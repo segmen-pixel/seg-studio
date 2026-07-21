@@ -1,0 +1,111 @@
+# SPDX-License-Identifier: Apache-2.0
+# Generates Software Bill of Materials (SBOM) for each release tag.
+#
+# Outputs:
+#   - CycloneDX 1.6 JSON (industry standard for vuln correlation)
+#   - SPDX 2.3 JSON      (industry standard for license compliance)
+#
+# These attach to the GitHub Release so downstream users / auditors can
+# verify exactly which dependencies (and their licenses) shipped, without
+# having to clone the repo or trust the README.
+#
+# Triggered:
+#   - on tag push (v*)            → attached to GitHub Release
+#   - workflow_dispatch (manual)  → uploaded as workflow artifact
+
+name: SBOM
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # needed to attach to Release
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install trainer_api lockfile (full env, so dist-info → license metadata)
+        # SBOM generated from a real installed env (rather than parsing
+        # requirements.txt textually) gets license metadata for ~95% of
+        # components, vs ~0% from textual parsing.
+        run: |
+          pip install -r apps/trainer_api/requirements.txt \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install cyclonedx-bom
+        run: pip install cyclonedx-bom
+
+      - name: Generate CycloneDX SBOM (trainer)
+        run: |
+          cyclonedx-py environment \
+            --output-format json \
+            --output-file seg-studio-trainer.cdx.json \
+            "$(which python)"
+
+      - name: Generate CycloneDX SBOM (serving — minimal subset)
+        run: |
+          cyclonedx-py requirements \
+            --output-format json \
+            --output-file seg-studio-serving.cdx.json \
+            apps/serving_api/requirements.txt
+
+      - name: Generate SPDX SBOM with syft
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: spdx-json
+          output-file: seg-studio.spdx.json
+
+      - name: NC license sanity check (machine-readable lockfile audit)
+        # Belt-and-suspenders: license-check.yml grep-blocks NC vendor names
+        # in source. This step blocks NC license expressions that slip
+        # through transitive deps.
+        run: |
+          python - <<'PY'
+          import json, sys
+          NC_KEYWORDS = ("non-commercial", "noncommercial", "research only",
+                         "cc-by-nc", "nvidia source code")
+          flagged = []
+          with open("seg-studio-trainer.cdx.json") as f:
+              sbom = json.load(f)
+          for c in sbom.get("components", []):
+              for lic in c.get("licenses", []):
+                  text = json.dumps(lic).lower()
+                  if any(kw in text for kw in NC_KEYWORDS):
+                      flagged.append((c.get("name"), c.get("version"), lic))
+          if flagged:
+              print("::error::NC / non-commercial license detected in SBOM")
+              for name, ver, lic in flagged:
+                  print(f"  {name}=={ver}  {lic}")
+              sys.exit(1)
+          print("✅ no NC / non-commercial licenses in SBOM")
+          PY
+
+      - name: Upload SBOMs as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: |
+            seg-studio-trainer.cdx.json
+            seg-studio-serving.cdx.json
+            seg-studio.spdx.json
+
+      - name: Attach SBOMs to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            seg-studio-trainer.cdx.json
+            seg-studio-serving.cdx.json
+            seg-studio.spdx.json
+          fail_on_unmatched_files: true

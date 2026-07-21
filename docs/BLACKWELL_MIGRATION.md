@@ -1,0 +1,162 @@
+# Blackwell (RTX 5090 / sm_120) Migration Guide
+
+_Drafted: 2026-05-11. Status: parallel cu128 env validated; main `.venv-windows`
+remains on cu124 for production stability._
+
+## Why
+
+The RTX 5090 (Blackwell, compute capability sm_120) requires CUDA 12.8+ and a
+PyTorch build that includes Blackwell kernels. Our current pinned PyTorch
+(`torch==2.6.0`, CUDA 12.4, arch list up to sm_90) returns a runtime error:
+
+```
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+```
+
+…when launching any CUDA kernel on a Blackwell device.
+
+## Solution
+
+A parallel virtual environment (`.venv-windows-cu128`) carrying:
+
+- `torch==2.11.0+cu128`, `torchvision==0.26.0+cu128`, `torchaudio==2.11.0+cu128`
+- All other dependencies identical to the cu124 lockfile
+- A dedicated lockfile `apps/trainer_api/requirements-cu128.txt`
+
+Older GPUs (Pascal sm_61 → Hopper sm_90) are fully supported by the cu128
+build as well — the `arch_list` is a superset. The migration is backwards-compatible.
+
+Verified arch coverage in cu128 build:
+
+```
+['sm_75', 'sm_80', 'sm_86', 'sm_90', 'sm_100', 'sm_120']
+```
+
+## Setup (Windows)
+
+```powershell
+$repo = "C:\path\to\seg-studio"
+
+# 1. Create parallel venv (uses same Python 3.11.9 as main venv)
+python -m venv "$repo\.venv-windows-cu128"
+$py = "$repo\.venv-windows-cu128\Scripts\python.exe"
+
+# 2. Upgrade pip
+& $py -m pip install --upgrade pip setuptools wheel
+
+# 3. Install PyTorch from cu128 index
+& $py -m pip install torch torchvision torchaudio `
+    --index-url https://download.pytorch.org/whl/cu128
+
+# 4. Install seg-studio deps from the cu128 lockfile
+& $py -m pip install -r "$repo\apps\trainer_api\requirements-cu128.txt" `
+    --index-url https://pypi.org/simple `
+    --extra-index-url https://download.pytorch.org/whl/cu128
+
+# 5. Install segcore in editable mode
+& $py -m pip install -e "$repo\packages\segcore" --no-deps
+
+# 6. Install dev tools
+& $py -m pip install -r "$repo\apps\trainer_api\requirements-dev.txt" --no-deps
+```
+
+## Setup (Linux trainer)
+
+```bash
+# (driver requirement: NVIDIA >= 525 for CUDA 12.8 wheels)
+nvidia-smi  # confirm driver version
+
+REPO=/data/seg-studio-dev/seg-studio
+python3.11 -m venv $REPO/.venv-linux-cu128
+PY=$REPO/.venv-linux-cu128/bin/python
+
+$PY -m pip install --upgrade pip setuptools wheel
+$PY -m pip install torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cu128
+$PY -m pip install -r $REPO/apps/trainer_api/requirements-cu128.txt \
+    --extra-index-url https://download.pytorch.org/whl/cu128
+$PY -m pip install -e $REPO/packages/segcore --no-deps
+```
+
+## Verification
+
+### A. PyTorch sanity
+
+```powershell
+& $py -c "
+import torch
+print('arch_list:', torch.cuda.get_arch_list())
+for i in range(torch.cuda.device_count()):
+    p = torch.cuda.get_device_properties(i)
+    print(f'  cuda:{i} = {p.name}  sm_{p.major}{p.minor}  {p.total_memory/1024**3:.1f} GB')
+"
+```
+
+Expected: `arch_list` contains `sm_120`. Both GPUs (5090 + 3090, or 5090 alone)
+should be enumerated.
+
+### B. DINOv2 numerical agreement (5090 vs 3090)
+
+Cosine similarity between embeddings computed on 5090 vs 3090 should be
+≥ 0.99999. We measured `1.000000` with `max|diff| = 1.67e-06` on the Bolt
+project (97 images, 12 sampled).
+
+### C. segcore unit tests
+
+```powershell
+cd $repo
+.venv-windows-cu128\Scripts\python.exe -m pytest packages\segcore\tests -q
+```
+
+Expected: all tests PASS (31/31 at the time of the migration; the suite has
+since grown).
+
+### D. trainer_api health check
+
+```powershell
+.venv-windows-cu128\Scripts\python.exe -m pytest apps\trainer_api\tests -q -k "not zarr and not training_fs"
+```
+
+The `test_zarr_mask.py` and `test_training_fs_discovery.py` errors are
+pre-existing issues unrelated to PyTorch upgrade (they fail on cu124 too).
+
+## Migration policy
+
+- **Phase 1 (current)**: Maintain BOTH `.venv-windows` (cu124, production) and
+  `.venv-windows-cu128` (Blackwell support). Use cu128 when developing on
+  a 5090.
+- **Phase 2 (after ~2-4 weeks of soaking)**: If no regression issues surface,
+  remove the cu124 lockfile and rename `requirements-cu128.in/txt` to the
+  canonical names.
+- **Phase 3**: Update CI to test on cu128 only (CPU-only wheels for CI runs).
+
+## Known caveats
+
+| Issue | Status |
+|---|---|
+| xFormers warnings from DINOv2 (SwiGLU/Attention/Block) | Pre-existing; not new in cu128. Optional install. |
+| `Missing SAM packages: timm, efficient_sam` warning | Optional extras; not required for core training. |
+| zarr_mask RecursionError | Pre-existing on cu124; deeper code issue with zarr 2.18 stacking. Fix later. |
+| pythoncore-3.11-64 Python detection in uv | Use `--python <venv>/Scripts/python.exe` explicitly. |
+| Cold-start matmul slower on 5090 than 3090 | CUDA context init overhead; warm-up clears. Real ML workloads will favor 5090. |
+
+## Files added in this migration
+
+```
+apps/trainer_api/
+├── requirements-cu128.in          (Blackwell variant of requirements.in)
+└── requirements-cu128.txt         (Lockfile, generated by `uv pip compile`)
+
+docs/
+└── BLACKWELL_MIGRATION.md         (this file)
+
+.venv-windows-cu128/                (NOT committed; runtime venv)
+```
+
+## License trail
+
+LICENSE: torch 2.11.0 BSD-3-Clause confirmed at https://github.com/pytorch/pytorch/blob/v2.11.0/LICENSE
+LICENSE: torchvision 0.26.0 BSD-3-Clause confirmed at https://github.com/pytorch/vision/blob/v0.26.0/LICENSE
+LICENSE: torchaudio 2.11.0 BSD-2-Clause confirmed at https://github.com/pytorch/audio/blob/v2.11.0/LICENSE
+LICENSE: nvidia-cuda-* (transient deps) NVIDIA EULA — bundled at install time via PyTorch index, redistribution
+governed by upstream PyTorch terms (already cleared for seg-studio license review).

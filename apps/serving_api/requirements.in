@@ -1,0 +1,17 @@
+# serving_api: human-edited dependency source.
+# Lockfile (`requirements.txt`) is generated FROM THE REPO ROOT by:
+#   uv pip compile apps/serving_api/requirements.in -o apps/serving_api/requirements.txt --python-version 3.11 --no-emit-index-url --universal
+# (The lockfile-drift CI re-runs exactly this command — keep them in sync.)
+#
+# Serving is intentionally minimal — keep the surface area small so security
+# patches and CVE response stay tractable.
+#
+# Pinned to the validated minor families (Python 3.11). Bumping a major
+# version is a deliberate compatibility-test event.
+
+fastapi==0.135.*
+uvicorn[standard]==0.42.*
+python-multipart==0.0.*
+numpy==2.4.*
+onnxruntime==1.25.*
+pillow>=10.2.0,<13

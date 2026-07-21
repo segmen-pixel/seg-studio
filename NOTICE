@@ -1,0 +1,84 @@
+Seg-Studio
+Copyright 2026 Segmen-Pixel and Seg-Studio contributors
+
+Licensed under the Apache License, Version 2.0 (the "License").
+You may obtain a copy of the License in the LICENSE file at the root of
+this distribution, or at http://www.apache.org/licenses/LICENSE-2.0.
+
+================================================================================
+This product includes software developed at, or copyrighted by, the following
+third parties. The notices below are reproduced from upstream NOTICE files as
+required by Apache License 2.0 §4(d). For the complete list of third-party
+dependencies and their licenses, see THIRD_PARTY_NOTICES.md.
+================================================================================
+
+--------------------------------------------------------------------------------
+Requests   (https://github.com/psf/requests)
+--------------------------------------------------------------------------------
+
+Requests
+Copyright 2019 Kenneth Reitz
+
+--------------------------------------------------------------------------------
+Playwright   (https://github.com/microsoft/playwright)
+--------------------------------------------------------------------------------
+
+Playwright
+Copyright (c) Microsoft Corporation
+
+This software contains code derived from the Puppeteer project
+(https://github.com/puppeteer/puppeteer), available under the Apache 2.0 license
+(https://github.com/puppeteer/puppeteer/blob/master/LICENSE).
+
+================================================================================
+LGPL components (Windows installer only)
+================================================================================
+
+The Windows installer bundles the following dynamically-linked libraries which
+are licensed under the GNU Lesser General Public License (LGPL). Replacement of
+these binaries is permitted under the LGPL terms; you can obtain the original
+sources from the URLs below, and the full license texts are reproduced under
+licenses/third_party/lgpl/.
+
+  libvips           LGPL-2.1+   https://github.com/libvips/libvips
+  Cairo             LGPL-2.1    https://gitlab.freedesktop.org/cairo/cairo
+  Pango             LGPL-2.0+   https://gitlab.gnome.org/GNOME/pango
+  HarfBuzz          MIT         https://github.com/harfbuzz/harfbuzz
+  FFmpeg (via cv2)  LGPL-2.1+   https://github.com/FFmpeg/FFmpeg
+                                (bundled inside opencv-python as
+                                 opencv_videoio_ffmpegXXXX_64.dll, LGPL build)
+  pyphen            LGPL-2.1+ / MPL-1.1 / GPL-2.0+ tri-license; we elect LGPL.
+                    https://github.com/Kozea/Pyphen
+
+================================================================================
+NVIDIA libraries via PyTorch CUDA wheel (Windows installer only)
+================================================================================
+
+The Windows installer ships the PyTorch CUDA wheel
+(``torch==2.x.x+cuXXX``), which transitively bundles NVIDIA libraries
+(cuDNN, cuBLAS, cuFFT, cuRAND, cuSPARSE, NCCL, NVRTC, NVTX, etc.) under
+their respective redistributable licenses. Seg-Studio does not download
+or package these libraries from NVIDIA directly; it inherits them from
+the PyTorch wheel that PyTorch's maintainers redistribute under the
+permissions granted by NVIDIA. The aggregated obligations text is
+reproduced verbatim from each wheel's LICENSE / NOTICE / ThirdPartyNotices
+file under licenses/third_party/wheels/.
+
+================================================================================
+Trademarks
+================================================================================
+
+All trademarks, service marks, trade names, product names, and logos appearing
+in this software are the property of their respective owners. In particular:
+
+  Apple, CoreML, macOS, Apple Silicon — trademarks of Apple Inc.
+  PyTorch                            — trademark of The Linux Foundation.
+  NVIDIA, CUDA, cuDNN                — trademarks of NVIDIA Corporation.
+  ONNX                               — trademark of the LF AI Foundation.
+  HuggingFace                        — trademark of Hugging Face, Inc.
+  Microsoft, Windows, Playwright,
+    ONNX Runtime                     — trademarks of Microsoft Corporation.
+  SAM, SAM 2, DINOv2                 — research models from Meta Platforms, Inc.
+
+The use of these names is for identification and informational purposes only
+and does not imply endorsement.

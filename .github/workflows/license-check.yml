@@ -1,0 +1,99 @@
+# SPDX-License-Identifier: Apache-2.0
+# License drift detection — blocks references to non-commercial-licensed
+# vendor weights / source trees in the OSS distribution.
+#
+# The blocked vendor / model-name prefixes are NOT stored in this repo:
+# they live in the `NC_VENDOR_PATTERNS` repository variable (newline-
+# separated, `#` comments allowed) so the strings never appear in the
+# published tree.  Maintainers: see the dev mirror for the master copy
+# and the one-liner that syncs it into the variable.
+#
+# The variable also blocks method names covered by third-party PATENTS
+# (not just licenses) — string greps cannot detect a patented algorithm,
+# so before implementing any new method, check the paper authors'
+# employer on Google Patents (see the dev mirror's oss-prep Phase 3-P).
+#
+# Maintainer patent WATCH LIST — recheck prosecution status at each
+# half-yearly cron run (numbers only; method context in the dev mirror):
+#   US20250239054 (pending) / US20260065648 (pending) / US12450729 (granted)
+#
+# Triggered on every push (no PR needed for solo dev) + half-yearly cron.
+
+name: License Check
+
+on:
+  push:
+  schedule:
+    # 半年ごと: 毎年 1 月 1 日と 7 月 1 日 00:00 UTC に強制再 audit
+    - cron: "0 0 1 1,7 *"
+  workflow_dispatch:
+
+jobs:
+  license-grep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load blocked vendor patterns
+        id: pattern
+        env:
+          NC_VENDOR_PATTERNS: ${{ vars.NC_VENDOR_PATTERNS }}
+        run: |
+          set -eu
+          SOURCE=""
+          if [ -n "${NC_VENDOR_PATTERNS:-}" ]; then
+            SOURCE="$NC_VENDOR_PATTERNS"
+          elif [ -f ".github/nc-vendor-patterns.txt" ]; then
+            # Legacy fallback for clones that still carry a local file.
+            SOURCE=$(cat ".github/nc-vendor-patterns.txt")
+          fi
+          if [ -z "$SOURCE" ]; then
+            echo "::warning::NC_VENDOR_PATTERNS repository variable is not set — skipping NC vendor check"
+            echo "value=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Join non-empty, non-comment lines with `|`
+          PATTERN=$(printf '%s\n' "$SOURCE" | grep -vE '^\s*(#|$)' | paste -sd '|' -)
+          if [ -z "$PATTERN" ]; then
+            echo "::error::NC vendor pattern source has no usable entries"
+            exit 1
+          fi
+          # Mask the resolved pattern in subsequent log output so the
+          # vendor names never surface in CI logs.
+          echo "::add-mask::$PATTERN"
+          echo "value=$PATTERN" >> "$GITHUB_OUTPUT"
+
+      - name: Block NC / non-commercial vendor references
+        if: steps.pattern.outputs.value != ''
+        env:
+          PATTERN: ${{ steps.pattern.outputs.value }}
+        run: |
+          set -eu
+          if grep -rEn "$PATTERN" \
+              --include="*.py" --include="*.ts" --include="*.tsx" --include="*.md" \
+              --include="*.yaml" --include="*.yml" --include="*.json" --include="*.toml" \
+              --exclude-dir=".git" --exclude-dir=".venv*" --exclude-dir="node_modules" \
+              --exclude-dir="dist" --exclude-dir="build" \
+              --exclude=".github/nc-vendor-patterns.txt" \
+              --exclude="license-check.yml" \
+              --exclude="pre-commit" \
+              .; then
+            echo "::error::Non-commercial vendor reference detected — see grep hits above"
+            echo "Apache-2.0 OSS cannot bundle non-commercial-licensed weights or source."
+            exit 1
+          fi
+          echo "✅ no non-commercial vendor references"
+
+      - name: Dependency license gate (PyPI metadata)
+        run: |
+          python3 scripts/ci/check_dep_licenses.py \
+            apps/trainer_api/requirements.txt \
+            apps/trainer_api/requirements-cu128.txt \
+            apps/trainer_api/requirements-openvino.txt \
+            apps/serving_api/requirements.txt \
+            --allowlist scripts/ci/dep-license-allowlist.txt
+
+      - name: Verify LICENSE file exists
+        run: |
+          test -f LICENSE || { echo "::error::LICENSE file missing"; exit 1; }
+          echo "✅ LICENSE present"

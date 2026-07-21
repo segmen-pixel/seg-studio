@@ -1,0 +1,92 @@
+# SPDX-License-Identifier: Apache-2.0
+# Lockfile drift detection — re-runs `uv pip compile` and fails if the result
+# differs from the committed `requirements.txt`. Forces every dependency
+# change to flow through:
+#     edit requirements.in  →  uv pip compile  →  commit BOTH
+# which is what makes the LICENSE: confirmation trail enforceable.
+
+name: Lockfile drift
+
+on:
+  push:
+    paths:
+      - "apps/**/requirements*.in"
+      - "apps/**/requirements*.txt"
+      - ".github/workflows/lockfile-drift.yml"
+  pull_request:
+    paths:
+      - "apps/**/requirements*.in"
+      - "apps/**/requirements*.txt"
+      - ".github/workflows/lockfile-drift.yml"
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Verify lockfiles match requirements.in
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.11"
+
+      - name: Recompile and diff each lockfile
+        run: |
+          set -eu
+          fail=0
+          # IMPORTANT: each lockfile must be recompiled with the SAME command,
+          # flags, and working directory documented in its requirements*.in
+          # header — uv embeds the command line and the .in path (in the
+          # "# via -r ..." annotations) into its output, so any mismatch
+          # produces a permanent false-positive diff.
+          check_one() {
+            local workdir="$1"
+            local in_file="$2"
+            local out_file="$3"
+            shift 3
+            local abs_out="$workdir/$out_file"
+            cp "$abs_out" "$abs_out.committed"
+            (cd "$workdir" && uv pip compile "$in_file" -o "$out_file" \
+              --python-version 3.11 "$@")
+            if ! diff -q "$abs_out.committed" "$abs_out" >/dev/null; then
+              echo "::error file=$abs_out::Lockfile out of sync with $in_file"
+              echo "--- committed (a) → recompiled (b) ---"
+              diff "$abs_out.committed" "$abs_out" || true
+              fail=1
+            else
+              echo "✅ $abs_out in sync"
+            fi
+            mv "$abs_out.committed" "$abs_out"  # restore so a second run is idempotent
+          }
+
+          check_one apps/trainer_api requirements.in requirements.txt \
+            --universal
+          check_one . apps/serving_api/requirements.in apps/serving_api/requirements.txt \
+            --no-emit-index-url --universal
+          check_one . apps/trainer_api/requirements-dev.in apps/trainer_api/requirements-dev.txt \
+            --no-emit-index-url --universal --constraint apps/trainer_api/requirements.txt
+          check_one apps/trainer_api requirements-openvino.in requirements-openvino.txt \
+            --universal
+
+          # NOT checked: apps/trainer_api/requirements-cu128.txt — compiled on
+          # Windows against the CUDA extra index with a hand-added pywin32
+          # marker; not reproducible on this runner. Background on the cu128
+          # environment: docs/BLACKWELL_MIGRATION.md. Regenerating that
+          # lockfile with --universal so it can join this check remains an
+          # open follow-up; until then, license review for cu128-only pins
+          # happens manually at each regeneration (commit message must carry
+          # the usual 'LICENSE: ...' trail).
+
+          if [ "$fail" -ne 0 ]; then
+            echo ""
+            echo "::error::One or more lockfiles drifted. Run locally (commands must match the requirements*.in headers):"
+            echo "  (cd apps/trainer_api && uv pip compile requirements.in -o requirements.txt --python-version 3.11 --universal)"
+            echo "  uv pip compile apps/serving_api/requirements.in -o apps/serving_api/requirements.txt --python-version 3.11 --no-emit-index-url --universal"
+            echo "  uv pip compile apps/trainer_api/requirements-dev.in -o apps/trainer_api/requirements-dev.txt --python-version 3.11 --no-emit-index-url --universal --constraint apps/trainer_api/requirements.txt"
+            echo "  (cd apps/trainer_api && uv pip compile requirements-openvino.in -o requirements-openvino.txt --python-version 3.11 --universal)"
+            echo "Then commit the regenerated lockfile WITH a 'LICENSE: <pkg> <ver> <SPDX-id> confirmed at <URL>' line in the body."
+            exit 1
+          fi
+          echo "All lockfiles in sync ✅"

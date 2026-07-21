@@ -1,0 +1,25 @@
+# trainer_api: optional OpenVINO export dependencies.
+# Installed only when the user opts in via:
+#   install_windows.bat --with-openvino
+# or manually: `pip install -r requirements-openvino.txt` (the lockfile
+# compiled from this manifest; regenerate with
+# `uv pip compile requirements-openvino.in -o requirements-openvino.txt --python-version 3.11 --universal`).
+#
+# Kept separate from requirements.in because the openvino + nncf wheels
+# weigh in around 300 MB+ and most users never need IR export. Splitting
+# the manifest also makes it easy to audit the OpenVINO license trail
+# without scanning the core dependency list.
+#
+# When adding/upgrading:
+#   1. Edit this file.
+#   2. Verify the new license is OSS-compatible (Apache-2.0 / MIT / BSD).
+#   3. Re-record the LICENSE confirmation URL in the commit body.
+#
+# License confirmation trail:
+#   openvino — Apache-2.0
+#     https://github.com/openvinotoolkit/openvino/blob/master/LICENSE
+#   nncf     — Apache-2.0 (used for INT8 post-training quantization)
+#     https://github.com/openvinotoolkit/nncf/blob/develop/LICENSE
+
+openvino>=2026.2,<2027
+nncf>=3.2,<4

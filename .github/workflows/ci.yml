@@ -1,0 +1,246 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── TypeScript type check ──────────────────────────────────────
+  typecheck:
+    name: TypeScript type check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/trainer_ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/trainer_ui/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+
+  # ── ESLint ─────────────────────────────────────────────────────
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/trainer_ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/trainer_ui/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+
+  # ── UI production build ────────────────────────────────────────
+  ui-build:
+    name: UI build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/trainer_ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/trainer_ui/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  # ── Ruff (Python lint) ────────────────────────────────────────
+  ruff:
+    name: Ruff lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff
+      - run: ruff check packages/ apps/trainer_api/app/ apps/serving_api/app/ scripts/ tests/
+
+  # ── Python import check ────────────────────────────────────────
+  python-imports:
+    name: Python import check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: apps/trainer_api/requirements.txt
+      - name: Install pinned requirements (lockfile)
+        # PyTorch CPU wheels live on download.pytorch.org; --extra-index-url
+        # lets pip find `torch==2.6.0` for Linux even if PyPI lacks the wheel.
+        run: |
+          pip install -r apps/trainer_api/requirements.txt \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Verify key imports
+        run: |
+          export PYTHONPATH="$PWD/packages/segcore:$PYTHONPATH"
+          python -c "
+          from apps.trainer_api.app.core.config import APP_VERSION
+          print(f'config.APP_VERSION = {APP_VERSION}')
+          "
+          python -c "
+          from segcore.training.model import MODEL_REGISTRY
+          print(f'MODEL_REGISTRY keys = {list(MODEL_REGISTRY.keys())}')
+          "
+      - name: Verify auto_select v6 combo predictor loads
+        # End-to-end sanity check: the bundled XGBoost regressor + ranker
+        # + PCA load successfully and `rank()` returns a non-empty,
+        # monotonically descending recommendation list.  Also verifies
+        # the warmup-calibrated time predictor (phys_time.json) is
+        # loaded and round-trips the anchor combo's elapsed_sec exactly.
+        # Catches schema drift between metadata.json and the loaders
+        # before it reaches a release branch.
+        run: |
+          export PYTHONPATH="$PWD/packages/segcore:$PYTHONPATH"
+          python -c "
+          import numpy as np
+          from segcore.auto_select.combo_predictor import get_default_predictor
+          p = get_default_predictor()
+          assert p is not None, 'v6 bundle missing'
+          assert p.metadata.get('model_family') == 'xgboost_ensemble'
+          assert len(p.all_combos) > 0
+          scalar = {n: 1.0 for n in p.scalar_feature_names}
+          dino = np.random.default_rng(0).standard_normal(768).astype(np.float32)
+          ranked = p.rank(scalar, dino_vec_768=dino)
+          assert len(ranked) == len(p.all_combos)
+          scores = [r['rank_score'] for r in ranked]
+          assert all(scores[i] >= scores[i+1] for i in range(len(scores)-1))
+          # Time predictor bundle should be present and well-formed.
+          assert p.time_predictor is not None, 'phys_time.json missing'
+          assert p.anchor_combo is not None
+          assert all(r['pred_elapsed_sec'] is not None for r in ranked)
+          # Anchor calibration must round-trip exactly.
+          rt = p.rank(scalar, dino_vec_768=dino,
+                      candidate_combos=[p.anchor_combo],
+                      anchor_elapsed_sec=660.0)
+          assert abs(rt[0]['pred_elapsed_sec'] - 660.0) < 1e-3, \
+              f'anchor calibration broken: got {rt[0][\"pred_elapsed_sec\"]}'
+          print(f'v6 combo+time predictor OK: {len(ranked)} combos, '
+                f'top-1 = {ranked[0][\"combo\"]} (~{ranked[0][\"pred_elapsed_min\"]:.1f} min)')
+          "
+      - name: Verify auto_select v6 VRAM predictor loads
+        # The OOM-avoidance bundle (vram_regressor.json / oom_classifier.json
+        # / vram_metadata.json) must load and produce a well-formed verdict.
+        # Also asserts the WDDM-aware policy: on the same GPU the WDDM budget
+        # is strictly tighter than the Linux budget (the safety requirement).
+        run: |
+          export PYTHONPATH="$PWD/packages/segcore:$PYTHONPATH"
+          python -c "
+          # Import via the package __init__ so the public re-export is checked too.
+          from segcore.auto_select import get_default_vram_predictor, VramPredictor
+          vp = get_default_vram_predictor()
+          assert vp is not None, 'VRAM bundle missing'
+          assert vp.metadata.get('model_family') == 'xgboost_vram_predictor'
+          # batch-free feature surface (20 cols, no batch_size).
+          assert len(vp.feature_names) == 20
+          assert 'batch_size' not in vp.feature_names
+          assert vp.safety.safety_multiplier > 1.0
+          combo = 'stdc_bc64_p256_distillOff_fp0.5_dw1.0_focal_cws0.0'
+          v = vp.verdict(combo, gpu_total_mb=24576.0, is_wddm=True, num_train=300)
+          assert v['verdict'] in ('ok', 'oom_risk')
+          assert v['pred_vram_mb'] > 0
+          assert v['vram_safe_mb'] >= v['pred_vram_mb']
+          # WDDM budget must be tighter than Linux on the same card.
+          w = vp.verdict(combo, 11911.0, is_wddm=True, num_train=300)
+          l = vp.verdict(combo, 11911.0, is_wddm=False, num_train=300)
+          assert w['budget_mb'] < l['budget_mb'], 'WDDM budget not tighter'
+          print(f'v6 VRAM predictor OK: pred={v[\"pred_vram_mb\"]:.0f}MB '
+                f'safe={v[\"vram_safe_mb\"]:.0f}MB verdict={v[\"verdict\"]}')
+          "
+      - name: Reject MIT-licensed combo predictor deps in the runtime stack
+        # The auto_select v6 swap (2026-05-21) removed LightGBM (MIT) so
+        # the shipped runtime is exclusively Apache-2.0 / BSD-3.  Block
+        # accidental reintroduction by failing the build if any of these
+        # MIT packages reappear in the trainer_api lockfile.
+        run: |
+          for pkg in lightgbm optuna shap interpret; do
+            if grep -i -q "^${pkg}==" apps/trainer_api/requirements.txt; then
+              echo "::error::Forbidden MIT dep '${pkg}' found in requirements.txt"
+              exit 1
+            fi
+            if grep -i -q "^${pkg}==" apps/trainer_api/requirements-cu128.txt; then
+              echo "::error::Forbidden MIT dep '${pkg}' found in requirements-cu128.txt"
+              exit 1
+            fi
+          done
+          echo "OK: no MIT-licensed combo predictor deps in trainer_api lockfiles"
+
+  # ── Pytest ─────────────────────────────────────────────────────
+  pytest:
+    name: Pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: apps/trainer_api/requirements.txt
+      - name: Install pinned requirements (lockfile + dev)
+        run: |
+          pip install -r apps/trainer_api/requirements.txt \
+            -r apps/trainer_api/requirements-dev.txt \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Run pytest
+        run: |
+          export PYTHONPATH="$PWD/packages/segcore:$PYTHONPATH"
+          DIRS=""
+          [ -d tests ] && DIRS="$DIRS tests/"
+          [ -d apps/trainer_api/tests ] && DIRS="$DIRS apps/trainer_api/tests/"
+          [ -d packages/segcore/tests ] && DIRS="$DIRS packages/segcore/tests/"
+          if [ -n "$DIRS" ]; then
+            python -m pytest $DIRS -v --tb=short
+          else
+            echo "No test directories found — skipping"
+          fi
+
+  # ── pip-audit (CVE scan against pinned lockfiles) ─────────────
+  pip-audit:
+    name: pip-audit (CVE scan)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit trainer_api lockfile
+        # pip-audit skips git+ URL deps automatically (mobile-sam, sam-2);
+        # we audit those manually when bumping their pinned SHA — see
+        # CONTRIBUTING.md ("Dependency policy").
+        run: |
+          pip-audit -r apps/trainer_api/requirements.txt \
+            --vulnerability-service osv \
+            --strict
+      - name: Audit serving_api lockfile
+        run: |
+          pip-audit -r apps/serving_api/requirements.txt \
+            --vulnerability-service osv \
+            --strict
+      - name: Audit trainer_api dev lockfile (informational, non-blocking)
+        # Dev/test deps don't ship to users; report but don't fail the build.
+        continue-on-error: true
+        run: |
+          pip-audit -r apps/trainer_api/requirements-dev.txt \
+            --vulnerability-service osv

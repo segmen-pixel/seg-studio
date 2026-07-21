@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: Apache-2.0
+# Developer Certificate of Origin check — every commit in a pull request
+# must carry a Signed-off-by line (git commit -s).  This is the inbound
+# provenance record for external contributions; see CONTRIBUTING.md.
+
+name: DCO
+
+on:
+  pull_request:
+
+jobs:
+  dco:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check Signed-off-by on all PR commits
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -eu
+          missing=0
+          for sha in $(git rev-list "$BASE..$HEAD"); do
+            if ! git log -1 --format=%B "$sha" | grep -qiE '^Signed-off-by: .+ <.+@.+>'; then
+              echo "::error::commit $sha is missing a Signed-off-by line (DCO)"
+              missing=1
+            fi
+          done
+          if [ "$missing" -eq 1 ]; then
+            echo "Every commit must be signed off per the Developer Certificate"
+            echo "of Origin (https://developercertificate.org/)."
+            echo "Amend with:  git commit --amend -s   (or rebase with --signoff)"
+            exit 1
+          fi
+          echo "✅ all commits signed off"

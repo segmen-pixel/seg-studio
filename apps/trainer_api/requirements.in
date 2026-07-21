@@ -1,0 +1,94 @@
+# trainer_api: human-edited dependency source.
+# Lockfile (`requirements.txt`) is auto-generated from this file by `uv pip compile`.
+#
+# When adding/upgrading a dependency:
+#   1. Edit this file (loose ranges OK for utilities; pin ML/server core).
+#   2. Run: uv pip compile requirements.in -o requirements.txt --python-version 3.11 --universal
+#      (--universal keeps the lock cross-platform: without it a Windows run
+#       bakes in pywin32 and breaks Linux CI / Docker / macOS installs)
+#   3. Verify the new license is OSS-compatible (Apache-2.0 / MIT / BSD / LGPL).
+#   4. Commit BOTH files together with a license-confirmation trail in the body:
+#        LICENSE: <pkg> <version> <SPDX-id> confirmed at <URL>
+#
+# ML / server-core packages are pinned to the version family currently
+# validated against our distill / training pipeline on Python 3.11
+# (Windows + CUDA 12.4 dev, Linux + CPU CI). Bumping a major version is
+# a deliberate compatibility-test event — re-run pytest + a smoke distill
+# run before relaxing these pins.
+#
+# See CONTRIBUTING.md ("Dependency policy") for the full flow.
+
+# ── Core server (pinned to validated minor families) ────────────
+fastapi==0.135.*
+uvicorn[standard]==0.42.*
+sqlmodel==0.0.*
+pydantic==2.12.*
+python-multipart==0.0.*
+httpx==0.28.*
+
+# ── ML / inference (pinned to validated major.minor) ────────────
+# torch CUDA suffix (`+cu124`) is environment-specific and intentionally
+# absent here — the lockfile records canonical PyPI versions
+# (`torch==2.13.0`) and CI installs CPU wheels via --extra-index-url.
+# 2.6.* had no wheels for Python 3.14 and its exact sympy==1.13.1
+# requirement dragged every co-resolution back to 2.6.0.
+torch==2.13.*
+torchvision==0.28.*
+numpy==2.4.*
+pillow>=10.2.0,<13
+opencv-python-headless>=4.9.0,<5
+scikit-learn==1.8.*
+scikit-image==0.26.*
+scipy==1.17.*
+onnx==1.20.*
+# onnxscript: required by torch>=2.11 torch.onnx.export (dynamo path).
+# MIT, https://github.com/microsoft/onnxscript/blob/main/LICENSE
+onnxscript>=0.7,<1
+# onnxruntime: installed separately by build_installer.py.
+# Dev: `pip install onnxruntime-gpu>=1.19.0` (CUDA) or `onnxruntime>=1.17.0` (CPU).
+
+# ── Large image tiling (DeepZoom pyramid generation) ────────────
+pyvips>=2.2.0,<4
+
+# ── Chunked mask storage for large images ───────────────────────
+zarr>=2.18.0,<3
+
+# ── DINOv2 / distillation ───────────────────────────────────────
+transformers==5.3.*
+huggingface_hub==1.*
+
+# ── auto_select combo predictor (XGBoost ensemble, Apache-2.0) ─
+# LightGBM (MIT) was the v3 backend.  v6 ships an XGBoost-only stack so
+# every runtime dep is Apache-2.0 or BSD-3.  See packages/segcore/auto_select/
+# models/best_model_v6/ for the bundled boosters.
+xgboost>=2.0.0,<4
+
+# ── CoreML export ───────────────────────────────────────────────
+coremltools>=8.0,<9
+
+# ── OpenVINO export (Intel edge) is opt-in: ~300MB+ of wheels.
+# Installed by `install_windows.bat --with-openvino` from
+# `requirements-openvino.in` rather than bundled here.
+
+# ── Environment loading ─────────────────────────────────────────
+python-dotenv>=1.0.0,<2
+
+# ── Report generation ───────────────────────────────────────────
+jinja2>=3.1.0,<4
+weasyprint>=62.0
+openpyxl>=3.1.0,<4
+matplotlib>=3.8.0,<4
+
+# ── SAM models (not on PyPI; pinned to specific commit SHA for reproducibility) ─
+# MobileSAM   Apache-2.0  https://github.com/ChaoningZhang/MobileSAM/blob/master/LICENSE
+# SAM 2 (Meta) Apache-2.0 https://github.com/facebookresearch/sam2/blob/main/LICENSE
+# Bumping a SHA is a dependency upgrade — re-confirm upstream LICENSE has
+# NOT changed AND re-run distill / inference smoke tests.
+#
+# MobileSAM SHA b01a9c… (2025-12-19) is the version validated against our
+# distill pipeline. master HEAD has only acknowledgement/comment changes
+# since (no functional diff), but we do NOT auto-track HEAD — pinning is
+# the whole point of this file.
+mobile-sam @ git+https://github.com/ChaoningZhang/MobileSAM.git@b01a9ccef3b9e10b099b544efe004d0871802c3b
+sam-2 @ git+https://github.com/facebookresearch/sam2.git@2b90b9f5ceec907a1c18123530e92e794ad901a4
+# Checkpoints auto-downloaded from HuggingFace: segmen-pixel/seg-studio

@@ -1,0 +1,38 @@
+# Seg-Studio has no built-in authentication. By default this compose
+# file publishes every port on 127.0.0.1 only, so LAN/WAN traffic
+# cannot reach the containers. Exposing externally REQUIRES a
+# reverse proxy with TLS + auth — see SECURITY.md.
+services:
+  trainer-api:
+    build:
+      context: .
+      dockerfile: apps/trainer_api/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "127.0.0.1:8002:8000"
+    environment:
+      - SEG_PROJECTS_DIR=/app/projects
+      - SEG_DB_PATH=/app/projects/app.db
+  serving-api:
+    build:
+      context: .
+      dockerfile: apps/serving_api/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      - SEG_MODELS_DIR=/app/models
+  trainer-ui:
+    build:
+      context: .
+      dockerfile: apps/trainer_ui/Dockerfile
+    ports:
+      - "127.0.0.1:5173:80"
+    depends_on:
+      - trainer-api
+  # cvat:
+  #   image: openvino/cvat-server:latest
+  #   ports:
+  #     - "8080:8080"

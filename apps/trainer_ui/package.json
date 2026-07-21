@@ -1,0 +1,39 @@
+{
+  "name": "seg-studio-trainer-ui",
+  "private": true,
+  "version": "0.9.7",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --port 5173",
+    "test:e2e": "npx playwright test",
+    "test:e2e:debug": "npx playwright test --headed --debug",
+    "screenshot": "npx playwright test e2e/_tools/debug-screenshot.spec.ts",
+    "screenshot:debug": "node e2e/_tools/screenshot-cli.mjs",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 200",
+    "diagnose:layout": "npx playwright test e2e/_tools/diagnose-layout.spec.ts",
+    "diagnose:4x3": "npx playwright test e2e/_tools/diagnose-4x3.spec.ts"
+  },
+  "dependencies": {
+    "immer": "10.1.1",
+    "openseadragon": "^6.0.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zustand": "4.5.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/openseadragon": "^5.0.2",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "@vitejs/plugin-react": "4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "source-map": "^0.7.6",
+    "typescript": "5.5.4",
+    "vite": "5.4.8"
+  }
+}
