@@ -1,0 +1,76 @@
+version: 2
+updates:
+  # ── Python: root (pyproject.toml) ─────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      python-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── Python: trainer_api ────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/apps/trainer_api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      trainer-api-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── Python: serving_api ────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/apps/serving_api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      serving-api-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── npm: trainer_ui ────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/apps/trainer_ui"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "javascript"
+    groups:
+      npm-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── GitHub Actions ─────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "ci"

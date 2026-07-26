@@ -1,0 +1,10 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+@import "./base.css";
+@import "./shell.css";
+@import "./common.css";
+@import "./projects.css";
+@import "./annotate.css";
+@import "./results.css";
+@import "./training.css";
+@import "./components.css";

@@ -1,0 +1,112 @@
+# SPDX-License-Identifier: Apache-2.0
+# Generates Software Bill of Materials (SBOM) for each release tag.
+#
+# Outputs:
+#   - CycloneDX 1.6 JSON (industry standard for vuln correlation)
+#   - SPDX 2.3 JSON      (industry standard for license compliance)
+#
+# These attach to the GitHub Release so downstream users / auditors can
+# verify exactly which dependencies (and their licenses) shipped, without
+# having to clone the repo or trust the README.
+#
+# Triggered:
+#   - on tag push (v*)            → attached to GitHub Release
+#   - workflow_dispatch (manual)  → uploaded as workflow artifact
+
+name: SBOM
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # needed to attach to Release
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Install trainer_api lockfile (full env, so dist-info → license metadata)
+        # SBOM generated from a real installed env (rather than parsing
+        # requirements.txt textually) gets license metadata for ~95% of
+        # components, vs ~0% from textual parsing.
+        run: |
+          pip install -r apps/trainer_api/requirements.txt \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install cyclonedx-bom (isolated tool venv)
+        # The SBOM generator lives in its own venv so the tool and its
+        # dependencies never leak into the environment SBOM of the app —
+        # the SBOM must describe what ships, not what audited it.
+        run: |
+          python -m venv /tmp/sbom-tool
+          /tmp/sbom-tool/bin/pip install cyclonedx-bom
+
+      - name: Generate CycloneDX SBOM (trainer)
+        run: |
+          /tmp/sbom-tool/bin/cyclonedx-py environment \
+            --output-format json \
+            --output-file seg-studio-trainer.cdx.json \
+            "$(which python)"
+
+      - name: Generate CycloneDX SBOM (serving — minimal subset)
+        run: |
+          /tmp/sbom-tool/bin/cyclonedx-py requirements \
+            --output-format json \
+            --output-file seg-studio-serving.cdx.json \
+            apps/serving_api/requirements.txt
+
+      - name: Generate SPDX SBOM with syft
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          path: .
+          format: spdx-json
+          output-file: seg-studio.spdx.json
+
+      - name: License audit of SBOM (fail-closed)
+        # Belt-and-suspenders: license-check.yml grep-blocks NC vendor names
+        # in source. This step (a) blocks NC license expressions that slip
+        # through transitive deps and (b) FAILS on components with missing /
+        # NOASSERTION license metadata — a component whose license we cannot
+        # name is not shippable. Manually-verified exceptions live in
+        # scripts/ci/dep-license-allowlist.txt (with reasons).
+        #
+        # The audit first recovers licences that cyclonedx-py drops: it records
+        # a licence only when the metadata is SPDX-shaped, so packages using the
+        # legacy free-text `License:` field ("BSD", "FreeBSD", "Apache License
+        # 2.0") arrived here with no licence at all and failed a gate they
+        # should have passed. Recovering them also puts the licence into the
+        # SBOM we publish, which is the whole point of shipping one.
+        #
+        # Only the trainer SBOM is audited: it is generated from an installed
+        # environment, so its metadata can be read back. The serving SBOM is
+        # parsed from requirements.txt and carries no licence data to recover.
+        run: |
+          python scripts/ci/audit_sbom_licenses.py seg-studio-trainer.cdx.json \
+            --allowlist scripts/ci/dep-license-allowlist.txt
+      - name: Upload SBOMs as workflow artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sbom
+          path: |
+            seg-studio-trainer.cdx.json
+            seg-studio-serving.cdx.json
+            seg-studio.spdx.json
+
+      - name: Attach SBOMs to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: |
+            seg-studio-trainer.cdx.json
+            seg-studio-serving.cdx.json
+            seg-studio.spdx.json
+          fail_on_unmatched_files: true

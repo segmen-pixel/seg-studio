@@ -1,0 +1,297 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+/* ── 32. Results Tab ── */
+.results-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr) 340px;
+  grid-template-rows: 1fr;
+  gap: 12px;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.results-layout-single {
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr) 300px;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.preview-panel .section {
+  width: 100%;
+}
+
+.preview-panel .section.preview-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.results-preview-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+.results-preview-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-preview-subtitle {
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-preview-hint {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-2);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.preview-frame .canvas-stack {
+  flex: 1;
+  min-height: 200px;
+}
+
+/* Preview overlay badge showing which split the active image belongs to.
+   Matches the row-badge colours (train=blue, val=vermilion, test=green)
+   with a full-word label for viewer legibility. Positioned inside the
+   .canvas-stack (which is position:relative) so it stays fixed relative
+   to the viewport even as the image pans / zooms. */
+.preview-set-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  z-index: 10;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.preview-set-train { background: rgba(10, 132, 255, 0.9); }
+.preview-set-val   { background: rgba(213, 94, 0, 0.9); }
+.preview-set-test  { background: rgba(48, 135, 91, 0.9); }
+
+
+.results-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  gap: 0;
+  /* Ensure scrollbar is always reachable for vs-GT and other bottom content */
+  padding-bottom: 16px;
+}
+/* Sliders in results-right should stretch to fill available width */
+.results-right input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+.results-right .opacity-range {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.results-run-list {
+  max-height: 200px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.results-run-list .card > div {
+  min-width: 0;
+}
+
+.results-run-list .card > div > div:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-layout .side-panel .list {
+  flex: 1;
+  min-height: 80px;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.results-image-list-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.results-image-list {
+  outline: none;
+}
+
+.results-image-list:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent);
+  border-radius: 10px;
+}
+
+.results-image-list-empty {
+  padding: 12px 6px;
+}
+
+/* Run F1 badge */
+.run-f1-badge {
+  margin-left: auto;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.run-f1-badge.best {
+  color: #00c853;
+  font-weight: 600;
+}
+
+.run-inferred-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+/* Collapsible sections in results-right */
+.results-right details {
+  margin-top: 12px;
+}
+.results-right details > summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.results-right details > summary::-webkit-details-marker {
+  display: none;
+}
+.results-right details > summary::before {
+  content: "\25B6";
+  display: inline-block;
+  font-size: 9px;
+  transition: transform 0.15s;
+}
+.results-right details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* Pattern menu */
+.gt-compare-wrap {
+  position: relative;
+}
+/* When menu is open, remove overflow clipping from toolbar */
+.overlay-tools:has(.gt-compare-wrap.open) {
+  overflow: visible !important;
+}
+.gt-pattern-menu {
+  position: absolute;
+  right: 100%;
+  top: -4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  padding: 4px;
+  padding-right: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 10;
+  white-space: nowrap;
+}
+.gt-pattern-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+}
+.gt-pattern-label {
+  flex-shrink: 0;
+}
+.gt-pattern-btn:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
+.gt-pattern-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Results root: fill parent */
+.results-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+
+/* ── Instance runs (v0.9.8): count chip in the preview header ── */
+.instance-count-chip {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: rgba(0, 158, 115, 0.18);
+  border: 1px solid rgba(0, 158, 115, 0.45);
+  color: #009e73;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
