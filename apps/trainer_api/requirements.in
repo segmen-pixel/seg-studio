@@ -91,7 +91,7 @@ albumentations>=2.0,<3
 xgboost>=2.0.0,<4
 
 # ── CoreML export ───────────────────────────────────────────────
-coremltools>=8.0,<9
+coremltools>=9.0,<10
 
 # ── OpenVINO export (Intel edge) is opt-in: ~300MB+ of wheels.
 # Installed by `install_windows.bat --with-openvino` from
