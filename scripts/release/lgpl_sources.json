@@ -1,0 +1,65 @@
+{
+  "_comment": [
+    "Copyleft-source manifest for binary releases (LGPL-2.x / MPL).",
+    "Each entry maps a DLL name pattern (glob, matched against the",
+    "release_manifest.json of a built installer staging) to the exact",
+    "upstream source archive that corresponds to the shipped binary.",
+    "Before every binary release: fill version / source_url / sha256 for",
+    "every entry that matches a shipped DLL, then run",
+    "scripts/release/collect_lgpl_sources.py — it fails closed on any",
+    "matched DLL whose source pin is incomplete."
+  ],
+  "components": [
+    {
+      "component": "libvips",
+      "dll_patterns": ["libvips*.dll", "vips*.dll"],
+      "license": "LGPL-2.1+",
+      "upstream": "https://github.com/libvips/libvips",
+      "version": null,
+      "source_url": null,
+      "sha256": null,
+      "patches": []
+    },
+    {
+      "component": "cairo",
+      "dll_patterns": ["*cairo*.dll"],
+      "license": "LGPL-2.1 (elected)",
+      "upstream": "https://gitlab.freedesktop.org/cairo/cairo",
+      "version": null,
+      "source_url": null,
+      "sha256": null,
+      "patches": []
+    },
+    {
+      "component": "pango",
+      "dll_patterns": ["*pango*.dll"],
+      "license": "LGPL-2.0+",
+      "upstream": "https://gitlab.gnome.org/GNOME/pango",
+      "version": null,
+      "source_url": null,
+      "sha256": null,
+      "patches": []
+    },
+    {
+      "component": "ffmpeg (LGPL build, via opencv-python-headless)",
+      "dll_patterns": ["opencv_videoio_ffmpeg*.dll"],
+      "license": "LGPL-2.1+",
+      "upstream": "https://github.com/FFmpeg/FFmpeg",
+      "version": null,
+      "source_url": null,
+      "sha256": null,
+      "patches": [],
+      "notes": "Record the OpenCV wheel's 3rdparty ffmpeg build config (opencv/opencv_3rdparty) revision here as well."
+    },
+    {
+      "component": "glib",
+      "dll_patterns": ["*glib*.dll", "*gobject*.dll", "*gio*.dll", "*gmodule*.dll"],
+      "license": "LGPL-2.1+",
+      "upstream": "https://gitlab.gnome.org/GNOME/glib",
+      "version": null,
+      "source_url": null,
+      "sha256": null,
+      "patches": []
+    }
+  ]
+}
