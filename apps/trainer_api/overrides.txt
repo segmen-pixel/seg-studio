@@ -1,0 +1,12 @@
+# uv override file (passed via `--override overrides.txt`, see the
+# requirements*.in headers and .github/workflows/lockfile-drift.yml).
+# An override REPLACES every requirement on the named package across the
+# whole resolution — use sparingly and document each entry.
+
+# supervision (rfdetr core dep) requires the GUI cv2 build (opencv-python),
+# but we already ship opencv-python-headless and BOTH wheels own the cv2/
+# package — installing the two together makes the import nondeterministic
+# and drags GUI/X11 bits into a server install. The headless build satisfies
+# `import cv2` for supervision, so the GUI requirement is disabled with a
+# never-true marker (python_version < '3' is false on every supported env).
+opencv-python ; python_version < '3'

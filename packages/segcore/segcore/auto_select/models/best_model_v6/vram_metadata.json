@@ -1,0 +1,81 @@
+{
+  "schema_version": "vram-v6.0",
+  "model_family": "xgboost_vram_predictor",
+  "feature_names": [
+    "arch_simpleunet",
+    "arch_stdc",
+    "arch_deeplabv3plus",
+    "base_channels",
+    "log2_bc",
+    "patch_size",
+    "log2_ps",
+    "distill_on",
+    "fg_patch_prob",
+    "dice_weight",
+    "class_weight_strength",
+    "loss_focal",
+    "loss_lovasz",
+    "loss_ce",
+    "driver_is_wddm",
+    "gpu_total_mb",
+    "num_train",
+    "log1p_num_train",
+    "bc_x_ps2",
+    "lovasz_x_bc"
+  ],
+  "regressor_path": "vram_regressor.json",
+  "regressor_space": "log",
+  "classifier_path": "oom_classifier.json",
+  "n_trees_regressor": 600,
+  "n_trees_classifier": 131,
+  "n_train_rows_regressor": 9121,
+  "n_train_rows_classifier": 9669,
+  "n_train_projects": 37,
+  "safety": {
+    "underpred_log_p95": 0.1713329401464776,
+    "safety_multiplier": 1.1868858451935242,
+    "wddm_headroom_mb": 2048.0,
+    "wddm_usable_fraction": 0.92,
+    "linux_headroom_mb": 512.0,
+    "linux_usable_fraction": 0.94,
+    "oom_prob_veto": 0.5
+  },
+  "lopo_regressor": {
+    "n_projects": 37,
+    "n_rows": 9121,
+    "mean_project_mae_mb": 350.725232972277,
+    "mean_project_mape_pct": 3.634884023721973,
+    "mean_project_r2_log": 0.9822645495081467,
+    "global_mae_mb": 334.71270568198565,
+    "global_mape_pct": 3.558373914519252,
+    "global_r2_log": 0.988805460924872,
+    "global_p90_abs_err_mb": 907.1631835937496,
+    "global_p99_abs_err_mb": 3483.6799609374957,
+    "resid_log_std": 0.06968299785977938,
+    "resid_log_mean": 0.030432690158354654,
+    "underpred_log_p90": 0.14116933080627092,
+    "underpred_log_p95": 0.1713329401464776,
+    "underpred_frac": 0.6732814384387676
+  },
+  "lopo_classifier": {
+    "auc": 0.9934846952208627,
+    "at_threshold_0.5": {
+      "threshold": 0.5,
+      "tp": 516.0,
+      "fp": 120.0,
+      "fn": 32.0,
+      "tn": 9001.0,
+      "precision": 0.8113207547169812,
+      "recall": 0.9416058394160584,
+      "f1": 0.8716216216216216
+    }
+  },
+  "dependencies": {
+    "xgboost": ">=2.0,<4.0",
+    "numpy": ">=1.24"
+  },
+  "license_stack": {
+    "xgboost": "Apache-2.0",
+    "numpy": "BSD-3-Clause"
+  }
+}

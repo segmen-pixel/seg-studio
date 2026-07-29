@@ -1,0 +1,34 @@
+# Documented exceptions for scripts/ci/check_dep_licenses.py — each entry
+# needs a reason and a verification pointer. Review at the half-yearly cron.
+
+# Tri-licensed GPL-2.0+ / LGPL-2.1+ / MPL-1.1; this project elects
+# LGPL/MPL — full texts shipped in licenses/third_party/lgpl/ (v0.9.5).
+pyphen
+
+# Installed from the upstream author repositories (not PyPI), Apache-2.0
+# confirmed via API fetch 2026-07-07; listed in THIRD_PARTY_NOTICES.md.
+mobile-sam
+sam-2
+
+# NVIDIA CUDA runtime wheel with no PyPI metadata; license text is
+# bundled inside the wheel and propagated via the torch wheel notices
+# collected by scripts/build_installer.py.
+nvidia-nccl-cu12
+
+# Apache-2.0 — confirmed via upstream README + LICENSE 2026-07-21
+# (https://github.com/MiXaiLL76/faster_coco_eval/blob/main/LICENSE);
+# PyPI classifiers are missing upstream. Listed in the M5 license trail
+# (commit 2dd655b).
+faster-coco-eval
+
+# NVIDIA proprietary CUDA redistributable wheels (torch 2.13 / cu128
+# chain) with no PyPI license metadata; the license text ships inside
+# each wheel and is propagated via the torch wheel notices collected by
+# scripts/build_installer.py — same handling as nvidia-nccl-cu12 above.
+cuda-toolkit
+nvidia-cuda-runtime
+nvidia-cudnn-cu13
+nvidia-nccl-cu13
+nvidia-nvjitlink
+nvidia-nvshmem-cu13
+nvidia-cusparselt-cu13

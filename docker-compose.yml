@@ -1,0 +1,48 @@
+# Seg-Studio has no user accounts or RBAC. The trainer API supports one
+# optional shared secret (SEG_API_TOKEN); the serving API has no
+# authentication at all. By default this compose file publishes every port
+# on 127.0.0.1 only, so LAN/WAN traffic cannot reach the containers.
+# Exposing externally REQUIRES a reverse proxy with TLS + auth — see
+# SECURITY.md.
+#
+# SEG_API_TOKEN is REQUIRED here: each container binds 0.0.0.0 inside its
+# own network namespace, and the trainer refuses to start on a non-loopback
+# bind without a secret. Put it in a .env file next to this one.
+services:
+  trainer-api:
+    build:
+      context: .
+      dockerfile: apps/trainer_api/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "127.0.0.1:8002:8000"
+    environment:
+      - SEG_PROJECTS_DIR=/app/projects
+      - SEG_DB_PATH=/app/projects/app.db
+      # Required - see the note at the top of this file. Compose reads it from
+      # .env and stops with this message when it is missing, which beats a
+      # container that exits a second after `up` returns.
+      - SEG_API_TOKEN=${SEG_API_TOKEN:?put SEG_API_TOKEN=<random secret> in a .env file next to docker-compose.yml}
+  serving-api:
+    build:
+      context: .
+      dockerfile: apps/serving_api/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      - SEG_MODELS_DIR=/app/models
+  trainer-ui:
+    build:
+      context: .
+      dockerfile: apps/trainer_ui/Dockerfile
+    ports:
+      - "127.0.0.1:5173:80"
+    depends_on:
+      - trainer-api
+  # cvat:
+  #   image: openvino/cvat-server:latest
+  #   ports:
+  #     - "8080:8080"
