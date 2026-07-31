@@ -1,0 +1,698 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+/* ── 3. App Shell ── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+/* ── 4. Header (Glassmorphism) ── */
+.app-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 0.5px solid var(--border);
+}
+
+/* Global toast / status area — inside .fab-stack, no fixed positioning */
+.tabs-status {
+  max-width: 600px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  animation: toast-in 0.3s ease-out;
+}
+/* Hide when empty */
+.tabs-status:empty {
+  display: none;
+}
+.tabs-status.toast-error {
+  color: #ff6b6b;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 600px;
+}
+
+.tabs-status.training-active {
+  color: #0cf;
+  font-family: "SF Mono", "Consolas", monospace;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.train-spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(0, 204, 255, 0.3);
+  border-top-color: #0cf;
+  border-radius: 50%;
+  animation: train-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes train-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+header {
+  padding: 10px 24px 6px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-width: 0;
+  position: relative;
+}
+
+.app-brand h1 {
+  margin: 0;
+  flex: 0 0 auto;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.header-project-name {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 40%;
+  text-align: center;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.app-version {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 6px;
+  font-family: "SF Mono", "Consolas", monospace;
+  opacity: 0.7;
+}
+
+
+/* Rotating ring */
+
+
+/* Panel */
+/* data-billing carries the language-independent billingKey ("active"/"inactive");
+   the legacy Japanese display-string selectors are kept for older payloads. */
+
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--panel-2);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.lang-toggle .lang-toggle-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* ── 6. Tab Bar (Segmented Control) ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 32px 0;
+}
+
+.tabs-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  padding: 8px var(--tabs-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs.tabs-fixed {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  flex: 0 0 auto;
+  gap: 0px;
+  position: relative;
+}
+.tabs.tabs-fixed.tabs-fixed-4 {
+  grid-template-columns: repeat(4, 100px);
+}
+.tabs.tabs-fixed button {
+  padding: 0 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  height: 34px;
+  box-sizing: border-box;
+}
+
+.tabs-result-scroll {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  margin-left: 20px;
+}
+.tabs-result-scroll .tabs {
+  gap: 2px;
+  flex-wrap: nowrap;
+}
+.tabs-result-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Result tabs density levels: shrink label width as count increases */
+/* Level 1: 3-4 tabs */
+.tabs-density-1 .tab-result-label { max-width: 110px; }
+/* Level 2: 5-7 tabs */
+.tabs-density-2 .tab-result-label { max-width: 88px; }
+/* Level 3: 8+ tabs */
+.tabs-density-3 .tab-result-label { max-width: 64px; }
+.tabs-density-3 .tabs { gap: 1px; }
+
+.tabs-row .tabs {
+  padding: 0;
+}
+
+.tabs button {
+  padding: 6px 16px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabs button:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
+
+.tabs button.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* OneNote-style tab overrides for fixed (main) tabs */
+.tabs.tabs-fixed button {
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  background: var(--panel-2);
+  color: var(--muted);
+  margin-bottom: -1px;
+}
+.tabs.tabs-fixed button:hover {
+  background: var(--panel);
+  color: var(--ink);
+}
+.tabs.tabs-fixed button.active {
+  background: var(--bg);
+  color: var(--accent);
+  font-weight: 600;
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+/* Hands-on guide — pulse the tab the user should visit next */
+.tabs.tabs-fixed button.tab-guide-pulse {
+  border-color: var(--accent);
+  color: var(--accent);
+  animation: tab-guide-pulse 1.6s ease-in-out infinite;
+}
+.tabs.tabs-fixed button.tab-guide-pulse:hover {
+  animation: none;
+  background: var(--accent);
+  color: #fff;
+}
+@keyframes tab-guide-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(10, 132, 255, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(10, 132, 255, 0);
+  }
+}
+
+.tabs button.tab-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+  height: 34px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  background: var(--panel-2);
+  color: var(--muted);
+  margin-bottom: -1px;
+  transition: all 0.15s ease;
+}
+.tabs button.tab-result:hover {
+  background: var(--panel);
+  color: var(--ink);
+}
+.tabs button.tab-result.active {
+  background: var(--bg);
+  color: var(--accent);
+  font-weight: 600;
+  border-color: var(--border);
+  box-shadow: none;
+}
+.tab-result-label {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tab-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0.5;
+  cursor: pointer;
+}
+.tab-close-btn:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.15);
+}
+.tabs button.active .tab-close-btn { opacity: 0.7; }
+.tabs button.active .tab-close-btn:hover { opacity: 1; background: rgba(0, 0, 0, 0.1); }
+.tab-lock-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.4;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.tab-lock-btn:hover { opacity: 1; background: rgba(0, 0, 0, 0.15); }
+.tab-lock-btn.locked { opacity: 0.8; }
+.tabs button.active .tab-lock-btn { opacity: 0.7; }
+.tabs button.active .tab-lock-btn:hover { opacity: 1; background: rgba(0, 0, 0, 0.1); }
+.tab-result.tab-locked {
+  border-color: var(--accent-2, #4caf50);
+  box-shadow: inset 0 0 0 1px var(--accent-2, #4caf50);
+}
+
+
+/* ── 9. API Connection Status ── */
+
+@keyframes api-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.api-connecting-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  background: rgba(240, 160, 64, 0.08);
+  border: 1px solid rgba(240, 160, 64, 0.25);
+  border-radius: var(--radius-m);
+  color: #F0A040;
+  font-size: 14px;
+}
+
+.api-connecting-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(240, 160, 64, 0.2);
+  border-top-color: #F0A040;
+  border-radius: 50%;
+  animation: api-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.projects-loading-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  background: var(--panel-2);
+}
+
+@keyframes api-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Licenses grid ── */
+.licenses {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--panel-2);
+  border-radius: var(--radius-m);
+}
+.licenses .section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.license-list {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2px 24px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── API Connecting Banner ── */
+.api-connecting-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  margin-top: 12px;
+  background: rgba(240, 160, 64, 0.08);
+  border: 1px solid rgba(240, 160, 64, 0.25);
+  border-radius: var(--radius-m);
+  color: #F0A040;
+  font-size: 14px;
+}
+
+.api-connecting-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(240, 160, 64, 0.2);
+  border-top-color: #F0A040;
+  border-radius: 50%;
+  animation: api-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes api-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── 10. Main Content ── */
+.app-content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 8px var(--content-pad) 12px;
+}
+
+/* ── 11. Tab Panels ── */
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tab-panel.active > div {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* ── 12. Panel (Card Container) ── */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.panel-tight {
+  padding-top: 8px;
+}
+
+/* ── 13. Tab Navigation Arrows ── */
+.tab-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 40px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-s);
+  background: rgba(128, 128, 128, 0.06);
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease, background 0.2s ease, color 0.2s ease;
+  pointer-events: auto;
+}
+
+.tab-nav-arrow:hover {
+  opacity: 1;
+  background: var(--panel-2);
+  color: var(--ink);
+}
+
+.tab-nav-arrow-left { left: 0; }
+.tab-nav-arrow-right { right: 0; }
+
+.tab-nav-arrow::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  bottom: -40px;
+  width: 56px;
+}
+
+.tab-nav-arrow-left::before { left: -8px; right: auto; }
+.tab-nav-arrow-right::before { right: -8px; left: auto; }
+
+
+/* ── 43b. Responsive: <= 1280px (4:3 screens) ── */
+@media (max-width: 1280px) {
+  .training-form-grid > input[type="number"] { width: 56px; }
+  .training-form-grid > select { width: 84px; }
+  .training-monitor-grid { height: 300px; }
+}
+
+/* ── 44. Responsive: <= 1100px ── */
+@media (max-width: 1100px) {
+  .app-brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .annotate-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    flex: none;
+    overflow: visible;
+  }
+  .annotate-layout .side-panel {
+    max-height: 200px;
+  }
+  .annotate-layout .canvas-stack {
+    aspect-ratio: 16 / 9;
+    flex: none;
+  }
+  .results-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    flex: none;
+    overflow: visible;
+  }
+  .results-layout .side-panel {
+    max-height: 240px;
+  }
+  .results-layout .canvas-stack {
+    aspect-ratio: 16 / 9;
+    flex: none;
+  }
+  .results-right {
+    max-height: 70vh;
+  }
+  .app-content {
+    overflow-y: auto;
+  }
+  .panel {
+    overflow: visible;
+  }
+  .tab-panel.active {
+    overflow: visible;
+  }
+  .training-layout {
+    grid-template-columns: 1fr;
+  }
+  .training-monitor-grid {
+    grid-template-columns: 1fr;
+  }
+  .training-monitor-grid .train-log-panel {
+    max-height: 300px;
+  }
+  .training-form-grid {
+    grid-template-columns: 74px minmax(0, 1fr);
+  }
+  .training-form-grid > input[type="text"],
+  .training-form-grid > input[type="number"],
+  .training-form-grid > select {
+    width: 100%;
+    max-width: 100%;
+  }
+  .training-start-row {
+    justify-content: center;
+  }
+  .training-start-btn {
+    width: min(100%, 280px);
+  }
+  .training-inline-controls {
+    flex-wrap: wrap;
+  }
+  .training-inline-controls select {
+    width: 100%;
+  }
+  .tabs-row {
+    flex-wrap: wrap;
+    align-items: start;
+  }
+  .tabs-result-scroll {
+    overflow-x: visible;
+  }
+}
+
+/* ── 46. Responsive: <= 700px ── */
+@media (max-width: 700px) {
+  .tab-nav-arrow {
+    display: none;
+  }
+}
+
+/* ── Description-mode tooltips (global) ── */
+/* Visual hint: dotted outline on hoverable elements */
+.desc-mode button[data-desc],
+.desc-mode label[data-desc],
+.desc-mode select[data-desc],
+.desc-mode .models-action-btn[data-desc] {
+  outline: 1px dashed rgba(79,195,247,0.35);
+  outline-offset: 2px;
+}
+/* JS-rendered tooltip (appended to body) */
+.desc-tooltip {
+  position: fixed;
+  z-index: 99999;
+  background: #1a1a2e;
+  color: #cde;
+  border: 1px solid #4fc3f7;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 19px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.desc-tooltip.visible {
+  opacity: 1;
+}
+
+.desc-tooltip-compact {
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 5px 10px;
+  border-color: var(--border);
+  max-width: 280px;
+  transition: none;
+}
