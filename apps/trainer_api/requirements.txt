@@ -34,9 +34,7 @@ attrs==26.1.0
     #   aiohttp
     #   cattrs
     #   coremltools
-brotli==1.2.0 ; platform_python_implementation == 'CPython'
-    # via fonttools
-brotlicffi==1.2.0.1 ; platform_python_implementation != 'CPython'
+brotli==1.2.0
     # via fonttools
 cattrs==26.1.0
     # via coremltools
@@ -47,19 +45,14 @@ certifi==2026.4.22
     #   requests
 cffi==2.0.0
     # via
-    #   brotlicffi
     #   pyvips
     #   weasyprint
 charset-normalizer==3.4.9
     # via requests
-click==8.3.3
+click==8.4.2
     # via
+    #   huggingface-hub
     #   typer
-    #   uvicorn
-colorama==0.4.6 ; sys_platform == 'win32'
-    # via
-    #   click
-    #   tqdm
     #   uvicorn
 contourpy==1.3.3
     # via matplotlib
@@ -67,11 +60,11 @@ coremltools==8.3.0
     # via -r requirements.in
 cssselect2==0.9.0
     # via weasyprint
-cuda-bindings==13.3.1 ; python_full_version < '3.15' and sys_platform == 'linux'
+cuda-bindings==13.3.1
     # via torch
-cuda-pathfinder==1.5.6 ; python_full_version < '3.15' and sys_platform == 'linux'
+cuda-pathfinder==1.5.6
     # via cuda-bindings
-cuda-toolkit==13.0.3.0 ; sys_platform == 'linux'
+cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3.0
     # via torch
 cycler==0.12.1
     # via matplotlib
@@ -81,9 +74,9 @@ deprecated==1.3.1
     # via numcodecs
 et-xmlfile==2.0.0
     # via openpyxl
-fastapi==0.135.4
+fastapi==0.141.1
     # via -r requirements.in
-fasteners==0.20 ; sys_platform != 'emscripten'
+fasteners==0.20
     # via zarr
 faster-coco-eval==1.7.2
     # via -r requirements.in
@@ -91,7 +84,7 @@ filelock==3.29.0
     # via
     #   huggingface-hub
     #   torch
-fonttools==4.62.1
+fonttools[woff]==4.62.1
     # via
     #   matplotlib
     #   weasyprint
@@ -99,28 +92,28 @@ frozenlist==1.8.0
     # via
     #   aiohttp
     #   aiosignal
-fsspec==2026.4.0
+fsspec[http]==2026.4.0
     # via
     #   huggingface-hub
     #   pytorch-lightning
     #   torch
-greenlet==3.5.0 ; platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'
+greenlet==3.5.0
     # via sqlalchemy
 h11==0.16.0
     # via
     #   httpcore
     #   uvicorn
-hf-xet==1.5.0 ; platform_machine == 'AMD64' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'arm64' or platform_machine == 'x86_64'
+hf-xet==1.5.2
     # via huggingface-hub
 httpcore==1.0.9
     # via httpx
-httptools==0.7.1
+httptools==0.8.0
     # via uvicorn
 httpx==0.28.1
     # via
     #   -r requirements.in
     #   huggingface-hub
-huggingface-hub==1.14.0
+huggingface-hub==1.26.0
     # via
     #   -r requirements.in
     #   accelerate
@@ -158,7 +151,7 @@ markdown-it-py==4.2.0
     # via rich
 markupsafe==3.0.3
     # via jinja2
-matplotlib==3.10.9
+matplotlib==3.11.1
     # via
     #   -r requirements.in
     #   supervision
@@ -177,13 +170,15 @@ multidict==6.7.1
     # via
     #   aiohttp
     #   yarl
+narwhals==2.24.0
+    # via scikit-learn
 networkx==3.6.1
     # via
     #   scikit-image
     #   torch
 numcodecs==0.15.1
     # via zarr
-numpy==2.4.4
+numpy==2.4.6
     # via
     #   -r requirements.in
     #   accelerate
@@ -199,6 +194,7 @@ numpy==2.4.4
     #   onnx
     #   onnx-ir
     #   onnxscript
+    #   opencv-python
     #   opencv-python-headless
     #   peft
     #   pycocotools
@@ -214,48 +210,48 @@ numpy==2.4.4
     #   transformers
     #   xgboost
     #   zarr
-nvidia-cublas==13.1.1.3 ; sys_platform == 'linux'
+nvidia-cublas==13.1.1.3
     # via
     #   cuda-toolkit
     #   nvidia-cudnn-cu13
     #   nvidia-cusolver
-nvidia-cuda-cupti==13.0.85 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-cuda-cupti==13.0.85
     # via cuda-toolkit
-nvidia-cuda-nvrtc==13.0.88 ; sys_platform == 'linux'
+nvidia-cuda-nvrtc==13.0.88
     # via
     #   cuda-toolkit
     #   nvidia-cublas
-nvidia-cuda-runtime==13.0.96 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-cuda-runtime==13.0.96
     # via cuda-toolkit
-nvidia-cudnn-cu13==9.20.0.48 ; sys_platform == 'linux'
+nvidia-cudnn-cu13==9.20.0.48
     # via torch
-nvidia-cufft==12.0.0.61 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-cufft==12.0.0.61
     # via cuda-toolkit
-nvidia-cufile==1.15.1.6 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-cufile==1.15.1.6
     # via cuda-toolkit
-nvidia-curand==10.4.0.35 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-curand==10.4.0.35
     # via cuda-toolkit
-nvidia-cusolver==12.0.4.66 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-cusolver==12.0.4.66
     # via cuda-toolkit
-nvidia-cusparse==12.6.3.3 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-cusparse==12.6.3.3
     # via
     #   cuda-toolkit
     #   nvidia-cusolver
-nvidia-cusparselt-cu13==0.8.1 ; sys_platform == 'linux'
+nvidia-cusparselt-cu13==0.8.1
     # via torch
-nvidia-nccl-cu12==2.30.7 ; sys_platform == 'linux'
+nvidia-nccl-cu12==2.30.7
     # via xgboost
-nvidia-nccl-cu13==2.29.7 ; sys_platform == 'linux'
+nvidia-nccl-cu13==2.29.7
     # via torch
-nvidia-nvjitlink==13.3.33 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-nvjitlink==13.3.33
     # via
     #   cuda-toolkit
     #   nvidia-cufft
     #   nvidia-cusolver
     #   nvidia-cusparse
-nvidia-nvshmem-cu13==3.4.5 ; sys_platform == 'linux'
+nvidia-nvshmem-cu13==3.4.5
     # via torch
-nvidia-nvtx==13.0.85 ; (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')
+nvidia-nvtx==13.0.85
     # via cuda-toolkit
 omegaconf==2.3.0
     # via hydra-core
@@ -268,6 +264,8 @@ onnx-ir==0.2.1
     # via onnxscript
 onnxscript==0.7.1
     # via -r requirements.in
+opencv-python==5.0.0.93
+    # via supervision
 opencv-python-headless==4.10.0.84
     # via
     #   -r requirements.in
@@ -290,7 +288,7 @@ packaging==26.2
     #   scikit-image
     #   torchmetrics
     #   transformers
-peft==0.19.1
+peft==0.20.0
     # via -r requirements.in
 pillow==12.3.0
     # via
@@ -322,16 +320,16 @@ pycocotools==2.0.11
     # via
     #   -r requirements.in
     #   torchmetrics
-pycparser==3.0 ; implementation_name != 'PyPy'
+pycparser==3.0
     # via cffi
-pydantic==2.12.5
+pydantic==2.13.4
     # via
     #   -r requirements.in
     #   albumentations
     #   fastapi
     #   rfdetr
     #   sqlmodel
-pydantic-core==2.41.5
+pydantic-core==2.46.4
     # via pydantic
 pydeprecate==0.9.0
     # via
@@ -357,8 +355,6 @@ pytorch-lightning==2.6.5
     # via -r requirements.in
 pyvips==3.1.1
     # via -r requirements.in
-pywin32==311 ; sys_platform == 'win32'
-    # via portalocker
 pyyaml==6.0.3
     # via
     #   accelerate
@@ -378,11 +374,11 @@ requests==2.34.2
     # via
     #   rfdetr
     #   supervision
-rfdetr==1.8.3
+rfdetr==1.9.0
     # via -r requirements.in
 rich==15.0.0
     # via typer
-safetensors==0.7.0
+safetensors==0.8.0
     # via
     #   accelerate
     #   peft
@@ -392,9 +388,9 @@ sam-2 @ git+https://github.com/facebookresearch/sam2.git@2b90b9f5ceec907a1c18123
     # via -r requirements.in
 scikit-image==0.26.0
     # via -r requirements.in
-scikit-learn==1.8.0
+scikit-learn==1.9.0
     # via -r requirements.in
-scipy==1.17.1
+scipy==1.18.0
     # via
     #   -r requirements.in
     #   albumentations
@@ -402,8 +398,6 @@ scipy==1.17.1
     #   scikit-learn
     #   supervision
     #   xgboost
-setuptools==83.0.0
-    # via torch
 shellingham==1.5.4
     # via typer
 simsimd==6.5.16
@@ -412,7 +406,7 @@ six==1.17.0
     # via python-dateutil
 sqlalchemy==2.0.49
     # via sqlmodel
-sqlmodel==0.0.38
+sqlmodel==0.0.39
     # via -r requirements.in
 starlette==1.3.1
     # via fastapi
@@ -450,7 +444,7 @@ torch==2.13.0
     #   timm
     #   torchmetrics
     #   torchvision
-torchmetrics==1.9.0
+torchmetrics[detection]==1.9.0
     # via
     #   -r requirements.in
     #   pytorch-lightning
@@ -472,22 +466,17 @@ tqdm==4.67.3
     #   sam-2
     #   supervision
     #   transformers
-transformers==5.5.4
+transformers==5.14.1
     # via
     #   -r requirements.in
     #   peft
     #   rfdetr
-triton==3.7.1 ; python_full_version < '3.15' and sys_platform == 'linux'
+triton==3.7.1
     # via torch
 typer==0.25.1
-    # via
-    #   huggingface-hub
-    #   transformers
+    # via transformers
 typing-extensions==4.15.0
     # via
-    #   aiohttp
-    #   aiosignal
-    #   anyio
     #   cattrs
     #   fastapi
     #   huggingface-hub
@@ -501,7 +490,6 @@ typing-extensions==4.15.0
     #   pytorch-lightning
     #   sqlalchemy
     #   sqlmodel
-    #   starlette
     #   torch
     #   typing-inspection
 typing-inspection==0.4.2
@@ -510,9 +498,9 @@ typing-inspection==0.4.2
     #   pydantic
 urllib3==2.7.0
     # via requests
-uvicorn==0.42.0
+uvicorn[standard]==0.52.0
     # via -r requirements.in
-uvloop==0.22.1 ; platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'
+uvloop==0.22.1
     # via uvicorn
 watchfiles==1.1.1
     # via uvicorn
@@ -527,7 +515,7 @@ websockets==16.0
     # via uvicorn
 wrapt==2.1.2
     # via deprecated
-xgboost==3.2.0
+xgboost==3.3.0
     # via -r requirements.in
 yarl==1.24.5
     # via aiohttp

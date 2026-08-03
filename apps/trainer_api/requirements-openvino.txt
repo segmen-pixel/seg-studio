@@ -42,11 +42,7 @@ safetensors==0.8.0
     # via nncf
 scikit-learn==1.9.0
     # via nncf
-scipy==1.17.1 ; python_full_version < '3.12'
-    # via
-    #   nncf
-    #   scikit-learn
-scipy==1.18.0 ; python_full_version >= '3.12'
+scipy==1.18.0
     # via
     #   nncf
     #   scikit-learn
