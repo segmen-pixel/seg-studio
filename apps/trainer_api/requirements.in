@@ -52,7 +52,7 @@ onnxscript>=0.7,<1
 pyvips>=2.2.0,<4
 
 # ── Chunked mask storage for large images ───────────────────────
-zarr>=2.18.0,<3
+zarr>=3.3.0,<4
 
 # ── DINOv2 / distillation ───────────────────────────────────────
 transformers==5.5.*
