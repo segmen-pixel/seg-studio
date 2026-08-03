@@ -9,9 +9,9 @@
 # Pinned to the validated minor families (Python 3.11). Bumping a major
 # version is a deliberate compatibility-test event.
 
-fastapi==0.135.*
-uvicorn[standard]==0.42.*
+fastapi==0.141.*
+uvicorn[standard]==0.52.*
 python-multipart==0.0.*
-numpy==2.4.*
-onnxruntime==1.25.*
+numpy==2.5.*
+onnxruntime==1.28.*
 pillow>=10.2.0,<13
