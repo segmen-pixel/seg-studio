@@ -1,0 +1,509 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+/* ── 22. Projects Tab ── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.projects-create-row {
+  align-items: stretch;
+}
+
+.projects-helper {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.projects-current-card,
+.projects-empty-state {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  background: linear-gradient(180deg, rgba(10, 132, 255, 0.08), rgba(10, 132, 255, 0.03));
+}
+
+.projects-current-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.projects-current-label,
+.projects-empty-title {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.projects-current-title {
+  margin-top: 4px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.projects-current-meta {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.projects-current-training {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.projects-current-training.muted {
+  color: var(--muted);
+}
+
+.projects-current-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-tile {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  background: var(--panel);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-tile:hover {
+  border-color: var(--muted);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.project-tile:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent) 68%, white);
+  box-shadow:
+    0 0 0 3px rgba(10, 132, 255, 0.18),
+    var(--shadow);
+  transform: translateY(-2px);
+}
+
+.project-tile.active {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.project-tile.dragging {
+  opacity: 0.4;
+}
+
+.project-tile.drag-over {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.project-tile-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--panel-2);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.project-tile-checkbox {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent);
+  z-index: 2;
+  opacity: 0.4;
+  transition: opacity 0.15s;
+}
+.project-tile-checkbox:checked,
+.project-tile:hover .project-tile-checkbox {
+  opacity: 1;
+}
+
+.project-tile-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+}
+
+.project-tile-empty {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.project-tile-info {
+  padding: 12px 14px;
+}
+
+.project-tile-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.project-tile-name-edit {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 2px 6px;
+  width: 100%;
+  outline: none;
+}
+
+.project-tile-desc {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-tile-meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.project-tile-memo {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 4px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  cursor: text;
+  min-height: 18px;
+  opacity: 0.7;
+}
+
+.project-tile-memo:hover {
+  opacity: 1;
+}
+
+.project-tile-memo-edit {
+  font-size: 14px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-s);
+  margin-top: 4px;
+  padding: 4px 6px;
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.project-tile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+  min-height: 20px;
+  cursor: text;
+}
+
+.project-tile-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  padding: 1px 8px;
+  border-radius: 9999px;
+  background: rgba(213, 94, 0, 0.16);
+  color: var(--accent);
+  border: 1px solid rgba(213, 94, 0, 0.35);
+  line-height: 1.5;
+}
+
+.project-tile-tag-empty {
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.project-tile-tags:hover .project-tile-tag-empty { opacity: 1; }
+
+.project-tile-tags-edit {
+  font-size: 12px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-s);
+  margin-top: 4px;
+  padding: 4px 6px;
+  width: 100%;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.project-tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.project-tag-filter-label {
+  color: var(--muted);
+  margin-right: 2px;
+}
+
+.tag-filter-chip {
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.tag-filter-chip:hover { color: var(--ink); border-color: var(--accent); }
+
+.tag-filter-chip.active,
+.tag-filter-chip.include {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* Exclude state: vermilion (#D55E00) for colour-vision accessibility
+   (avoids purple, contrasts cleanly with the include blue). A leading
+   "−" glyph is rendered in the JSX so the state also has a shape cue. */
+.tag-filter-chip.exclude {
+  background: #D55E00;
+  color: white;
+  border-color: #D55E00;
+}
+.tag-filter-chip.exclude:hover { color: white; border-color: #D55E00; }
+
+.project-tile-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.project-tile:hover .project-tile-actions {
+  opacity: 1;
+}
+
+.project-tile.active .project-tile-actions {
+  opacity: 1;
+}
+
+.project-tile:focus-visible .project-tile-actions {
+  opacity: 1;
+}
+
+/* Licenses */
+.licenses {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  background: var(--panel-2);
+}
+
+.license-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+
+/* ── 45b. Import Progress Dialog ── */
+.import-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.import-dialog {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  min-width: 280px;
+}
+
+.import-dialog-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: import-spin 0.8s linear infinite;
+}
+
+@keyframes import-spin {
+  to { transform: rotate(360deg); }
+}
+
+.import-dialog-text {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ── 45c. Settings Panel ── */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.settings-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  padding: 24px 28px;
+  width: 1280px;
+  max-width: 92vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.settings-panel section {
+  margin-bottom: 12px;
+}
+
+/* Consistent divider between major settings sections */
+.settings-panel .settings-section-divider {
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  padding-top: 18px;
+}
+.settings-panel .settings-section-divider.danger {
+  border-top-color: var(--danger);
+}
+
+.settings-panel section h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-panel label {
+  display: block;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.settings-panel input[type="range"] {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* ── 45d. About Panel ── */
+.about-panel {
+  width: 800px;
+  max-width: 90vw;
+}
+
+.about-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.about-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.about-system-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.about-system-item {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.about-system-label {
+  font-weight: 600;
+  min-width: 36px;
+  color: var(--muted);
+}
+
+.about-license-scroll {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 12px;
+}
+

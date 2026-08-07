@@ -1,0 +1,331 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+/* ── 17. Common Components ── */
+
+/* Row layout */
+.row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.status-line {
+  margin-top: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ── 18. Input / Select / Textarea ── */
+input, select, textarea {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.2);
+}
+
+/* ── 19. Buttons ── */
+button.primary,
+button.ghost,
+button.danger {
+  min-height: 34px;
+  padding: 8px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+
+button.ghost {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+
+button.danger {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+}
+
+button.primary:hover,
+button.danger:hover {
+  filter: brightness(1.1);
+  transform: translateY(-0.5px);
+}
+
+button.ghost:hover {
+  background: var(--border);
+  transform: translateY(-0.5px);
+}
+
+button.primary:active,
+button.ghost:active,
+button.danger:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Range sliders: consistent thumb & track across all browsers */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--panel-2);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  margin-top: -4px; /* (track 6px - thumb 14px) / 2 */
+}
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--panel-2);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+}
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── 20. Cards ── */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  background: var(--panel);
+  font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow);
+}
+
+.card.list-item-flat {
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  padding: 6px 8px;
+  box-shadow: none;
+  user-select: none;
+}
+
+.card.list-item-flat.selected {
+  background: rgba(10, 132, 255, 0.25);
+  box-shadow: inset 0 0 0 2px #0a84ff;
+}
+.card.list-item-flat.active {
+  background: rgba(10, 132, 255, 0.1);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.card.list-item-flat.selected.active {
+  background: rgba(10, 132, 255, 0.30);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.card select {
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  background: var(--panel-2);
+}
+
+.card.active {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.card.inactive {
+  opacity: 0.55;
+}
+
+/* ── 21. Lists ── */
+.list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.list.list-compact {
+  gap: 0;
+}
+
+
+.section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 10px 12px;
+  background: var(--panel-2);
+  margin-bottom: 12px;
+}
+
+.section.preview-frame {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.main-left {
+  max-width: calc(100% - 336px);
+}
+
+.section-title {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* ── Score Grid (Results sidebar) ── */
+.score-grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+  gap: 2px 10px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.score-label { color: var(--muted); }
+.score-val { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.score-val.best { color: var(--accent); }
+
+
+/* ── 37. File Input ── */
+.file-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.file-input input[type="file"] {
+  width: 220px;
+  max-width: 100%;
+}
+
+.side-panel .file-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+}
+
+.side-panel .file-input.compact {
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+
+.side-panel .file-input input[type="file"] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-m);
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.file-button:hover {
+  filter: brightness(1.1);
+}
+
+.file-button.compact {
+  width: auto;
+  padding: 8px 12px;
+}
+
+/* ── 42. Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 0.8;
+}
+

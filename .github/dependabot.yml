@@ -1,0 +1,89 @@
+version: 2
+
+# Version updates are switched off here, and this is not neglect.
+#
+# The published repository is an output: each release replaces `main` with a
+# single orphan commit built from the development tree and force-pushes it, so
+# a pull request merged here is discarded by the next release -- and its base
+# branch disappears, which is why the previous batch of 22 closed themselves 38
+# seconds after a release push. Dependencies are raised in the development
+# repository, where the change survives, and arrive here with the next release.
+#
+# `open-pull-requests-limit: 0` stops *version* updates only. Dependabot
+# security updates are unaffected -- those are the ones worth acting on here,
+# and they are enabled on the repository.
+updates:
+  # ── Python: root (pyproject.toml) ─────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      python-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── Python: trainer_api ────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/apps/trainer_api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      trainer-api-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── Python: serving_api ────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/apps/serving_api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "python"
+    groups:
+      serving-api-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── npm: trainer_ui ────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/apps/trainer_ui"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "javascript"
+    groups:
+      npm-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── GitHub Actions ─────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "ci"

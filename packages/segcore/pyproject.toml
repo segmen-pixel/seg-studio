@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "seg-segcore"
+version = "0.9.8"
+description = "Segmentation training core — models, datasets, metrics"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [{name = "segmen-pixel"}]
+keywords = ["segmentation", "deep-learning", "pytorch"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = [
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "numpy>=1.26,<3",
+    "pillow>=10.2",
+    "scikit-learn>=1.4",
+    "scipy>=1.12",
+    "opencv-python-headless>=4.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/segmen-pixel/seg-studio"
+Repository = "https://github.com/segmen-pixel/seg-studio"
+Issues = "https://github.com/segmen-pixel/seg-studio/issues"
+
+[project.optional-dependencies]
+distill = [
+    "transformers>=4.30,<6",
+    "huggingface_hub>=0.20",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["segcore"]
