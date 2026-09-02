@@ -55,7 +55,7 @@ pyvips>=2.2.0,<4
 zarr>=2.18.0,<3
 
 # ── DINOv2 / distillation ───────────────────────────────────────
-transformers==5.5.*
+transformers==5.10.*
 huggingface_hub==1.*
 
 # ── Instance segmentation (v0.9.8): RF-DETR-Seg fine-tune/predict/export ─
