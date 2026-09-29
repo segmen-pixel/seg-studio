@@ -1,0 +1,10 @@
+# Every git dependency an install route fetches, at the commit it pins.
+# scripts/ci/check_git_dep_licenses.py scans each one (sca-git-deps.yml), and
+# tests/test_git_dep_pins.py keeps this list equal to the installers and
+# lockfiles. "#copy=<dir>" marks a dependency the installers copy one
+# directory of instead of pip-installing it (TinySAM has no setup.py); the
+# gate then treats every file under that directory as shipped.
+git+https://github.com/ChaoningZhang/MobileSAM.git@b01a9ccef3b9e10b099b544efe004d0871802c3b
+git+https://github.com/facebookresearch/sam2.git@2b90b9f5ceec907a1c18123530e92e794ad901a4
+git+https://github.com/yformer/EfficientSAM.git@d525f622e6f640acf5a0fc37c7ca1f243da5bde0
+git+https://github.com/xinghaochen/TinySAM.git@11589bc1d98c16cff046c31d5ad4cd90a30f0897 #copy=tinysam

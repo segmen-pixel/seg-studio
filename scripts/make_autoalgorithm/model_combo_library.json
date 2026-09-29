@@ -1,0 +1,4350 @@
+{
+  "projects": {
+    "Sample_Bolt": {
+      "features": {
+        "fg_ratio": 7e-05,
+        "num_train": 72.0,
+        "num_total": 87.0,
+        "num_val": 15.0,
+        "mean_width": 1936.0,
+        "mean_height": 1216.0,
+        "mean_fg_area_px": 164.3,
+        "std_fg_area_px": 150.0,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 7e-05,
+        "log_num_train": 4.290459441148391,
+        "log_img_pixels": 14.671701330362634,
+        "fg_area_frac": 6.979087374945629e-05,
+        "class_imbalance_ratio": 14284.714285714286,
+        "bg_mean_intensity": 170.97,
+        "bg_std_intensity": 0.71,
+        "fg_bg_contrast": 0.3105,
+        "inter_image_variance": 370.98,
+        "inter_image_variance_bg": 370.65,
+        "inter_image_variance_fg": 931.85,
+        "jig_score": 0.0009
+      },
+      "n_runs": 52,
+      "mean_f1": 0.3761,
+      "std_f1": 0.2513,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.6738894907908992,
+          "miou": 0.3599894279246216,
+          "z": 1.1847,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.6837416481069042,
+          "miou": 0.38240973173537157,
+          "z": 1.2239,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.6658767772511849,
+          "miou": 0.34316216289747353,
+          "z": 1.1528,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.5608194622279129,
+          "miou": 0.2692692106676568,
+          "z": 0.7348,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.6673326673326674,
+          "miou": 0.36813425155057095,
+          "z": 1.1586,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.6278240190249703,
+          "miou": 0.32640243260024593,
+          "z": 1.0014,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.6063157894736843,
+          "miou": 0.3113442712002231,
+          "z": 0.9159,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.6927138331573389,
+          "miou": 0.3911728239398002,
+          "z": 1.2596,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.6576482830385015,
+          "miou": 0.35598769274649,
+          "z": 1.1201,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.015209125475285171,
+          "miou": 0.0041025641025641026,
+          "z": -1.4361,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.019161676646706587,
+          "miou": 0.005439956480348157,
+          "z": -1.4204,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.26366559485530544,
+          "miou": 0.0811542351386749,
+          "z": -0.4475,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.24115334207077327,
+          "miou": 0.061018268942797244,
+          "z": -0.5371,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.04152249134948097,
+          "miou": 0.014814814814814814,
+          "z": -1.3314,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.2602040816326531,
+          "miou": 0.061647096413451556,
+          "z": -0.4613,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.019161676646706587,
+          "miou": 0.005439956480348157,
+          "z": -1.4204,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.08047690014903129,
+          "miou": 0.022696074744935416,
+          "z": -1.1764,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.012770137524557957,
+          "miou": 0.00503425123062182,
+          "z": -1.4458,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.10015649452269171,
+          "miou": 0.02702010766526896,
+          "z": -1.0981,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.41277641277641275,
+          "miou": 0.14777719733577122,
+          "z": 0.1458,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.1511627906976744,
+          "miou": 0.05570373259148518,
+          "z": -0.8952,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.34177215189873417,
+          "miou": 0.12278984113897966,
+          "z": -0.1367,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.3781190019193858,
+          "miou": 0.1109183764560277,
+          "z": 0.0079,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.36519607843137253,
+          "miou": 0.1198448172477027,
+          "z": -0.0435,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.2562396006655574,
+          "miou": 0.061191435047644196,
+          "z": -0.4771,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_Bridge": {
+      "features": {
+        "fg_ratio": 0.001394,
+        "num_train": 78.0,
+        "num_total": 105.0,
+        "num_val": 27.0,
+        "mean_width": 2048.0,
+        "mean_height": 1536.0,
+        "mean_fg_area_px": 4384.5,
+        "std_fg_area_px": 4383.3,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.001394,
+        "log_num_train": 4.3694478524670215,
+        "log_img_pixels": 14.961555899867015,
+        "fg_area_frac": 0.0013937950134277344,
+        "class_imbalance_ratio": 716.3601147776184,
+        "bg_mean_intensity": 120.43,
+        "bg_std_intensity": 11.41,
+        "fg_bg_contrast": 0.0023,
+        "inter_image_variance": 1020.97,
+        "inter_image_variance_bg": 1020.73,
+        "inter_image_variance_fg": 1038.37,
+        "jig_score": 0.0002
+      },
+      "n_runs": 12,
+      "mean_f1": 0.6857,
+      "std_f1": 0.1573,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.7845744156228425,
+          "miou": 0.474118630626779,
+          "z": 0.6286,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.7823138478231385,
+          "miou": 0.4795706447168574,
+          "z": 0.6142,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.7824608467307729,
+          "miou": 0.474438555367555,
+          "z": 0.6152,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.3942250328123136,
+          "miou": 0.15025505665538186,
+          "z": -1.8524,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.4403537478572542,
+          "miou": 0.17917932698005673,
+          "z": -1.5592,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.4443665673734011,
+          "miou": 0.1791551430076673,
+          "z": -1.5337,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7571206628689798,
+          "miou": 0.4471221047630411,
+          "z": 0.4541,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.740704756922387,
+          "miou": 0.4166126305266619,
+          "z": 0.3498,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.7694576940022604,
+          "miou": 0.4540132030165236,
+          "z": 0.5325,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.7770244746207527,
+          "miou": 0.46376431807416196,
+          "z": 0.5806,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.775549188156638,
+          "miou": 0.4784296267725218,
+          "z": 0.5713,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.7799017755950132,
+          "miou": 0.4748294886863756,
+          "z": 0.5989,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_ContactLens": {
+      "features": {
+        "fg_ratio": 0.009886,
+        "num_train": 151.0,
+        "num_total": 181.0,
+        "num_val": 30.0,
+        "mean_width": 512.0,
+        "mean_height": 512.0,
+        "mean_fg_area_px": 2591.6,
+        "std_fg_area_px": 2225.1,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.009886,
+        "log_num_train": 5.0238805208462765,
+        "log_img_pixels": 12.476649250079015,
+        "fg_area_frac": 0.00988616943359375,
+        "class_imbalance_ratio": 100.15314586283633,
+        "bg_mean_intensity": 215.94,
+        "bg_std_intensity": 10.34,
+        "fg_bg_contrast": 0.0321,
+        "inter_image_variance": 2004.39,
+        "inter_image_variance_bg": 2063.65,
+        "inter_image_variance_fg": 1296.79,
+        "jig_score": -0.0296
+      },
+      "n_runs": 12,
+      "mean_f1": 0.7122,
+      "std_f1": 0.1965,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8311008280565026,
+          "miou": 0.550795645890713,
+          "z": 0.6052,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.8199183571717927,
+          "miou": 0.5608226087400511,
+          "z": 0.5483,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8371469485999817,
+          "miou": 0.5594739879869491,
+          "z": 0.636,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.4014929352172754,
+          "miou": 0.2110711924768963,
+          "z": -1.5813,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.4185546923787875,
+          "miou": 0.20385266113241343,
+          "z": -1.4945,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.34551755311134547,
+          "miou": 0.18045381675937192,
+          "z": -1.8662,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7847674280979997,
+          "miou": 0.49237558276530546,
+          "z": 0.3694,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.8057252027936985,
+          "miou": 0.5456206011363475,
+          "z": 0.4761,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8336283185840708,
+          "miou": 0.555163757015542,
+          "z": 0.6181,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8226697777231978,
+          "miou": 0.551643409887399,
+          "z": 0.5623,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8051900916432265,
+          "miou": 0.5389694254836693,
+          "z": 0.4734,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8405060226378549,
+          "miou": 0.5688437690650638,
+          "z": 0.6531,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_FilmDefect": {
+      "features": {
+        "fg_ratio": 0.001107,
+        "num_train": 120.0,
+        "num_total": 144.0,
+        "num_val": 24.0,
+        "mean_width": 512.0,
+        "mean_height": 512.0,
+        "mean_fg_area_px": 290.2,
+        "std_fg_area_px": 367.9,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.001107,
+        "log_num_train": 4.795790545596741,
+        "log_img_pixels": 12.476649250079015,
+        "fg_area_frac": 0.001107025146484375,
+        "class_imbalance_ratio": 902.3423667570011,
+        "bg_mean_intensity": 25.25,
+        "bg_std_intensity": 0.65,
+        "fg_bg_contrast": 0.0424,
+        "inter_image_variance": 15.19,
+        "inter_image_variance_bg": 14.87,
+        "inter_image_variance_fg": 37.87,
+        "jig_score": 0.0211
+      },
+      "n_runs": 59,
+      "mean_f1": 0.4969,
+      "std_f1": 0.2341,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8325982742090124,
+          "miou": 0.4077643278062298,
+          "z": 1.434,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.812074360390208,
+          "miou": 0.4106788835755058,
+          "z": 1.3463,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.823862742011648,
+          "miou": 0.3249222126389744,
+          "z": 1.3966,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.543120290259559,
+          "miou": 0.18195995261679698,
+          "z": 0.1973,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.31213872832369943,
+          "miou": 0.09833924138799009,
+          "z": -0.7895,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.2121857690668939,
+          "miou": 0.08372573516603142,
+          "z": -1.2165,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.833116036505867,
+          "miou": 0.3242221773667171,
+          "z": 1.4362,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.8188742336986811,
+          "miou": 0.38812689725075994,
+          "z": 1.3753,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8035181404114968,
+          "miou": 0.3185451518376451,
+          "z": 1.3097,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.5218993621545004,
+          "miou": 0.17111924973995785,
+          "z": 0.1066,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.32390287369124526,
+          "miou": 0.07246710827776753,
+          "z": -0.7392,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8262955854126679,
+          "miou": 0.3242578734328091,
+          "z": 1.407,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8233595379432055,
+          "miou": 0.33033030269196395,
+          "z": 1.3945,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8318189064243584,
+          "miou": 0.32532573775564305,
+          "z": 1.4306,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.5218993621545004,
+          "miou": 0.17111924973995785,
+          "z": 0.1066,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.5266016935612717,
+          "miou": 0.1475839571247528,
+          "z": 0.1267,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.29884566053869177,
+          "miou": 0.09431954635115956,
+          "z": -0.8463,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.2762248271716261,
+          "miou": 0.09821736527213923,
+          "z": -0.9429,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.3166696964188329,
+          "miou": 0.11204371153060239,
+          "z": -0.7701,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.4319559228650138,
+          "miou": 0.13199186398034715,
+          "z": -0.2776,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.5986984815618221,
+          "miou": 0.2219518455793698,
+          "z": 0.4347,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.4984930681133213,
+          "miou": 0.17353255793396136,
+          "z": 0.0066,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.2905837239028547,
+          "miou": 0.10021757642604706,
+          "z": -0.8816,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.4235337109446373,
+          "miou": 0.1419539867316858,
+          "z": -0.3136,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.29254103469769377,
+          "miou": 0.0969045673944316,
+          "z": -0.8732,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_MetalDent": {
+      "features": {
+        "fg_ratio": 0.000649,
+        "num_train": 24.0,
+        "num_total": 29.0,
+        "num_val": 5.0,
+        "mean_width": 2448.0,
+        "mean_height": 2048.0,
+        "mean_fg_area_px": 3252.8,
+        "std_fg_area_px": 3394.5,
+        "num_active_classes": 3.0,
+        "mean_fg_ratio_per_image": 0.000649,
+        "log_num_train": 3.2188758248682006,
+        "log_img_pixels": 15.427645629791614,
+        "fg_area_frac": 0.0006488077001633988,
+        "class_imbalance_ratio": 7807.4296875
+      },
+      "n_runs": 18,
+      "mean_f1": 0.4412,
+      "std_f1": 0.1225,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.5153810940288399,
+          "miou": 0.29508825448188114,
+          "z": 0.605,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.4643928767533318,
+          "miou": 0.2075277560661594,
+          "z": 0.189,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.6084904167135579,
+          "miou": 0.3727877339856811,
+          "z": 1.3648,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.15216138837905793,
+          "miou": 0.07596614879147852,
+          "z": -2.3589,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.22680725303291815,
+          "miou": 0.12099257047574877,
+          "z": -1.7498,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.25532272523532046,
+          "miou": 0.29977001260711705,
+          "z": -1.5171,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.37834626960240775,
+          "miou": 0.293079049765128,
+          "z": -0.5132,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.44920277194042585,
+          "miou": 0.18497333661503945,
+          "z": 0.065,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.4150930418455933,
+          "miou": 0.32079876449714456,
+          "z": -0.2133,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.458771669491975,
+          "miou": 0.30640773585082626,
+          "z": 0.1431,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.5342649608173187,
+          "miou": 0.3076664034433737,
+          "z": 0.7591,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.5690388151350484,
+          "miou": 0.3628271692793536,
+          "z": 1.0429,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_ScratchA": {
+      "features": {
+        "fg_ratio": 0.002631,
+        "num_train": 17.0,
+        "num_total": 20.0,
+        "num_val": 3.0,
+        "mean_width": 2448.0,
+        "mean_height": 2048.0,
+        "mean_fg_area_px": 13189.5,
+        "std_fg_area_px": 1880.8,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.002631,
+        "log_num_train": 2.8903717578961645,
+        "log_img_pixels": 15.427645629791614,
+        "fg_area_frac": 0.002630794749540441,
+        "class_imbalance_ratio": 379.0836183960471
+      },
+      "n_runs": 21,
+      "mean_f1": 0.6904,
+      "std_f1": 0.1262,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8164204284034559,
+          "miou": 0.6826322064901414,
+          "z": 0.9985,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.7157118445903409,
+          "miou": 0.5548245035792037,
+          "z": 0.2004,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8331596399810516,
+          "miou": 0.7180386357506103,
+          "z": 1.1311,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.3619982986621298,
+          "miou": 0.20068183886959057,
+          "z": -2.6026,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.5303047425321129,
+          "miou": 0.35471089486534263,
+          "z": -1.2688,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.5968571825893478,
+          "miou": 0.4170065181852716,
+          "z": -0.7415,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7190879548239305,
+          "miou": 0.5435227516123209,
+          "z": 0.2272,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.6481682202471277,
+          "miou": 0.47613848478770643,
+          "z": -0.3348,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.822422729890574,
+          "miou": 0.695303568886143,
+          "z": 1.046,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.4963820549927641,
+          "miou": 0.3056240193496583,
+          "z": -1.5377,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.5742880327678813,
+          "miou": 0.39431269298280586,
+          "z": -0.9203,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.6024379232505643,
+          "miou": 0.4275152305730412,
+          "z": -0.6972,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.7892778881924273,
+          "miou": 0.643055870194419,
+          "z": 0.7834,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.7391727268516374,
+          "miou": 0.5792452473354026,
+          "z": 0.3863,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8480365918933386,
+          "miou": 0.735720910290365,
+          "z": 1.249,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_ScratchB": {
+      "features": {
+        "fg_ratio": 0.000516,
+        "num_train": 17.0,
+        "num_total": 20.0,
+        "num_val": 3.0,
+        "mean_width": 2448.0,
+        "mean_height": 2048.0,
+        "mean_fg_area_px": 2585.8,
+        "std_fg_area_px": 1417.9,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.000516,
+        "log_num_train": 2.8903717578961645,
+        "log_img_pixels": 15.427645629791614,
+        "fg_area_frac": 0.0005157670164419935,
+        "class_imbalance_ratio": 1936.9844961240312
+      },
+      "n_runs": 18,
+      "mean_f1": 0.745,
+      "std_f1": 0.1875,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8312159709618875,
+          "miou": 0.7104784628349553,
+          "z": 0.46,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.8429661941112323,
+          "miou": 0.724672639188614,
+          "z": 0.5226,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8495208495208495,
+          "miou": 0.7586776477370498,
+          "z": 0.5576,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.1730938123752495,
+          "miou": 0.14496851721355264,
+          "z": -3.0508,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.4658119658119658,
+          "miou": 0.2925250225461642,
+          "z": -1.4893,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.44925315970892377,
+          "miou": 0.2889432165999219,
+          "z": -1.5776,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.8337414965986395,
+          "miou": 0.7077811285615412,
+          "z": 0.4734,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.7734553775743707,
+          "miou": 0.6112665978057441,
+          "z": 0.1518,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8230018464785017,
+          "miou": 0.6933531068258975,
+          "z": 0.4161,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8451315432601031,
+          "miou": 0.7220207242095841,
+          "z": 0.5342,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8476605005440696,
+          "miou": 0.7436059238145537,
+          "z": 0.5477,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8380651945320715,
+          "miou": 0.7334997957996161,
+          "z": 0.4965,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_BlobDefect": {
+      "features": {
+        "fg_ratio": 3.4e-05,
+        "num_train": 17.0,
+        "num_total": 20.0,
+        "num_val": 3.0,
+        "mean_width": 2448.0,
+        "mean_height": 2048.0,
+        "mean_fg_area_px": 169.1,
+        "std_fg_area_px": 44.3,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 3.4e-05,
+        "log_num_train": 2.8903717578961645,
+        "log_img_pixels": 15.427645629791614,
+        "fg_area_frac": 3.3728904973447715e-05,
+        "class_imbalance_ratio": 29410.764705882353
+      },
+      "n_runs": 18,
+      "mean_f1": 0.6747,
+      "std_f1": 0.2807,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8661417322834646,
+          "miou": 0.7846147230822154,
+          "z": 0.6821,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.6473429951690821,
+          "miou": 0.5828739186948142,
+          "z": -0.0974,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.7359307359307359,
+          "miou": 0.63411507191995,
+          "z": 0.2182,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.11216314639475601,
+          "miou": 0.05949349537115072,
+          "z": -2.0042,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.11632653061224489,
+          "miou": 0.06315175383802835,
+          "z": -1.9894,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.0947075208913649,
+          "miou": 0.047424125834341004,
+          "z": -2.0664,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7194244604316546,
+          "miou": 0.6525518341307815,
+          "z": 0.1594,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.875968992248062,
+          "miou": 0.8034903939946562,
+          "z": 0.7171,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8780487804878049,
+          "miou": 0.8071426337680206,
+          "z": 0.7245,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.6542056074766355,
+          "miou": 0.48488929668203046,
+          "z": -0.073,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.9019607843137255,
+          "miou": 0.835998028433683,
+          "z": 0.8097,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8939393939393939,
+          "miou": 0.8179599169221112,
+          "z": 0.7812,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_CoilDefect": {
+      "features": {
+        "fg_ratio": 0.126958,
+        "num_train": 39.0,
+        "num_total": 53.0,
+        "num_val": 14.0,
+        "mean_width": 640.0,
+        "mean_height": 480.0,
+        "mean_fg_area_px": 39001.4,
+        "std_fg_area_px": 10733.1,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.126958,
+        "log_num_train": 3.6888794541139363,
+        "log_img_pixels": 12.635254280255655,
+        "fg_area_frac": 0.12695768229166668,
+        "class_imbalance_ratio": 6.876620614691474,
+        "bg_mean_intensity": 68.35,
+        "bg_std_intensity": 3.67,
+        "fg_bg_contrast": 0.2772,
+        "inter_image_variance": 133.02,
+        "inter_image_variance_bg": 75.71,
+        "inter_image_variance_fg": 308.6,
+        "jig_score": 0.4308
+      },
+      "n_runs": 83,
+      "mean_f1": 0.6606,
+      "std_f1": 0.0671,
+      "combos": {
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.6414042779840521,
+          "miou": 0.46851265282622095,
+          "z": -0.2865,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.6475610324263884,
+          "miou": 0.47538024436709664,
+          "z": -0.1947,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.704751067567821,
+          "miou": 0.5410134954441972,
+          "z": 0.6583,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.7629522251014554,
+          "miou": 0.6106093749473404,
+          "z": 1.5263,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.6952566601689408,
+          "miou": 0.5293743880402885,
+          "z": 0.5167,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.730448266248076,
+          "miou": 0.5652393918421954,
+          "z": 1.0415,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.7492314959983021,
+          "miou": 0.5937492362614127,
+          "z": 1.3216,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.809127342097869,
+          "miou": 0.6799910506469756,
+          "z": 2.2149,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7564361868924427,
+          "miou": 0.6096909876788132,
+          "z": 1.4291,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.717754567450293,
+          "miou": 0.552689620330805,
+          "z": 0.8522,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.6475610324263884,
+          "miou": 0.47538024436709664,
+          "z": -0.1947,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.6768322705383627,
+          "miou": 0.5067114519867639,
+          "z": 0.2419,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8258287861029394,
+          "miou": 0.7104492697505901,
+          "z": 2.464,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.7869217838052245,
+          "miou": 0.6471650937339289,
+          "z": 1.8837,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8175516670523524,
+          "miou": 0.6952360981262816,
+          "z": 2.3406,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.6354975486481438,
+          "miou": 0.46314954241575645,
+          "z": -0.3746,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.6743627209961012,
+          "miou": 0.5063121600531122,
+          "z": 0.2051,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.6390582225608896,
+          "miou": 0.46650283462807407,
+          "z": -0.3215,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.574476668950293,
+          "miou": 0.3998548171535092,
+          "z": -1.2846,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.5373967047903954,
+          "miou": 0.36561034327017344,
+          "z": -1.8377,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.6613010050932471,
+          "miou": 0.4947727359610707,
+          "z": 0.0102,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.6390582225608896,
+          "miou": 0.46650283462807407,
+          "z": -0.3215,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.6332232432648265,
+          "miou": 0.46027421715582045,
+          "z": -0.4085,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.6162381897792504,
+          "miou": 0.4453406867889095,
+          "z": -0.6618,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_LiquidTurbid": {
+      "features": {
+        "fg_ratio": 0.004187,
+        "num_train": 150.0,
+        "num_total": 180.0,
+        "num_val": 30.0,
+        "mean_width": 1224.0,
+        "mean_height": 600.0,
+        "mean_fg_area_px": 3075.0,
+        "std_fg_area_px": 1474.2,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.004187,
+        "log_num_train": 5.017279836814924,
+        "log_img_pixels": 13.506809118288418,
+        "fg_area_frac": 0.004187091503267974,
+        "class_imbalance_ratio": 237.83448770002389,
+        "bg_mean_intensity": 155.97,
+        "bg_std_intensity": 1.53,
+        "fg_bg_contrast": 0.0679,
+        "inter_image_variance": 671.23,
+        "inter_image_variance_bg": 685.73,
+        "inter_image_variance_fg": 265.55,
+        "jig_score": -0.0216
+      },
+      "n_runs": 57,
+      "mean_f1": 0.7005,
+      "std_f1": 0.1352,
+      "combos": {
+        "simpleunet_bc32_p128": {
+          "f1": 0.7508902415492834,
+          "miou": 0.536900025690805,
+          "z": 0.3725,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.9091584836274011,
+          "miou": 0.7461636689502611,
+          "z": 1.5435,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p128": {
+          "f1": 0.7773084307907139,
+          "miou": 0.5705548397728811,
+          "z": 0.5679,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.7773084307907139,
+          "miou": 0.5705548397728811,
+          "z": 0.5679,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.5353539077959268,
+          "miou": 0.341588590868005,
+          "z": -1.2222,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.7741531894537359,
+          "miou": 0.5648761846187086,
+          "z": 0.5446,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.9191943127962086,
+          "miou": 0.760469018097847,
+          "z": 1.6177,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7811899496029876,
+          "miou": 0.575264724962777,
+          "z": 0.5967,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.9016584910067741,
+          "miou": 0.7321831327357156,
+          "z": 1.488,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.9059398078297467,
+          "miou": 0.7408792076071561,
+          "z": 1.5197,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.9202610781268431,
+          "miou": 0.7668533132889378,
+          "z": 1.6256,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8299659642262293,
+          "miou": 0.6419930617716266,
+          "z": 0.9575,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8733905979243138,
+          "miou": 0.6962856159108157,
+          "z": 1.2788,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.6443339683129675,
+          "miou": 0.4272680327979446,
+          "z": -0.4159,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.5803014089530943,
+          "miou": 0.3855067664342446,
+          "z": -0.8897,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.6543000914913083,
+          "miou": 0.43445300519820823,
+          "z": -0.3422,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.7206569984097221,
+          "miou": 0.5061831627182706,
+          "z": 0.1488,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.6317712966747614,
+          "miou": 0.41658073262925666,
+          "z": -0.5089,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.7324987393391945,
+          "miou": 0.5193208297685783,
+          "z": 0.2364,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.6657237367400479,
+          "miou": 0.44996968932951037,
+          "z": -0.2577,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.7269950496787557,
+          "miou": 0.5207898056622864,
+          "z": 0.1957,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.7081558959033745,
+          "miou": 0.4887642476553789,
+          "z": 0.0563,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_InsectDetect": {
+      "features": {
+        "fg_ratio": 0.000538,
+        "num_train": 74.0,
+        "num_total": 89.0,
+        "num_val": 15.0,
+        "mean_width": 640.0,
+        "mean_height": 480.0,
+        "mean_fg_area_px": 165.4,
+        "std_fg_area_px": 55.6,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.000538,
+        "log_num_train": 4.31748811353631,
+        "log_img_pixels": 12.635254280255655,
+        "fg_area_frac": 0.0005384114583333333,
+        "class_imbalance_ratio": 1857.736059479554,
+        "bg_mean_intensity": 119.45,
+        "bg_std_intensity": 4.72,
+        "fg_bg_contrast": 0.1828,
+        "inter_image_variance": 667.52,
+        "inter_image_variance_bg": 665.51,
+        "inter_image_variance_fg": 1090.34,
+        "jig_score": 0.003
+      },
+      "n_runs": 14,
+      "mean_f1": 0.6516,
+      "std_f1": 0.1324,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.7447495961227787,
+          "miou": 0.5971235931711171,
+          "z": 0.7035,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.7888805409466566,
+          "miou": 0.648961737918332,
+          "z": 1.0369,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.677698975571316,
+          "miou": 0.5163057421880951,
+          "z": 0.1969,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.29110512129380056,
+          "miou": 0.1482178478505868,
+          "z": -2.7239,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.5802139037433155,
+          "miou": 0.34927170575430727,
+          "z": -0.5396,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.4792176039119804,
+          "miou": 0.28015406559621214,
+          "z": -1.3026,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.6816999132697311,
+          "miou": 0.5153943335353149,
+          "z": 0.2271,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.7538838920686836,
+          "miou": 0.6066280497392961,
+          "z": 0.7725,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.6069364161849711,
+          "miou": 0.4108937654247381,
+          "z": -0.3377,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.6925953627524308,
+          "miou": 0.5380200392562693,
+          "z": 0.3094,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.7601593625498008,
+          "miou": 0.6071271691327129,
+          "z": 0.8199,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.6634877384196185,
+          "miou": 0.5019569363591713,
+          "z": 0.0895,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_MetalDeform": {
+      "features": {
+        "fg_ratio": 0.006588,
+        "num_train": 93.0,
+        "num_total": 124.0,
+        "num_val": 31.0,
+        "mean_width": 2896.0,
+        "mean_height": 2176.0,
+        "mean_fg_area_px": 41517.6,
+        "std_fg_area_px": 19217.8,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.006588,
+        "log_num_train": 4.543294782270004,
+        "log_img_pixels": 15.65632936148144,
+        "fg_area_frac": 0.006588321620084498,
+        "class_imbalance_ratio": 150.79113539769276,
+        "bg_mean_intensity": 100.93,
+        "bg_std_intensity": 7.62,
+        "fg_bg_contrast": 0.1414,
+        "inter_image_variance": 2473.53,
+        "inter_image_variance_bg": 2265.18,
+        "inter_image_variance_fg": 3961.4,
+        "jig_score": 0.0842
+      },
+      "n_runs": 68,
+      "mean_f1": 0.3715,
+      "std_f1": 0.2203,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.699368160424185,
+          "miou": 0.538158493563235,
+          "z": 1.4883,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.609062499114603,
+          "miou": 0.4329022268462361,
+          "z": 1.0784,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.816836328454532,
+          "miou": 0.6583525846641395,
+          "z": 2.0216,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.747904814107774,
+          "miou": 0.5572993677057048,
+          "z": 1.7087,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.7059750912304814,
+          "miou": 0.5201639096409127,
+          "z": 1.5183,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.7506955818591501,
+          "miou": 0.5552122395879798,
+          "z": 1.7214,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.769858846282404,
+          "miou": 0.5911044076456707,
+          "z": 1.8084,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.7579350478156961,
+          "miou": 0.5815061193025821,
+          "z": 1.7542,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8014985471975468,
+          "miou": 0.6200760365981921,
+          "z": 1.952,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.07118440114919304,
+          "miou": 0.036863887495963546,
+          "z": -1.3636,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.08711067431834003,
+          "miou": 0.04633055590847682,
+          "z": -1.2913,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.1153317859367778,
+          "miou": 0.0634930241785904,
+          "z": -1.1632,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.3160962280523605,
+          "miou": 0.18206833801121347,
+          "z": -0.2517,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.1124090299629532,
+          "miou": 0.060374094426186124,
+          "z": -1.1765,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.29618274926382077,
+          "miou": 0.17231356472309906,
+          "z": -0.3421,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.07118440114919304,
+          "miou": 0.036863887495963546,
+          "z": -1.3636,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.4029092800832366,
+          "miou": 0.23206792749713653,
+          "z": 0.1424,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.28505517089598675,
+          "miou": 0.15842363062989573,
+          "z": -0.3926,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.3366982858838952,
+          "miou": 0.18531522822699759,
+          "z": -0.1582,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.4405858325438365,
+          "miou": 0.27324066361276916,
+          "z": 0.3135,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.25400710588083986,
+          "miou": 0.13790830889652958,
+          "z": -0.5336,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.4285018835298255,
+          "miou": 0.2628789973832667,
+          "z": 0.2586,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.3386547723741081,
+          "miou": 0.20347494470169608,
+          "z": -0.1493,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.3712300024273327,
+          "miou": 0.22347823907449524,
+          "z": -0.0014,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.45050520421678986,
+          "miou": 0.2797485681844307,
+          "z": 0.3585,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_SIM": {
+      "features": {
+        "fg_ratio": 0.022609,
+        "num_train": 110.0,
+        "num_total": 147.0,
+        "num_val": 37.0,
+        "mean_width": 515.4829931972789,
+        "mean_height": 511.1292517006803,
+        "mean_fg_area_px": 5954.7,
+        "std_fg_area_px": 4970.9,
+        "num_active_classes": 3.0,
+        "mean_fg_ratio_per_image": 0.0226,
+        "log_num_train": 4.709530201312334,
+        "log_img_pixels": 12.481726808993864,
+        "fg_area_frac": 0.02260033146299552,
+        "class_imbalance_ratio": 244.04269662921348,
+        "bg_mean_intensity": 130.47,
+        "bg_std_intensity": 9.99,
+        "fg_bg_contrast": 0.0645,
+        "inter_image_variance": 1700.94,
+        "inter_image_variance_bg": 1669.06,
+        "inter_image_variance_fg": 1928.04,
+        "jig_score": 0.0187
+      },
+      "n_runs": 51,
+      "mean_f1": 0.6375,
+      "std_f1": 0.1707,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8371486367775105,
+          "miou": 0.6158215077072542,
+          "z": 1.1699,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.8534279295782607,
+          "miou": 0.6043662598989108,
+          "z": 1.2653,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.853901941844698,
+          "miou": 0.6231421905768119,
+          "z": 1.268,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.8039473454263781,
+          "miou": 0.5512379143145119,
+          "z": 0.9754,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.8237322635008134,
+          "miou": 0.571006666077891,
+          "z": 1.0913,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8517641643368914,
+          "miou": 0.6313591790782139,
+          "z": 1.2555,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8274041440456075,
+          "miou": 0.6085306457237417,
+          "z": 1.1128,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8380694017084034,
+          "miou": 0.5566273977772068,
+          "z": 1.1753,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8556530340356185,
+          "miou": 0.6517519893609591,
+          "z": 1.2783,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.5675612728710824,
+          "miou": 0.3038269953859894,
+          "z": -0.4096,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.4927273270040883,
+          "miou": 0.22153854208266413,
+          "z": -0.8481,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.6906848913212502,
+          "miou": 0.439226403047315,
+          "z": 0.3118,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.6771007899986223,
+          "miou": 0.45303985862778273,
+          "z": 0.2322,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.6224026537596381,
+          "miou": 0.35824475546004786,
+          "z": -0.0883,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.6677844152682393,
+          "miou": 0.41336764472956045,
+          "z": 0.1776,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.5675612728710824,
+          "miou": 0.3038269953859894,
+          "z": -0.4096,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.4149550397207392,
+          "miou": 0.1874949037250289,
+          "z": -1.3037,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.2719426306386194,
+          "miou": 0.11522314983013421,
+          "z": -2.1416,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.4330893712450887,
+          "miou": 0.20263012857887913,
+          "z": -1.1975,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.5045248822102109,
+          "miou": 0.20405497384423843,
+          "z": -0.7789,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.4065871246816347,
+          "miou": 0.1781632344079414,
+          "z": -1.3528,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.4604498990335546,
+          "miou": 0.2124808160012879,
+          "z": -1.0372,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.46234567766138385,
+          "miou": 0.23509588904625583,
+          "z": -1.0261,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.43901363440033947,
+          "miou": 0.18713293125206745,
+          "z": -1.1628,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.4940030604101413,
+          "miou": 0.253114617337926,
+          "z": -0.8406,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_Gear": {
+      "features": {
+        "fg_ratio": 0.011275,
+        "num_train": 145.0,
+        "num_total": 174.0,
+        "num_val": 29.0,
+        "mean_width": 1280.0,
+        "mean_height": 960.0,
+        "mean_fg_area_px": 13854.8,
+        "std_fg_area_px": 3793.9,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.011275,
+        "log_num_train": 4.983606621708336,
+        "log_img_pixels": 14.021548641375544,
+        "fg_area_frac": 0.011275065104166666,
+        "class_imbalance_ratio": 87.69179600886918,
+        "bg_mean_intensity": 42.28,
+        "bg_std_intensity": 3.24,
+        "fg_bg_contrast": 0.0051,
+        "inter_image_variance": 1930.53,
+        "inter_image_variance_bg": 1880.08,
+        "inter_image_variance_fg": 2388.45,
+        "jig_score": 0.0261
+      },
+      "n_runs": 85,
+      "mean_f1": 0.5706,
+      "std_f1": 0.2041,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8641404756707255,
+          "miou": 0.732466620231341,
+          "z": 1.4385,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.8159311600072423,
+          "miou": 0.6586867761656839,
+          "z": 1.2022,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.9113409230304998,
+          "miou": 0.8091672409178073,
+          "z": 1.6698,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.46905471351740297,
+          "miou": 0.2838906528121682,
+          "z": -0.4978,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.511619553555815,
+          "miou": 0.35570388107521056,
+          "z": -0.2892,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.6972847613091515,
+          "miou": 0.5070409946766817,
+          "z": 0.6207,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.8976267396433935,
+          "miou": 0.7902629640302568,
+          "z": 1.6026,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.8060028877761052,
+          "miou": 0.6504414480603284,
+          "z": 1.1535,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.9179393632744365,
+          "miou": 0.8279366472308591,
+          "z": 1.7021,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.42984299509240625,
+          "miou": 0.2575302160968988,
+          "z": -0.6899,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.5811302245734505,
+          "miou": 0.40550713468470295,
+          "z": 0.0515,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.6670304103440466,
+          "miou": 0.4815297637882521,
+          "z": 0.4725,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.9099375915954486,
+          "miou": 0.8132426893210208,
+          "z": 1.6629,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8559438332829191,
+          "miou": 0.7182200601592034,
+          "z": 1.3983,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.9092797897406824,
+          "miou": 0.8111853676235186,
+          "z": 1.6597,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.6721755307982423,
+          "miou": 0.4701244001836573,
+          "z": 0.4977,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.38764407420274805,
+          "miou": 0.22521801333218683,
+          "z": -0.8967,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.33064772258504943,
+          "miou": 0.18604472013483014,
+          "z": -1.1761,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.42675889606750955,
+          "miou": 0.25685817254117843,
+          "z": -0.705,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.5155523649659182,
+          "miou": 0.32211662853098527,
+          "z": -0.2699,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.4877432501273561,
+          "miou": 0.29978902827170434,
+          "z": -0.4062,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.47944363780100735,
+          "miou": 0.2875105985877556,
+          "z": -0.4468,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.4216510897255579,
+          "miou": 0.2390961769588599,
+          "z": -0.7301,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.39312233617474696,
+          "miou": 0.22521814272510382,
+          "z": -0.8699,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.4028462599023205,
+          "miou": 0.21965937970775115,
+          "z": -0.8222,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_Gumi": {
+      "features": {
+        "fg_ratio": 0.018916,
+        "num_train": 21.0,
+        "num_total": 25.0,
+        "num_val": 4.0,
+        "mean_width": 1280.0,
+        "mean_height": 720.0,
+        "mean_fg_area_px": 17433.1,
+        "std_fg_area_px": 6089.0,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.018916,
+        "log_num_train": 3.091042453358316,
+        "log_img_pixels": 13.733866568923764,
+        "fg_area_frac": 0.018916124131944444,
+        "class_imbalance_ratio": 51.865299217593574,
+        "bg_mean_intensity": 92.86,
+        "bg_std_intensity": 1.78,
+        "fg_bg_contrast": 0.4212,
+        "inter_image_variance": 860.09,
+        "inter_image_variance_bg": 663.59,
+        "inter_image_variance_fg": 2270.7,
+        "jig_score": 0.2285
+      },
+      "n_runs": 72,
+      "mean_f1": 0.7642,
+      "std_f1": 0.1269,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.9141230958093857,
+          "miou": 0.8299877143003016,
+          "z": 1.1817,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.9418741258741259,
+          "miou": 0.8885780319331039,
+          "z": 1.4005,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.9292011466277246,
+          "miou": 0.8850325580957555,
+          "z": 1.3006,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.9684276336355111,
+          "miou": 0.93683923988529,
+          "z": 1.6098,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.9578992436135293,
+          "miou": 0.9132094626719727,
+          "z": 1.5268,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.9609509557557105,
+          "miou": 0.9273705798093532,
+          "z": 1.5509,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.9667310094243216,
+          "miou": 0.9322810045612681,
+          "z": 1.5964,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.9679227654936157,
+          "miou": 0.9400100844502436,
+          "z": 1.6058,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.9259007477906186,
+          "miou": 0.8848469050656975,
+          "z": 1.2745,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.6785766669600164,
+          "miou": 0.5513060484330151,
+          "z": -0.6752,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.8029940119760479,
+          "miou": 0.6527145234767016,
+          "z": 0.3056,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.7549289470739622,
+          "miou": 0.6168100040349729,
+          "z": -0.0733,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.801102434542949,
+          "miou": 0.6832419368332247,
+          "z": 0.2907,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.8785578265837247,
+          "miou": 0.7819517969555628,
+          "z": 0.9013,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.8868387426526961,
+          "miou": 0.7960188487236552,
+          "z": 0.9666,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.8029940119760479,
+          "miou": 0.6527145234767016,
+          "z": 0.3056,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.6681534344335415,
+          "miou": 0.4920900886268188,
+          "z": -0.7574,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.5298092209856916,
+          "miou": 0.3709875812999687,
+          "z": -1.848,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.6018548316316082,
+          "miou": 0.43423474831557785,
+          "z": -1.28,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.7730873171186283,
+          "miou": 0.6216560453446074,
+          "z": 0.0699,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.6812268434688136,
+          "miou": 0.512024790390176,
+          "z": -0.6543,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.7290012104750376,
+          "miou": 0.5624192749817893,
+          "z": -0.2777,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.8393949890312897,
+          "miou": 0.7058349587810911,
+          "z": 0.5926,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.7716657765694033,
+          "miou": 0.6105158164186527,
+          "z": 0.0587,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.7699810191268799,
+          "miou": 0.6420536311251438,
+          "z": 0.0454,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_Leather": {
+      "features": {
+        "fg_ratio": 0.023449,
+        "num_train": 17.0,
+        "num_total": 20.0,
+        "num_val": 3.0,
+        "mean_width": 1024.0,
+        "mean_height": 1024.0,
+        "mean_fg_area_px": 24587.6,
+        "std_fg_area_px": 13703.5,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.023449,
+        "log_num_train": 2.8903717578961645,
+        "log_img_pixels": 13.862943611198906,
+        "fg_area_frac": 0.02344856262207031,
+        "class_imbalance_ratio": 41.645741822679,
+        "bg_mean_intensity": 118.48,
+        "bg_std_intensity": 8.82,
+        "fg_bg_contrast": 0.2378,
+        "inter_image_variance": 2871.54,
+        "inter_image_variance_bg": 2760.81,
+        "inter_image_variance_fg": 3260.37,
+        "jig_score": 0.0386
+      },
+      "n_runs": 72,
+      "mean_f1": 0.7924,
+      "std_f1": 0.0454,
+      "combos": {
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.7556660826315492,
+          "miou": 0.598539228182212,
+          "z": -0.8093,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.8083362507465145,
+          "miou": 0.6700815230033985,
+          "z": 0.3497,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8319583892903584,
+          "miou": 0.6992842271733571,
+          "z": 0.8695,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.8394558100638424,
+          "miou": 0.7099136580475786,
+          "z": 1.0344,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.8146468564154583,
+          "miou": 0.6806236055234157,
+          "z": 0.4885,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.8484312313547989,
+          "miou": 0.7314824547537101,
+          "z": 1.2319,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.8246148843636955,
+          "miou": 0.6940970660291895,
+          "z": 0.7079,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8543092993231877,
+          "miou": 0.7391757224523388,
+          "z": 1.3613,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.8632675059488703,
+          "miou": 0.748902341107056,
+          "z": 1.5584,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8474282139758258,
+          "miou": 0.7248304723253288,
+          "z": 1.2099,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.8083362507465145,
+          "miou": 0.6700815230033985,
+          "z": 0.3497,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.821875954781546,
+          "miou": 0.6807125339681955,
+          "z": 0.6476,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8566122448979592,
+          "miou": 0.7400491048043207,
+          "z": 1.412,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8462897167800223,
+          "miou": 0.7259806575011271,
+          "z": 1.1848,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8499446727790073,
+          "miou": 0.7317358362768923,
+          "z": 1.2652,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.7969934026430279,
+          "miou": 0.6455211179643036,
+          "z": 0.1001,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.7042416778353316,
+          "miou": 0.5368883214579862,
+          "z": -1.9409,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.7667358482887723,
+          "miou": 0.603496638345517,
+          "z": -0.5657,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.8015055631385201,
+          "miou": 0.657519093779912,
+          "z": 0.1994,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.7257104844968403,
+          "miou": 0.5630807543849011,
+          "z": -1.4685,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.7949770190413658,
+          "miou": 0.646686517291816,
+          "z": 0.0557,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.790902246701272,
+          "miou": 0.6427981309112408,
+          "z": -0.034,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.760659879047692,
+          "miou": 0.600869949928164,
+          "z": -0.6994,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.7822161587384387,
+          "miou": 0.6276283075920611,
+          "z": -0.2251,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_Mask": {
+      "features": {
+        "fg_ratio": 0.006861,
+        "num_train": 91.0,
+        "num_total": 109.0,
+        "num_val": 18.0,
+        "mean_width": 1264.0,
+        "mean_height": 1016.0,
+        "mean_fg_area_px": 8811.3,
+        "std_fg_area_px": 881.5,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.006861,
+        "log_num_train": 4.5217885770490405,
+        "log_img_pixels": 14.06566520284523,
+        "fg_area_frac": 0.006861186210505332,
+        "class_imbalance_ratio": 144.75134819997086,
+        "bg_mean_intensity": 92.59,
+        "bg_std_intensity": 2.81,
+        "fg_bg_contrast": 0.1147,
+        "inter_image_variance": 1413.78,
+        "inter_image_variance_bg": 1372.77,
+        "inter_image_variance_fg": 2021.02,
+        "jig_score": 0.029
+      },
+      "n_runs": 55,
+      "mean_f1": 0.6399,
+      "std_f1": 0.2076,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.9047572315316863,
+          "miou": 0.8292559049999464,
+          "z": 1.2754,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.9003947805339991,
+          "miou": 0.8225404058641373,
+          "z": 1.2544,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.9050297087805952,
+          "miou": 0.8313968804606415,
+          "z": 1.2768,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.8813988208203649,
+          "miou": 0.7878742740395647,
+          "z": 1.1629,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.8874484529718251,
+          "miou": 0.8017758014060564,
+          "z": 1.1921,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8981558276820998,
+          "miou": 0.8183856872551448,
+          "z": 1.2436,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.9051626335540013,
+          "miou": 0.8279537875434727,
+          "z": 1.2774,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8972201094290552,
+          "miou": 0.8168194421104382,
+          "z": 1.2391,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.9000012439203393,
+          "miou": 0.8228787228111322,
+          "z": 1.2525,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.5932441737544976,
+          "miou": 0.41411804918736056,
+          "z": -0.2249,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.5837157526466445,
+          "miou": 0.4051683686874299,
+          "z": -0.2708,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.6904862673468024,
+          "miou": 0.5271252196892986,
+          "z": 0.2434,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.6056129681753745,
+          "miou": 0.43089679191689056,
+          "z": -0.1654,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.6394395646269138,
+          "miou": 0.45257830051591114,
+          "z": -0.0024,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.6440593957167344,
+          "miou": 0.4635243471624859,
+          "z": 0.0198,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.5932441737544976,
+          "miou": 0.41411804918736056,
+          "z": -0.2249,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.5451643890799789,
+          "miou": 0.36935450088137434,
+          "z": -0.4565,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.4369876747066108,
+          "miou": 0.2820329136772586,
+          "z": -0.9775,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.5574173091270828,
+          "miou": 0.3867520905769946,
+          "z": -0.3975,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.3335975199895663,
+          "miou": 0.20904641608548155,
+          "z": -1.4755,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.35322231349413785,
+          "miou": 0.22073282575751677,
+          "z": -1.381,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.40887283555751625,
+          "miou": 0.26531572489526234,
+          "z": -1.113,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.36356243268786953,
+          "miou": 0.22175833456072114,
+          "z": -1.3312,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.36075533334661275,
+          "miou": 0.22083816001183876,
+          "z": -1.3447,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.37547811713148943,
+          "miou": 0.23156080714372862,
+          "z": -1.2738,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        }
+      }
+    },
+    "Sample_Screw": {
+      "features": {
+        "fg_ratio": 0.005501,
+        "num_train": 26.0,
+        "num_total": 35.0,
+        "num_val": 9.0,
+        "mean_width": 1280.0,
+        "mean_height": 960.0,
+        "mean_fg_area_px": 6760.0,
+        "std_fg_area_px": 2251.5,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.005501,
+        "log_num_train": 3.295836866004329,
+        "log_img_pixels": 14.021548641375544,
+        "fg_area_frac": 0.005501302083333334,
+        "class_imbalance_ratio": 180.78512997636795,
+        "bg_mean_intensity": 185.03,
+        "bg_std_intensity": 4.67,
+        "fg_bg_contrast": 0.1185,
+        "inter_image_variance": 626.57,
+        "inter_image_variance_bg": 565.9,
+        "inter_image_variance_fg": 1871.94,
+        "jig_score": 0.0968
+      },
+      "n_runs": 75,
+      "mean_f1": 0.563,
+      "std_f1": 0.1991,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8509051865549226,
+          "miou": 0.6882697652376454,
+          "z": 1.446,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.8213101507425674,
+          "miou": 0.6553006026762606,
+          "z": 1.2974,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8318674459513137,
+          "miou": 0.6609071838216707,
+          "z": 1.3504,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.7889305011578376,
+          "miou": 0.6205609260484405,
+          "z": 1.1347,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.8176640622764088,
+          "miou": 0.65167667201691,
+          "z": 1.279,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8395841946724942,
+          "miou": 0.6698138902778035,
+          "z": 1.3891,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8381462094924426,
+          "miou": 0.6729798953401744,
+          "z": 1.3819,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8389254006687421,
+          "miou": 0.6712237551749917,
+          "z": 1.3858,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8441860465116279,
+          "miou": 0.6776296620215894,
+          "z": 1.4123,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.46920091256555363,
+          "miou": 0.2712653322110876,
+          "z": -0.4713,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p128": {
+          "f1": 0.2939660246392401,
+          "miou": 0.1605374392388549,
+          "z": -1.3514,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.6906273431642089,
+          "miou": 0.5280048405766194,
+          "z": 0.6409,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p128": {
+          "f1": 0.6879120879120879,
+          "miou": 0.4721031567866059,
+          "z": 0.6273,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.5351693112043285,
+          "miou": 0.357474928595792,
+          "z": -0.1399,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p128": {
+          "f1": 0.6773350559356374,
+          "miou": 0.45309709147710264,
+          "z": 0.5742,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p128": {
+          "f1": 0.2939660246392401,
+          "miou": 0.1605374392388549,
+          "z": -1.3514,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 128,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc128_p512": {
+          "f1": 0.3493762844716341,
+          "miou": 0.20981836518746214,
+          "z": -1.0731,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p512": {
+          "f1": 0.3807647157471072,
+          "miou": 0.19933410249868797,
+          "z": -0.9155,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "deeplabv3plus_bc64_p512": {
+          "f1": 0.405086285195277,
+          "miou": 0.21802822474193112,
+          "z": -0.7933,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc128_p512": {
+          "f1": 0.5762785400509789,
+          "miou": 0.401537104530754,
+          "z": 0.0666,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p512": {
+          "f1": 0.508006909753023,
+          "miou": 0.31896148756590725,
+          "z": -0.2763,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "simpleunet_bc64_p512": {
+          "f1": 0.5971400394477318,
+          "miou": 0.4195997152488691,
+          "z": 0.1714,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc128_p512": {
+          "f1": 0.5292526110610072,
+          "miou": 0.34128091126330745,
+          "z": -0.1696,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p512": {
+          "f1": 0.5662307072460174,
+          "miou": 0.39632344723437274,
+          "z": 0.0161,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 512,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p512": {
+          "f1": 0.5065999482357001,
+          "miou": 0.3482874385418835,
+          "z": -0.2834,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 512,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_BacteriaDetect": {
+      "features": {
+        "fg_ratio": 0.007954,
+        "num_train": 43.0,
+        "num_total": 58.0,
+        "num_val": 15.0,
+        "mean_width": 388.3448275862069,
+        "mean_height": 264.5689655172414,
+        "mean_fg_area_px": 813.2,
+        "std_fg_area_px": 915.1,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.007915,
+        "log_num_train": 3.784189633918261,
+        "log_img_pixels": 11.539995632335508,
+        "fg_area_frac": 0.007914818234649124,
+        "class_imbalance_ratio": 124.72290671360322,
+        "bg_mean_intensity": 120.79,
+        "bg_std_intensity": 6.84,
+        "fg_bg_contrast": 0.1559,
+        "inter_image_variance": 976.86,
+        "inter_image_variance_bg": 975.1,
+        "inter_image_variance_fg": 1003.71,
+        "jig_score": 0.0018
+      },
+      "n_runs": 14,
+      "mean_f1": 0.6403,
+      "std_f1": 0.0661,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.6417936591346995,
+          "miou": 0.5282888297821773,
+          "z": 0.0228,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.777688988333067,
+          "miou": 0.5668363317784924,
+          "z": 2.0799,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.6490497737556561,
+          "miou": 0.5290571920789412,
+          "z": 0.1326,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p128": {
+          "f1": 0.4789963349309275,
+          "miou": 0.31871962705411927,
+          "z": -2.4416,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p128": {
+          "f1": 0.6257796257796258,
+          "miou": 0.48519247049122577,
+          "z": -0.2197,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p128": {
+          "f1": 0.6155936809920163,
+          "miou": 0.43141690503280156,
+          "z": -0.3739,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 128,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.585944743185611,
+          "miou": 0.4723901922187724,
+          "z": -0.8227,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.652228387327725,
+          "miou": 0.5371216651737455,
+          "z": 0.1807,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.6336562612127736,
+          "miou": 0.5146850538898352,
+          "z": -0.1004,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.6024268379728765,
+          "miou": 0.4658036690524368,
+          "z": -0.5732,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.6946826758147513,
+          "miou": 0.5551092006558271,
+          "z": 0.8234,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "off"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.6480386888769479,
+          "miou": 0.5056501401215594,
+          "z": 0.1173,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_WallTexture": {
+      "features": {
+        "fg_ratio": 0.126958,
+        "num_train": 39.0,
+        "num_total": 53.0,
+        "num_val": 14.0,
+        "mean_width": 640.0,
+        "mean_height": 480.0,
+        "mean_fg_area_px": 39001.4,
+        "std_fg_area_px": 10733.1,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.126958,
+        "log_num_train": 3.6888794541139363,
+        "log_img_pixels": 12.635254280255655,
+        "fg_area_frac": 0.12695768229166668,
+        "class_imbalance_ratio": 6.876620614691474
+      },
+      "n_runs": 12,
+      "mean_f1": 0.7376,
+      "std_f1": 0.0627,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.798656560939689,
+          "miou": 0.672226368271326,
+          "z": 0.9747,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.7231884555489325,
+          "miou": 0.5625619702850639,
+          "z": -0.2298,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8128525138803774,
+          "miou": 0.6881387966075044,
+          "z": 1.2013,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.6768166471946496,
+          "miou": 0.511819112278728,
+          "z": -0.9699,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.6020937502661908,
+          "miou": 0.4275942187285923,
+          "z": -2.1626,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.7488797829821136,
+          "miou": 0.604014377080716,
+          "z": 0.1803,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.7421252668298016,
+          "miou": 0.5888356313780596,
+          "z": 0.0724,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.746869944671769,
+          "miou": 0.592832522171047,
+          "z": 0.1482,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.8144452160906032,
+          "miou": 0.6888356412261462,
+          "z": 1.2267,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    },
+    "Sample_Vehicle": {
+      "features": {
+        "fg_ratio": 0.000886,
+        "num_train": 573.0,
+        "num_total": 687.0,
+        "num_val": 114.0,
+        "mean_width": 1280.0,
+        "mean_height": 720.0,
+        "mean_fg_area_px": 816.2,
+        "std_fg_area_px": 1452.2,
+        "num_active_classes": 2.0,
+        "mean_fg_ratio_per_image": 0.000886,
+        "log_num_train": 6.352629396319567,
+        "log_img_pixels": 13.733866568923764,
+        "fg_area_frac": 0.0008856336805555556,
+        "class_imbalance_ratio": 1127.6681715575621,
+        "bg_mean_intensity": 125.74,
+        "bg_std_intensity": 8.55,
+        "fg_bg_contrast": 0.2888,
+        "inter_image_variance": 1571.8,
+        "inter_image_variance_bg": 1551.76,
+        "inter_image_variance_fg": 2743.77,
+        "jig_score": 0.0127
+      },
+      "n_runs": 10,
+      "mean_f1": 0.8136,
+      "std_f1": 0.0125,
+      "combos": {
+        "deeplabv3plus_bc128_p256": {
+          "f1": 0.8295192958700067,
+          "miou": 0.3223405539889065,
+          "z": 1.2761,
+          "arch": "deeplabv3plus",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc128_p256": {
+          "f1": 0.8143817485860105,
+          "miou": 0.31983239466043994,
+          "z": 0.0609,
+          "arch": "simpleunet",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc128_p256": {
+          "f1": 0.8093683143790114,
+          "miou": 0.3094933851168738,
+          "z": -0.3415,
+          "arch": "stdc",
+          "base_channels": 128,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc32_p256": {
+          "f1": 0.8099332525439052,
+          "miou": 0.31613660502454966,
+          "z": -0.2962,
+          "arch": "deeplabv3plus",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc32_p256": {
+          "f1": 0.782009816978045,
+          "miou": 0.2955043718858115,
+          "z": -2.5377,
+          "arch": "simpleunet",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc32_p256": {
+          "f1": 0.8172378585601726,
+          "miou": 0.30919947426621813,
+          "z": 0.2902,
+          "arch": "stdc",
+          "base_channels": 32,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "deeplabv3plus_bc64_p256": {
+          "f1": 0.8184459250077472,
+          "miou": 0.31799880852360596,
+          "z": 0.3872,
+          "arch": "deeplabv3plus",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "simpleunet_bc64_p256": {
+          "f1": 0.8165851750440055,
+          "miou": 0.3139255332199047,
+          "z": 0.2378,
+          "arch": "simpleunet",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        },
+        "stdc_bc64_p256": {
+          "f1": 0.820098048566469,
+          "miou": 0.3145841955998605,
+          "z": 0.5198,
+          "arch": "stdc",
+          "base_channels": 64,
+          "patch_size": 256,
+          "distill_mode": "feature"
+        }
+      }
+    }
+  },
+  "global_combos": {
+    "stdc_bc128_p256": {
+      "mean_z": 1.2386,
+      "std_z": 0.602,
+      "mean_f1": 0.7943,
+      "n_projects": 29,
+      "n_runs": 42,
+      "arch": "stdc",
+      "base_channels": 128,
+      "patch_size": 256
+    },
+    "stdc_bc64_p256": {
+      "mean_z": 1.1856,
+      "std_z": 0.528,
+      "mean_f1": 0.7917,
+      "n_projects": 28,
+      "n_runs": 51,
+      "arch": "stdc",
+      "base_channels": 64,
+      "patch_size": 256
+    },
+    "stdc_bc32_p256": {
+      "mean_z": 1.0973,
+      "std_z": 0.6816,
+      "mean_f1": 0.7788,
+      "n_projects": 29,
+      "n_runs": 43,
+      "arch": "stdc",
+      "base_channels": 32,
+      "patch_size": 256
+    },
+    "deeplabv3plus_bc128_p256": {
+      "mean_z": 1.0699,
+      "std_z": 0.4783,
+      "mean_f1": 0.8001,
+      "n_projects": 21,
+      "n_runs": 26,
+      "arch": "deeplabv3plus",
+      "base_channels": 128,
+      "patch_size": 256
+    },
+    "simpleunet_bc128_p256": {
+      "mean_z": 1.013,
+      "std_z": 0.7357,
+      "mean_f1": 0.7791,
+      "n_projects": 19,
+      "n_runs": 21,
+      "arch": "simpleunet",
+      "base_channels": 128,
+      "patch_size": 256
+    },
+    "deeplabv3plus_bc64_p256": {
+      "mean_z": 0.9874,
+      "std_z": 0.5864,
+      "mean_f1": 0.7653,
+      "n_projects": 28,
+      "n_runs": 45,
+      "arch": "deeplabv3plus",
+      "base_channels": 64,
+      "patch_size": 256
+    },
+    "simpleunet_bc32_p256": {
+      "mean_z": 0.9686,
+      "std_z": 0.9332,
+      "mean_f1": 0.7645,
+      "n_projects": 29,
+      "n_runs": 46,
+      "arch": "simpleunet",
+      "base_channels": 32,
+      "patch_size": 256
+    },
+    "simpleunet_bc64_p256": {
+      "mean_z": 0.9049,
+      "std_z": 0.4916,
+      "mean_f1": 0.7208,
+      "n_projects": 28,
+      "n_runs": 101,
+      "arch": "simpleunet",
+      "base_channels": 64,
+      "patch_size": 256
+    },
+    "deeplabv3plus_bc32_p256": {
+      "mean_z": 0.8241,
+      "std_z": 0.7454,
+      "mean_f1": 0.7345,
+      "n_projects": 28,
+      "n_runs": 64,
+      "arch": "deeplabv3plus",
+      "base_channels": 32,
+      "patch_size": 256
+    },
+    "simpleunet_bc128_p128": {
+      "mean_z": 0.5679,
+      "std_z": 0.0,
+      "mean_f1": 0.7773,
+      "n_projects": 1,
+      "n_runs": 1,
+      "arch": "simpleunet",
+      "base_channels": 128,
+      "patch_size": 128
+    },
+    "stdc_bc128_p128": {
+      "mean_z": 0.1777,
+      "std_z": 0.4858,
+      "mean_f1": 0.5613,
+      "n_projects": 19,
+      "n_runs": 39,
+      "arch": "stdc",
+      "base_channels": 128,
+      "patch_size": 128
+    },
+    "stdc_bc64_p128": {
+      "mean_z": 0.1138,
+      "std_z": 0.6308,
+      "mean_f1": 0.5473,
+      "n_projects": 20,
+      "n_runs": 42,
+      "arch": "stdc",
+      "base_channels": 64,
+      "patch_size": 128
+    },
+    "simpleunet_bc128_p512": {
+      "mean_z": -0.2071,
+      "std_z": 0.5948,
+      "mean_f1": 0.4758,
+      "n_projects": 19,
+      "n_runs": 58,
+      "arch": "simpleunet",
+      "base_channels": 128,
+      "patch_size": 512
+    },
+    "simpleunet_bc64_p512": {
+      "mean_z": -0.2757,
+      "std_z": 0.5054,
+      "mean_f1": 0.4674,
+      "n_projects": 19,
+      "n_runs": 57,
+      "arch": "simpleunet",
+      "base_channels": 64,
+      "patch_size": 512
+    },
+    "stdc_bc128_p512": {
+      "mean_z": -0.2853,
+      "std_z": 0.4358,
+      "mean_f1": 0.492,
+      "n_projects": 19,
+      "n_runs": 66,
+      "arch": "stdc",
+      "base_channels": 128,
+      "patch_size": 512
+    },
+    "simpleunet_bc32_p128": {
+      "mean_z": -0.3447,
+      "std_z": 0.7981,
+      "mean_f1": 0.5238,
+      "n_projects": 26,
+      "n_runs": 79,
+      "arch": "simpleunet",
+      "base_channels": 32,
+      "patch_size": 128
+    },
+    "stdc_bc64_p512": {
+      "mean_z": -0.3807,
+      "std_z": 0.5474,
+      "mean_f1": 0.4375,
+      "n_projects": 19,
+      "n_runs": 56,
+      "arch": "stdc",
+      "base_channels": 64,
+      "patch_size": 512
+    },
+    "simpleunet_bc64_p128": {
+      "mean_z": -0.4281,
+      "std_z": 0.67,
+      "mean_f1": 0.4756,
+      "n_projects": 18,
+      "n_runs": 44,
+      "arch": "simpleunet",
+      "base_channels": 64,
+      "patch_size": 128
+    },
+    "stdc_bc32_p128": {
+      "mean_z": -0.4533,
+      "std_z": 0.9041,
+      "mean_f1": 0.4662,
+      "n_projects": 27,
+      "n_runs": 50,
+      "arch": "stdc",
+      "base_channels": 32,
+      "patch_size": 128
+    },
+    "stdc_bc32_p512": {
+      "mean_z": -0.4726,
+      "std_z": 0.5517,
+      "mean_f1": 0.4297,
+      "n_projects": 19,
+      "n_runs": 56,
+      "arch": "stdc",
+      "base_channels": 32,
+      "patch_size": 512
+    },
+    "deeplabv3plus_bc128_p512": {
+      "mean_z": -0.5431,
+      "std_z": 0.5509,
+      "mean_f1": 0.4618,
+      "n_projects": 19,
+      "n_runs": 66,
+      "arch": "deeplabv3plus",
+      "base_channels": 128,
+      "patch_size": 512
+    },
+    "deeplabv3plus_bc64_p128": {
+      "mean_z": -0.6191,
+      "std_z": 0.6498,
+      "mean_f1": 0.4224,
+      "n_projects": 18,
+      "n_runs": 31,
+      "arch": "deeplabv3plus",
+      "base_channels": 64,
+      "patch_size": 128
+    },
+    "deeplabv3plus_bc64_p512": {
+      "mean_z": -0.8296,
+      "std_z": 0.4889,
+      "mean_f1": 0.3825,
+      "n_projects": 19,
+      "n_runs": 52,
+      "arch": "deeplabv3plus",
+      "base_channels": 64,
+      "patch_size": 512
+    },
+    "deeplabv3plus_bc32_p128": {
+      "mean_z": -0.8839,
+      "std_z": 0.7198,
+      "mean_f1": 0.4089,
+      "n_projects": 25,
+      "n_runs": 86,
+      "arch": "deeplabv3plus",
+      "base_channels": 32,
+      "patch_size": 128
+    },
+    "simpleunet_bc32_p512": {
+      "mean_z": -0.9525,
+      "std_z": 0.6394,
+      "mean_f1": 0.3552,
+      "n_projects": 19,
+      "n_runs": 58,
+      "arch": "simpleunet",
+      "base_channels": 32,
+      "patch_size": 512
+    },
+    "deeplabv3plus_bc32_p512": {
+      "mean_z": -1.1858,
+      "std_z": 0.6751,
+      "mean_f1": 0.3324,
+      "n_projects": 19,
+      "n_runs": 52,
+      "arch": "deeplabv3plus",
+      "base_channels": 32,
+      "patch_size": 512
+    }
+  },
+  "meta": {
+    "n_runs": 1332,
+    "n_projects": 29,
+    "n_combos": 26,
+    "top_combo": "stdc_bc128_p256"
+  }
+}

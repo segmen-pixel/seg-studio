@@ -1,0 +1,9 @@
+packages/segcore/auto_select/models/**/*.txt -text
+
+# Line-ending protection. Shell scripts must stay LF everywhere: a CRLF
+# checkout (e.g. Windows clone with autocrlf=true, then run under WSL or
+# Docker) dies at "set -euo pipefail" with "invalid option name".
+# Windows scripts stay CRLF for cmd.exe / PowerShell.
+*.sh   text eol=lf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf

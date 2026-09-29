@@ -1,0 +1,8 @@
+{
+  "name": "seg-studio",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "trainer-api",
+  "workspaceFolder": "/app",
+  "forwardPorts": [8000, 8001, 5173],
+  "postCreateCommand": "pip install -r apps/trainer_api/requirements.txt && pip install -r apps/serving_api/requirements.txt"
+}

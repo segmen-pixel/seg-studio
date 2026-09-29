@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:8002",
+      "localStorage": [
+        {
+          "name": "seg-tutorial-state",
+          "value": "{\"completed\":true,\"skipped\":true,\"lastStep\":0,\"mode\":null}"
+        }
+      ]
+    }
+  ]
+}
