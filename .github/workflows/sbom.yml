@@ -1,0 +1,193 @@
+# SPDX-License-Identifier: Apache-2.0
+# Generates Software Bill of Materials (SBOM) for each release tag.
+#
+# Outputs:
+#   - CycloneDX 1.6 JSON (industry standard for vuln correlation)
+#   - SPDX 2.3 JSON      (industry standard for license compliance)
+#   - seg-studio-sbom.commit (the commit they were generated from)
+#
+# These attach to the GitHub Release so downstream users / auditors can
+# verify exactly which dependencies (and their licenses) shipped, without
+# having to clone the repo or trust the README.
+#
+# Triggered:
+#   - on tag push (v*)            → attached to GitHub Release
+#   - workflow_dispatch (manual)  → uploaded as workflow artifact
+
+name: SBOM
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    name: Generate SBOM
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # needed to attach to Release
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+
+      - name: Install trainer_api lockfile (full env, so dist-info → license metadata)
+        # SBOM generated from a real installed env (rather than parsing
+        # requirements.txt textually) gets license metadata for ~95% of
+        # components, vs ~0% from textual parsing.
+        run: |
+          pip install -r apps/trainer_api/requirements.txt \
+            --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install cyclonedx-bom (isolated tool venv)
+        # The SBOM generator lives in its own venv so the tool and its
+        # dependencies never leak into the environment SBOM of the app —
+        # the SBOM must describe what ships, not what audited it.
+        run: |
+          python -m venv /tmp/sbom-tool
+          /tmp/sbom-tool/bin/pip install cyclonedx-bom
+
+      - name: Generate CycloneDX SBOM (trainer)
+        run: |
+          /tmp/sbom-tool/bin/cyclonedx-py environment \
+            --output-format json \
+            --output-file seg-studio-trainer.cdx.json \
+            "$(which python)"
+
+      - name: Generate CycloneDX SBOM (serving — minimal subset)
+        run: |
+          /tmp/sbom-tool/bin/cyclonedx-py requirements \
+            --output-format json \
+            --output-file seg-studio-serving.cdx.json \
+            apps/serving_api/requirements.txt
+
+      - name: Generate SPDX SBOM with syft
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          path: .
+          format: spdx-json
+          output-file: seg-studio.spdx.json
+
+      - name: License audit of SBOM (fail-closed)
+        # Belt-and-suspenders: license-check.yml grep-blocks NC vendor names
+        # in source. This step (a) blocks NC license expressions that slip
+        # through transitive deps and (b) FAILS on components with missing /
+        # NOASSERTION license metadata — a component whose license we cannot
+        # name is not shippable. Manually-verified exceptions live in
+        # scripts/ci/dep-license-allowlist.txt (with reasons).
+        #
+        # The audit first recovers licences that cyclonedx-py drops: it records
+        # a licence only when the metadata is SPDX-shaped, so packages using the
+        # legacy free-text `License:` field ("BSD", "FreeBSD", "Apache License
+        # 2.0") arrived here with no licence at all and failed a gate they
+        # should have passed. Recovering them also puts the licence into the
+        # SBOM we publish, which is the whole point of shipping one.
+        #
+        # Only the trainer SBOM is audited: it is generated from an installed
+        # environment, so its metadata can be read back. The serving SBOM is
+        # parsed from requirements.txt and carries no licence data to recover.
+        run: |
+          python scripts/ci/audit_sbom_licenses.py seg-studio-trainer.cdx.json \
+            --allowlist scripts/ci/dep-license-allowlist.txt
+      - name: Record the commit the SBOMs describe
+        # Attached beside the SBOMs, so that a later run on the same tag can
+        # tell a re-run from a moved tag (next step).
+        run: git rev-parse HEAD > seg-studio-sbom.commit
+
+      - name: Upload SBOMs as workflow artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sbom
+          path: |
+            seg-studio-trainer.cdx.json
+            seg-studio-serving.cdx.json
+            seg-studio.spdx.json
+            seg-studio-sbom.commit
+
+      # The SBOMs under a published tag are attached once and never replaced.
+      # All three published tags were moved to a later commit and this job
+      # re-ran, so the assets under a tag changed nine days after it was
+      # published -- with no checksum published to notice it by.
+      #
+      # The release usually exists before this job runs (`gh release create`
+      # makes the tag and publishes the release in one step), so its existence
+      # proves nothing. What matters is whether it already carries SBOMs, and
+      # made from which commit. Dates cannot answer that: a commit carries its
+      # committer's clock and time zone while the release date is UTC, so a
+      # commit made hours before publishing can sort after it. The commit is
+      # compared instead: none attached yet -> attach all four; attached from
+      # this same commit -> leave the published ones as they are, and attach
+      # only those a first run that failed part way left out; from another
+      # commit, or from one nobody recorded -> red build. The guard names the
+      # files the next step uploads, so an asset already published is never
+      # uploaded again: a rebuilt SBOM is not byte for byte the same (its
+      # serial number and timestamps change).
+      - name: Refuse to replace the SBOMs of a published tag
+        id: guard
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          head=$(cat seg-studio-sbom.commit)
+          all="seg-studio-trainer.cdx.json seg-studio-serving.cdx.json seg-studio.spdx.json seg-studio-sbom.commit"
+          attach() {
+            # One name a line: the attach step uploads these and nothing else.
+            echo "attach=true" >> "$GITHUB_OUTPUT"
+            { echo "files<<SBOM_FILES"; printf '%s\n' $1; echo "SBOM_FILES"; } >> "$GITHUB_OUTPUT"
+          }
+          if ! assets=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" \
+                          --json assets --jq '.assets[].name' 2>gh-release-view.err); then
+            if grep -qi 'not found' gh-release-view.err; then
+              echo "no release for $tag yet; the next step creates it with the SBOMs of $head"
+              attach "$all"
+              exit 0
+            fi
+            cat gh-release-view.err >&2
+            exit 1
+          fi
+          present=""
+          missing=""
+          for f in $all; do
+            if grep -qxF "$f" <<<"$assets"; then present="$present $f"; else missing="$missing $f"; fi
+          done
+          if [ -z "$present" ]; then
+            echo "release $tag carries no SBOMs yet; attaching the ones made from $head"
+            attach "$all"
+            exit 0
+          fi
+          recorded=""
+          if grep -qxF seg-studio-sbom.commit <<<"$assets"; then
+            recorded=$(gh release download "$tag" --repo "$GITHUB_REPOSITORY" \
+                         --pattern seg-studio-sbom.commit --output - | tr -d '[:space:]')
+          fi
+          if [ "$recorded" = "$head" ] && [ -n "$missing" ]; then
+            # The uploads go side by side, so a first run that failed part way
+            # can leave some of the four behind. Made from this same commit,
+            # the missing ones go up and the published ones stay as they are.
+            echo "the SBOMs under $tag were made from $head, but${missing} did not reach it; attaching only those"
+            attach "$missing"
+            exit 0
+          fi
+          if [ "$recorded" = "$head" ]; then
+            echo "the SBOMs under $tag were made from $head already; leaving them as published"
+            echo "attach=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "::error::$tag already carries SBOMs (${present# }) made from ${recorded:-a commit nobody recorded}, and now points at $head."
+          echo "::error::Publish a new version instead of replacing the assets under one people may have pinned."
+          exit 1
+
+      - name: Attach SBOMs to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v') && steps.guard.outputs.attach == 'true'
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          # The guard's list, one name a line: all four the first time, only the
+          # missing ones when a first run left some out.
+          files: ${{ steps.guard.outputs.files }}
+          fail_on_unmatched_files: true

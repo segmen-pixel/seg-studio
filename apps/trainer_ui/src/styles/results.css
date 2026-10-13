@@ -1,0 +1,527 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+/* ── 32. Results Tab ── */
+.results-layout {
+  display: grid;
+  /* See .annotate-layout: the 12px tracks are the splitters, standing in for
+     the gap so the panels keep their old positions. */
+  grid-template-columns:
+    var(--pane-left, var(--sidebar-w)) 12px
+    minmax(0, 1fr)
+    12px var(--pane-right, 340px);
+  grid-template-rows: 1fr;
+  gap: 0;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.results-layout-single {
+  grid-template-columns:
+    var(--pane-left, var(--sidebar-w)) 12px
+    minmax(0, 1fr)
+    12px var(--pane-right, 300px);
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.preview-panel .section {
+  width: 100%;
+}
+
+.preview-panel .section.preview-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.results-preview-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+.results-preview-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-preview-subtitle {
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-preview-hint {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-2);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.preview-frame .canvas-stack {
+  flex: 1;
+  min-height: 200px;
+}
+
+/* Preview overlay badge showing which split the active image belongs to.
+   Matches the row-badge colours (train=blue, val=vermilion, test=green)
+   with a full-word label for viewer legibility. Positioned inside the
+   .canvas-stack (which is position:relative) so it stays fixed relative
+   to the viewport even as the image pans / zooms. */
+/* Result for the image on screen, in the corner the eye lands on first.
+   The tool columns below are pushed down to clear it (see .overlay-tools
+   further down) rather than the badge dodging them, because the badge is the
+   thing being read and the tools are the thing being reached for. */
+.results-verdict-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 21;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+}
+
+.results-verdict-badge .verdict-mark {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* The false-alarm half, set apart so the match rate stays the headline. */
+.results-verdict-over {
+  padding-left: 9px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+/* Okabe-Ito, with no purple in it, and every state carries a distinct glyph
+   as well as a colour, so colour is never the only channel. Declared once
+   here because two things read it -- the pill over the image and the marker
+   in the list -- and they must not drift into different shades. */
+.results-layout,
+.results-layout-single {
+  --verdict-missed: 213, 94, 0;
+  --verdict-over: 230, 159, 0;
+  --verdict-detected: 0, 158, 115;
+  --verdict-clean: 105, 105, 105;
+}
+
+.results-verdict-badge.verdict-missed {
+  background: rgba(var(--verdict-missed), 0.92);
+}
+
+.results-verdict-badge.verdict-over {
+  background: rgba(var(--verdict-over), 0.92);
+}
+
+.results-verdict-badge.verdict-detected {
+  background: rgba(var(--verdict-detected), 0.92);
+}
+
+.results-verdict-badge.verdict-clean {
+  background: rgba(var(--verdict-clean), 0.85);
+}
+
+/* The list marker: one 12x12 silhouette in a 14px slot, riding at the END of
+   the row next to the rate. Both are flex:none after a flex:1 name, so they
+   still land in a straight column and a long run can be scanned without
+   reading any filename. They sit at the end rather than beside the set badge
+   because "Va" is the same vermilion and the same rounded rectangle as the
+   missed mark: 4px apart, the two read as a single marker. */
+.verdict-mark {
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* The results row is now one column of flex children. The second grid column
+   held the per-image class dots, which have moved to the list header. Scoped
+   to the results pane on purpose: the annotate list still has its dots, and
+   shares both the rule above it and the .class-dot styles. */
+.results-layout .side-panel .card.list-item-flat {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* The head truncates and the tail is pinned. Files are often named like
+   "part_cam1_0001234.png": end-truncation spends the width on the identical
+   "part_cam1_000" prefix and throws away the serial and extension, which are
+   the only characters that tell two rows apart. Same span, split in two, 0px. */
+.results-row-name {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+/* Shrink-to-fit rather than flex:1. With flex:1 the head owns all the spare
+   width, so its ellipsis is pinned to the right edge of a box wider than the
+   text and the name reads "samp... 4442.png" with a gap in the middle. At
+   0 1 auto the head gives up exactly the width it has to and the ellipsis
+   lands against the tail. */
+.results-row-name-head {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-row-name-tail {
+  flex: none;
+  white-space: pre;
+}
+
+/* Area match rate, fixed width and tabular figures so the column reads as a
+   rail and an outlier has a shape. Deliberately NOT coloured by verdict: the
+   mark beside it already says which state the row is in, and colouring the
+   number would make the same claim twice with less precision. */
+.results-row-rate {
+  flex: 0 0 34px;
+  text-align: right;
+  font-size: 10px;
+  line-height: 1;
+  color: #444;
+  font-family: ui-monospace, Consolas, "SF Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The confidence slider's readout. Without it the slider silently repaints
+   many small marks and expects someone to notice; how many are missed,
+   before and after the move, is the number a threshold is actually tuned
+   against. Costs nothing per row. */
+.results-verdict-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px 3px;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-verdict-seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--ink);
+}
+
+.results-verdict-seg b {
+  font-weight: 700;
+  font-family: ui-monospace, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Where the per-row class dots went -- a filter, which is what they were
+   being used as. The swatch is a rounded square, never a circle: the row has
+   exactly one circle left in it and it means "detected". */
+.results-class-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-class-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 0;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.results-class-chip.on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.results-class-chip i {
+  display: block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.results-class-chip b {
+  font-weight: 700;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.results-rate-head {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  color: #444;
+}
+
+/* One step down, so the verdict owns the top-right corner. Scoped to the
+   results preview on purpose: .overlay-tools is shared with the annotate tab,
+   which has no badge to clear. */
+.preview-frame .canvas-stack .overlay-tools {
+  top: 68px;
+  max-height: calc(100% - 80px);
+}
+
+.preview-set-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+  z-index: 10;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.preview-set-train { background: rgba(10, 132, 255, 0.9); }
+.preview-set-val   { background: rgba(213, 94, 0, 0.9); }
+.preview-set-test  { background: rgba(48, 135, 91, 0.9); }
+
+
+.results-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  gap: 0;
+  /* Ensure scrollbar is always reachable for vs-GT and other bottom content */
+  padding-bottom: 16px;
+}
+/* Sliders in results-right should stretch to fill available width */
+.results-right input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+.results-right .opacity-range {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.results-run-list {
+  max-height: 200px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.results-run-list .card > div {
+  min-width: 0;
+}
+
+.results-run-list .card > div > div:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.results-layout .side-panel .list {
+  flex: 1;
+  min-height: 80px;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.results-image-list-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.results-image-list {
+  outline: none;
+}
+
+.results-image-list:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent);
+  border-radius: 10px;
+}
+
+.results-image-list-empty {
+  padding: 12px 6px;
+}
+
+/* Run F1 badge */
+.run-f1-badge {
+  margin-left: auto;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.run-f1-badge.best {
+  color: #00c853;
+  font-weight: 600;
+}
+
+.run-inferred-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+/* Collapsible sections in results-right */
+.results-right details {
+  margin-top: 12px;
+}
+.results-right details > summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.results-right details > summary::-webkit-details-marker {
+  display: none;
+}
+.results-right details > summary::before {
+  content: "\25B6";
+  display: inline-block;
+  font-size: 9px;
+  transition: transform 0.15s;
+}
+.results-right details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* Pattern menu */
+.gt-compare-wrap {
+  position: relative;
+}
+/* When menu is open, remove overflow clipping from toolbar */
+.overlay-tools:has(.gt-compare-wrap.open) {
+  overflow: visible !important;
+}
+.gt-pattern-menu {
+  position: absolute;
+  right: 100%;
+  top: -4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  padding: 4px;
+  padding-right: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 10;
+  white-space: nowrap;
+}
+.gt-pattern-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+}
+.gt-pattern-label {
+  flex-shrink: 0;
+}
+.gt-pattern-btn:hover {
+  background: var(--panel-2);
+  color: var(--ink);
+}
+.gt-pattern-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Results root: fill parent */
+.results-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+
+/* ── Instance runs (v0.9.8): count chip in the preview header ── */
+.instance-count-chip {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: rgba(0, 158, 115, 0.18);
+  border: 1px solid rgba(0, 158, 115, 0.45);
+  color: #009e73;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+  vertical-align: middle;
+}

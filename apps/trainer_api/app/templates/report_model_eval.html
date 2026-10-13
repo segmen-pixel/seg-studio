@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }}</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --success: #16a34a;
+    --warning: #ea580c;
+    --danger: #dc2626;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", Meiryo, Roboto, sans-serif;
+    color: var(--gray-800);
+    line-height: 1.6;
+    background: white;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  h1 { font-size: 1.75rem; color: var(--gray-900); margin-bottom: 4px; }
+  h2 {
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin: 32px 0 4px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  h3 { font-size: 1rem; color: var(--gray-800); margin: 16px 0 8px; }
+  .section-intro { color: var(--gray-600); font-size: 0.85rem; margin: 0 0 12px; }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--primary);
+  }
+  .header-meta { color: var(--gray-600); font-size: 0.85rem; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  /* KPI Grid */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .kpi-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .kpi-label { font-size: 0.75rem; color: var(--gray-600); letter-spacing: 0.03em; }
+  .kpi-value { font-size: 1.5rem; font-weight: 700; color: var(--gray-900); }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.875rem;
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  tr:nth-child(even) { background: var(--gray-50); }
+  tr:hover { background: var(--primary-light); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Charts */
+  .chart-container {
+    margin: 16px 0;
+    text-align: center;
+  }
+  .chart-container img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+  }
+
+  /* Hard cases */
+  .hard-case-grid {
+    display: grid;
+    grid-template-columns: 1fr;  /* one case per row -> larger panels */
+    gap: 20px;
+    margin: 16px 0;
+  }
+  .hard-case-card {
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .hard-case-card .info {
+    padding: 8px 12px;
+    background: var(--gray-50);
+    font-size: 0.8rem;
+  }
+  .panel-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+  .panel-row img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .panel-label {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--gray-600);
+    padding: 2px;
+    background: var(--gray-100);
+  }
+
+  /* Instance recall */
+  .instance-recall {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  .recall-value {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .recall-good { color: var(--success); }
+  .recall-warn { color: var(--warning); }
+  .recall-bad { color: var(--danger); }
+
+  /* Traceability */
+  .trace-table { font-size: 0.8rem; }
+  .trace-table td:first-child { font-weight: 600; width: 220px; color: var(--gray-600); }
+  .trace-table td:last-child { word-break: break-all; font-family: "SF Mono", Monaco, monospace; }
+
+  /* Judgment */
+  .judgment-box {
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 1rem;
+  }
+  .judgment-good { border-color: var(--success); background: #f0fdf4; }
+  .judgment-warn { border-color: var(--warning); background: #fff7ed; }
+  .judgment-bad { border-color: var(--danger); background: #fef2f2; }
+  .judgment-icon { font-size: 1.5rem; margin-right: 8px; }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.75rem;
+    color: var(--gray-600);
+    text-align: center;
+  }
+
+  /* Print (A4) */
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  @media print {
+    body {
+      max-width: none;
+      padding: 0;
+      font-size: 10pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    /* keep colored backgrounds when printing */
+    .header, .badge, .judgment-box, .kpi-card, .instance-recall,
+    th, .panel-label, h2 {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    /* keep a heading + its intro together with the content that follows */
+    h1, h2, h3 { page-break-after: avoid; }
+    .section-intro { page-break-before: avoid; page-break-after: avoid; }
+    /* never split these blocks across an A4 page boundary */
+    .judgment-box, .instance-recall, .chart-container,
+    .hard-case-card, .kpi-card { page-break-inside: avoid; }
+    /* tables: repeat header per page, keep rows intact */
+    thead { display: table-header-group; }
+    tr { page-break-inside: avoid; }
+    .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div>
+    <h1>{{ title }}</h1>
+    <div class="header-meta">
+      {{ L.run }}: <code>{{ run_id }}</code> &middot;
+      {{ L.generated }}: {{ generated_at[:19] }}Z
+    </div>
+  </div>
+  <div>
+    <span class="badge">{{ report_type }}</span>
+  </div>
+</div>
+
+<!-- KPI Summary -->
+<h2>{{ L.summary }}</h2>
+<p class="section-intro">{{ L.summary_intro }}</p>
+<div class="kpi-grid">
+  {% for kpi in kpis %}
+  <div class="kpi-card">
+    <div class="kpi-label">{{ kpi.label }}</div>
+    <div class="kpi-value">{{ kpi.value }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Judgment -->
+{% if best_f1 is number %}
+  {% if best_f1 >= 0.90 %}
+  <div class="judgment-box judgment-good">
+    <span class="judgment-icon">&#10004;</span>
+    <strong>{{ L.judg_good_strong }}</strong> F1 = {{ "%.4f"|format(best_f1) }} {{ L.judg_good_body }}
+  </div>
+  {% elif best_f1 >= 0.75 %}
+  <div class="judgment-box judgment-warn">
+    <span class="judgment-icon">&#9888;</span>
+    <strong>{{ L.judg_warn_strong }}</strong> F1 = {{ "%.4f"|format(best_f1) }} {{ L.judg_warn_body }}
+  </div>
+  {% else %}
+  <div class="judgment-box judgment-bad">
+    <span class="judgment-icon">&#10060;</span>
+    <strong>{{ L.judg_bad_strong }}</strong> F1 = {{ "%.4f"|format(best_f1) }} {{ L.judg_bad_body }}
+  </div>
+  {% endif %}
+{% endif %}
+
+<!-- Per-Class Metrics -->
+<h2>{{ L.per_class }}</h2>
+<p class="section-intro">{{ L.per_class_intro }}</p>
+{% if per_class_metrics %}
+<table>
+  <thead>
+    <tr>
+      <th>{{ L.col_class }}</th>
+      <th class="num">{{ L.col_precision }}</th>
+      <th class="num">{{ L.col_recall }}</th>
+      <th class="num">{{ L.col_f1 }}</th>
+      <th class="num">{{ L.col_iou }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cls in per_class_metrics %}
+    <tr>
+      <td>{{ cls.name }}</td>
+      <td class="num">{{ "%.4f"|format(cls.precision) }}</td>
+      <td class="num">{{ "%.4f"|format(cls.recall) }}</td>
+      <td class="num">{{ "%.4f"|format(cls.f1) }}</td>
+      <td class="num">{{ "%.4f"|format(cls.iou) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>{{ L.no_per_class }}</p>
+{% endif %}
+
+<!-- Instance-level Recall -->
+{% if instance_recall %}
+<h2>{{ L.instance_recall }}</h2>
+<p class="section-intro">{{ L.instance_recall_intro }}</p>
+<div class="instance-recall">
+  <div>
+    {% set ir = instance_recall.instance_recall %}
+    <span class="recall-value {% if ir >= 0.95 %}recall-good{% elif ir >= 0.80 %}recall-warn{% else %}recall-bad{% endif %}">
+      {{ "%.1f"|format(ir * 100) }}%
+    </span>
+    <span style="color: var(--gray-600); margin-left: 8px;">
+      ({{ instance_recall.detected_instances }} / {{ instance_recall.total_instances }} {{ L.defects_detected }})
+    </span>
+  </div>
+  {% if instance_recall.missed_instances %}
+  <h3 style="margin-top: 12px;">{{ L.missed_title }}</h3>
+  <table>
+    <thead>
+      <tr><th>{{ L.col_image }}</th><th class="num">{{ L.col_area }}</th><th class="num">{{ L.col_iou }}</th></tr>
+    </thead>
+    <tbody>
+      {% for m in instance_recall.missed_instances[:10] %}
+      <tr>
+        <td>{{ m.image }}</td>
+        <td class="num">{{ m.instance_area_px }}</td>
+        <td class="num">{{ "%.4f"|format(m.iou) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endif %}
+
+<!-- Learning Curves -->
+{% if learning_curves_img %}
+<h2>{{ L.training_progress }}</h2>
+<p class="section-intro">{{ L.training_progress_intro }}</p>
+<div class="chart-container">
+  <img src="{{ learning_curves_img }}" alt="{{ L.training_progress }}">
+</div>
+{% endif %}
+
+<!-- Confusion Matrix -->
+{% if confusion_matrix_img %}
+<h2>{{ L.confusion_matrix }}</h2>
+<p class="section-intro">{{ L.confusion_matrix_intro }}</p>
+<div class="chart-container">
+  <img src="{{ confusion_matrix_img }}" alt="{{ L.confusion_matrix }}">
+</div>
+{% endif %}
+
+<!-- Threshold Analysis -->
+{% if threshold_chart_img %}
+<h2>{{ L.threshold_cal }}</h2>
+<p class="section-intro">{{ L.threshold_cal_intro }}</p>
+<div class="chart-container">
+  <img src="{{ threshold_chart_img }}" alt="{{ L.threshold_cal }}">
+</div>
+{% endif %}
+
+<!-- Score Distribution -->
+{% if score_dist_img %}
+<h2>{{ L.confidence_dist }}</h2>
+<p class="section-intro">{{ L.confidence_dist_intro }}</p>
+<div class="chart-container">
+  <img src="{{ score_dist_img }}" alt="{{ L.confidence_dist }}">
+</div>
+{% endif %}
+
+<!-- Hard Cases -->
+{% if hard_case_images %}
+<h2>{{ L.hard_cases }}</h2>
+<p class="section-intro">{{ L.hard_cases_intro }}</p>
+<div class="hard-case-grid">
+  {% for case in hard_case_images %}
+  <div class="hard-case-card">
+    <div class="info">
+      <strong>{{ case.stem }}</strong> &middot;
+      {{ L.confidence }}: {{ "%.4f"|format(case.mean_confidence) }} &middot;
+      {{ L.fg }}: {{ "%.4f"|format(case.fg_ratio) }}
+    </div>
+    <div class="panel-row">
+      <div>
+        <div class="panel-label">{{ L.panel_original }}</div>
+        {% if case.original %}<img src="{{ case.original }}" alt="{{ L.panel_original }}">{% else %}<div style="height:100px;background:#eee;"></div>{% endif %}
+      </div>
+      <div>
+        <div class="panel-label">{{ L.panel_prediction }}</div>
+        {% if case.prediction %}<img src="{{ case.prediction }}" alt="{{ L.panel_prediction }}">{% else %}<div style="height:100px;background:#eee;"></div>{% endif %}
+      </div>
+      <div>
+        <div class="panel-label">{{ L.panel_confidence }}</div>
+        {% if case.confidence %}<img src="{{ case.confidence }}" alt="{{ L.panel_confidence }}">{% else %}<div style="height:100px;background:#eee;"></div>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Dataset Health -->
+{% if dataset_stats %}
+<h2>{{ L.dataset_health }}</h2>
+<table>
+  <tbody>
+    <tr><td>{{ L.ds_train }}</td><td class="num">{{ dataset_stats.get("num_train", "N/A") }}</td></tr>
+    <tr><td>{{ L.ds_val }}</td><td class="num">{{ dataset_stats.get("num_val", "N/A") }}</td></tr>
+    <tr><td>{{ L.ds_classes }}</td><td class="num">{{ dataset_stats.get("num_classes", "N/A") }}</td></tr>
+    <tr><td>{{ L.ds_mean_size }}</td><td class="num">{{ dataset_stats.get("mean_width", "?") | int }}x{{ dataset_stats.get("mean_height", "?") | int }}</td></tr>
+    <tr><td>{{ L.ds_fg }}</td><td class="num">{{ "%.4f"|format(dataset_stats.get("fg_ratio", 0)) }}</td></tr>
+    <tr><td>{{ L.ds_input }}</td><td class="num">{{ dataset_stats.get("input_size", "N/A") }}</td></tr>
+    <tr><td>{{ L.ds_stride }}</td><td class="num">{{ dataset_stats.get("output_stride", "N/A") }}</td></tr>
+  </tbody>
+</table>
+{% endif %}
+
+<!-- Traceability -->
+<h2>{{ L.traceability }}</h2>
+<table class="trace-table">
+  <tbody>
+    <tr><td>{{ L.tr_model_hash }}</td><td>{{ model_hash }}</td></tr>
+    <tr><td>{{ L.tr_run_id }}</td><td>{{ run_id }}</td></tr>
+    <tr><td>{{ L.tr_project_id }}</td><td>{{ project_id }}</td></tr>
+    <tr><td>{{ L.tr_arch }}</td><td>{{ train_config.get("arch", "N/A") }}</td></tr>
+    <tr><td>{{ L.tr_loss }}</td><td>{{ train_config.get("loss_type", "N/A") }}</td></tr>
+    <tr><td>{{ L.tr_lr }}</td><td>{{ train_config.get("lr", "N/A") }}</td></tr>
+    <tr><td>{{ L.tr_batch }}</td><td>{{ train_config.get("batch_size", "N/A") }}</td></tr>
+    <tr><td>{{ L.tr_patch }}</td><td>{{ train_config.get("patch_size", "N/A") }}</td></tr>
+    <tr><td>{{ L.tr_epochs }}</td><td>{{ train_config.get("epochs", "N/A") }}</td></tr>
+    <tr><td>{{ L.tr_distill }}</td><td>{{ train_config.get("distill_mode", "off") }}</td></tr>
+    <tr><td>{{ L.tr_aug }}</td><td>{{ L.enabled if train_config.get("augment_enabled", false) else L.disabled }}</td></tr>
+    <tr><td>{{ L.tr_generated }}</td><td>{{ generated_at }}</td></tr>
+    <tr><td>{{ L.tr_version }}</td><td>{{ app_version }}</td></tr>
+  </tbody>
+</table>
+
+<!-- Footer -->
+<div class="footer">
+  {{ L.footer_by }} v{{ app_version }} &middot; {{ generated_at[:10] }}
+</div>
+
+</body>
+</html>

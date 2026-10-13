@@ -1,0 +1,113 @@
+# SPDX-License-Identifier: Apache-2.0
+# License drift detection — blocks references to vendor weights and source
+# trees whose licenses do not permit redistribution under this project's
+# license.
+#
+# The blocked prefixes are not stored in this repo: they live in the
+# `NC_VENDOR_PATTERNS` repository variable (newline-separated, `#` comments
+# allowed) so the strings never appear in the published tree.
+#
+# Runs on pushes and pull requests, plus a half-yearly re-audit cron.
+
+name: License Check
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # 半年ごと: 毎年 1 月 1 日と 7 月 1 日 00:00 UTC に強制再 audit
+    - cron: "0 0 1 1,7 *"
+  workflow_dispatch:
+
+jobs:
+  license-grep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Load blocked vendor patterns
+        id: pattern
+        env:
+          NC_VENDOR_PATTERNS: ${{ vars.NC_VENDOR_PATTERNS }}
+        run: |
+          set -eu
+          SOURCE=""
+          if [ -n "${NC_VENDOR_PATTERNS:-}" ]; then
+            SOURCE="$NC_VENDOR_PATTERNS"
+          elif [ -f ".github/nc-vendor-patterns.txt" ]; then
+            # Legacy fallback for clones that still carry a local file.
+            SOURCE=$(cat ".github/nc-vendor-patterns.txt")
+          fi
+          if [ -z "$SOURCE" ]; then
+            # Fail closed: a fork or freshly-created repo that forgot to set
+            # the variable must not silently pass with the NC vendor check
+            # disabled. Set the NC_VENDOR_PATTERNS repository variable
+            # to make CI green; forks that do not redistribute third-party
+            # weights can set it to a single '#' comment line.
+            echo "::error::NC_VENDOR_PATTERNS repository variable is not set — the NC vendor check cannot run"
+            exit 1
+          fi
+          # Join non-empty, non-comment lines with `|`
+          PATTERN=$(printf '%s\n' "$SOURCE" | grep -vE '^\s*(#|$)' | paste -sd '|' -)
+          if [ -z "$PATTERN" ]; then
+            echo "::error::NC vendor pattern source has no usable entries"
+            exit 1
+          fi
+          # Mask the resolved pattern in subsequent log output so the
+          # vendor names never surface in CI logs.
+          echo "::add-mask::$PATTERN"
+          echo "value=$PATTERN" >> "$GITHUB_OUTPUT"
+
+      - name: Block NC / non-commercial vendor references
+        if: steps.pattern.outputs.value != ''
+        env:
+          PATTERN: ${{ steps.pattern.outputs.value }}
+        run: |
+          set -eu
+          if grep -rEn "$PATTERN" \
+              --include="*.py" --include="*.ts" --include="*.tsx" --include="*.md" \
+              --include="*.yaml" --include="*.yml" --include="*.json" --include="*.toml" \
+              --exclude-dir=".git" --exclude-dir=".venv*" --exclude-dir="node_modules" \
+              --exclude-dir="dist" --exclude-dir="build" \
+              --exclude=".github/nc-vendor-patterns.txt" \
+              --exclude="license-check.yml" \
+              --exclude="pre-commit" \
+              .; then
+            echo "::error::Non-commercial vendor reference detected — see grep hits above"
+            echo "Apache-2.0 OSS cannot bundle non-commercial-licensed weights or source."
+            exit 1
+          fi
+          echo "✅ no non-commercial vendor references"
+
+      - name: Dependency license gate (PyPI metadata)
+        run: |
+          python3 scripts/ci/check_dep_licenses.py \
+            apps/trainer_api/requirements.txt \
+            apps/trainer_api/requirements-openvino.txt \
+            apps/serving_api/requirements.txt \
+            --allowlist scripts/ci/dep-license-allowlist.txt
+
+      - name: Install osv-scanner (pinned, SHA-256 verified)
+        # The Python gate above reads PyPI metadata and cannot see the npm
+        # tree. osv-scanner resolves npm licenses via deps.dev, closing the
+        # copyleft (AGPL/GPL/SSPL/...) gap on the JS side. Pinned + checksum-
+        # verified to match the release-download discipline used elsewhere.
+        run: |
+          set -eu
+          ver=2.4.0
+          sha=15314940c10d26af9c6649f150b8a47c1262e8fc7e17b1d1029b0e479e8ed8a0
+          url="https://github.com/google/osv-scanner/releases/download/v${ver}/osv-scanner_linux_amd64"
+          curl -fsSL "$url" -o /tmp/osv-scanner
+          echo "${sha}  /tmp/osv-scanner" | sha256sum -c -
+          chmod +x /tmp/osv-scanner
+
+      - name: npm dependency license gate (copyleft/AGPL)
+        run: |
+          python3 scripts/ci/check_npm_licenses.py \
+            apps/trainer_ui/package-lock.json \
+            --osv-scanner /tmp/osv-scanner
+
+      - name: Verify LICENSE file exists
+        run: |
+          test -f LICENSE || { echo "::error::LICENSE file missing"; exit 1; }
+          echo "✅ LICENSE present"

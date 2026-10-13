@@ -1,0 +1,332 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+
+/* The Assist tab: a conversation, the pictures the model was shown, and four
+   controls. Laid out as a column that fills the panel, so the log scrolls and
+   the box you type in stays where your hands are. */
+
+.assist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  min-height: 0;                 /* so the log, not the panel, does the scrolling */
+  padding: 12px 16px 16px;
+}
+
+.assist-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.assist-head .badge {
+  padding: 2px 10px;
+  border-radius: var(--radius-pill, 999px);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.assist-head .badge-live {
+  border-color: transparent;
+  background: var(--accent-2);
+  color: #fff;
+}
+
+.assist .notice {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-2);
+  font-size: 13px;
+}
+
+.assist-log {
+  flex: 1 1 auto;
+  min-height: 160px;
+  overflow-y: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assist-entry {
+  font-size: 13px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Left and right the way a chat reads: the model speaks on the left, the person
+   on the right. The run's machinery -- tool calls, the pictures it was shown,
+   notes about trimming -- is nobody's speech, so it runs down the middle, small,
+   where it does not read as something that was said. */
+.assist-entry.assist-theirs,
+.assist-entry.assist-mine {
+  max-width: 84%;
+  padding: 7px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.assist-entry.assist-theirs {
+  align-self: flex-start;
+  background: var(--panel-2);
+  border-bottom-left-radius: 4px;
+}
+
+.assist-entry.assist-mine {
+  align-self: flex-end;
+  background: var(--accent-soft, var(--panel-2));
+  border-bottom-right-radius: 4px;
+}
+
+.assist-entry.assist-note {
+  align-self: center;
+  width: 100%;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* A picture is shown to the model, so it belongs on the model's side even
+   though it is not speech; centred it would be cropped by the narrow middle. */
+.assist-entry.assist-image { align-self: flex-start; width: auto; }
+
+.assist-entry p { margin: 0; }
+.assist-entry code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--panel-2);
+}
+
+/* A picture the model was shown. Bounded, because what it sees is 1280 px
+   wide and the panel is not. */
+.assist-role { font-weight: 600; }
+.assist-conn { font-size: 12px; }
+.assist-model { font-size: 12px; max-width: 55%; }
+.assist-head .badge { margin-left: auto; }
+
+/* The grip: the panel is anchored bottom-right, so its top-left corner is
+   what you pull to make it bigger. */
+/* Top-left, because the panel is anchored bottom-right: the two free edges are
+   the ones that grow, and the grip belongs on the corner where they meet. */
+.assist-dock-grip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  touch-action: none;
+  background: linear-gradient(135deg, var(--border) 0 45%, transparent 45%);
+  z-index: 1;
+}
+
+.assist-entry figure { margin: 0; }
+.assist-entry img {
+  display: block;
+  cursor: zoom-in;
+  max-width: min(100%, 260px);
+  max-height: 92px;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--border);
+}
+.assist-entry figcaption { font-size: 12px; margin-top: 4px; }
+
+/* Clicked open: as much of it as the panel can hold. */
+.assist-entry figure.wide img {
+  cursor: zoom-out;
+  max-width: 100%;
+  max-height: min(60vh, 520px);
+}
+
+.assist-question {
+  padding: 8px 10px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-2);
+  border-left: 3px solid var(--accent-2);
+}
+
+.assist-error p, .assist .error { color: var(--danger); }
+
+/* A refused tool call. It reads as a line of the conversation rather than as a
+   note down the middle, because it is the answer to what the run just tried --
+   and because the same refusal again and again, folded away behind a toggle,
+   is what a stuck run used to look like from here.
+   The triangle carries the meaning as well as the colour: red and green are
+   not what this has to be told apart by. */
+.assist-failed {
+  color: var(--danger);
+  padding: 6px 10px;
+  border-radius: var(--radius-md, 10px);
+  border-left: 3px solid var(--danger);
+  background: var(--panel-2);
+}
+
+.assist-failed code { color: inherit; font-weight: 600; }
+
+/* A mode the person switched on, said plainly above the box they typed it in:
+   a run that stops after every step looks, for the first few seconds, exactly
+   like a run that has hung. */
+.assist-mode {
+  margin: 4px 0;
+  padding: 4px 8px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-2);
+  border-left: 3px solid var(--accent);
+  font-size: 12px;
+}
+
+/* One of the steps before labelling, answered. Numbered, because the point of
+   reading it is knowing how far in the run is. */
+.assist-entry.assist-step {
+  padding: 8px 10px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-2);
+  border-left: 3px solid var(--accent);
+}
+
+.assist-step-head {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.assist-entry.assist-step p { margin: 0; }
+
+/* The dry run against an image somebody already labelled. */
+.assist-rehearsal {
+  padding: 8px 10px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--panel-2);
+  border-left: 3px solid var(--accent-2);
+}
+
+.assist-rehearsal-bad {
+  border-left-color: var(--danger);
+  color: var(--danger);
+}
+
+.assist-reply { display: flex; gap: 8px; }
+.assist-reply input { flex: 1 1 auto; }
+
+.assist-label { font-size: 13px; color: var(--muted); }
+
+.assist textarea {
+  /* The box you type in must not be the thing that collapses when the log
+     grows. A textarea defaults to overflow:auto, so its automatic minimum
+     size inside a flex column is zero -- it is the only item here without a
+     floor, so every pixel the log overflows by is taken out of it. Give it a
+     floor and take it out of the shrink pool; the log above is what scrolls. */
+  flex: 0 0 auto;
+  min-height: 52px;
+  width: 100%;
+  resize: vertical;
+  font: inherit;
+  padding: 8px 10px;
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.assist-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.assist-controls label { display: flex; align-items: center; gap: 6px; }
+
+
+/* The dock: a button in the corner of the labelling screen, and the panel it
+   opens. Fixed rather than in the flow, so the annotator's own layout -- which
+   fills its panel and does its own measuring -- is not disturbed by a panel
+   appearing beside it. */
+
+/* The bottom-right corner belongs to .fab-stack (components.css:286): a fixed
+   column at right:20 bottom:20 with z-index 1200. It was described here as 52px
+   wide, and moving this pill to right:84 was enough to clear it -- until the
+   toasts moved in. .tabs-status lives in that same stack at up to 600px wide and
+   the stack is align-items:flex-end, so a toast reaches six hundred pixels
+   leftward from the right edge and paints over anything below z-index 1200 on
+   its way. right:84 was inside that. The corner is not 52px wide; it is as wide
+   as the longest message, which is not a number this file can hold.
+
+   So the dock sits on the left instead, where nothing else is fixed. */
+.assist-steps-toggle {
+  align-self: flex-start;
+  margin: 0 0 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill, 999px);
+  background: transparent;
+  color: var(--muted, #9aa);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.assist-steps-toggle:hover { color: var(--ink); border-color: var(--accent); }
+
+.assist-dock {
+  position: fixed;
+  right: 84px;
+  bottom: 62px;
+  z-index: 39;
+  width: min(440px, calc(100vw - 36px));
+  /* The window is the only limit: a cap at 72% of it stopped a panel dragged
+     taller from getting any taller, and the conversation is what needs room. */
+  max-height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 14px);
+  background: var(--panel);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+  overflow: hidden;
+}
+
+.assist-dock-bar {
+  /* The handle: drag the panel by its bar, double-click to send it home. */
+  cursor: move;
+  touch-action: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.assist-dock-close {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.assist-dock-close:hover { color: var(--ink); }
+
+/* Inside the dock the conversation is the tall part, so it gets the height
+   and the picture gets less of it. */
+.assist-dock .assist { padding: 10px 12px 12px; min-height: 0; }
+.assist-dock .assist-log { min-height: 120px; }
+.assist-dock .assist-entry figure.wide img { max-height: min(46vh, 420px); }
