@@ -1,0 +1,13 @@
+# trainer_api: dev/test dependencies (human-edited source).
+# Lockfile (`requirements-dev.txt`) is generated FROM THE REPO ROOT by:
+#   uv pip compile apps/trainer_api/requirements-dev.in -o apps/trainer_api/requirements-dev.txt --python-version 3.11 --no-emit-index-url --universal --constraint apps/trainer_api/requirements.txt
+# (The lockfile-drift CI re-runs exactly this command — keep them in sync.)
+#
+# Install order (assumes runtime deps already installed):
+#   pip install -r requirements.txt -r requirements-dev.txt
+
+pytest>=8.0,<10
+pytest-asyncio>=0.23,<2
+pytest-timeout>=2.4.0,<3
+httpx>=0.27.0,<1
+matplotlib>=3.8.0,<4

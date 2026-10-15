@@ -1,0 +1,39 @@
+{
+  "status": "ok",
+  "version": "v6.0-warmup",
+  "feature_names": [
+    "log_num_train",
+    "log_num_total",
+    "log_img_pixels",
+    "log_bc",
+    "log_ps",
+    "arch_simpleunet",
+    "arch_stdc",
+    "arch_deeplabv3plus",
+    "distill_on",
+    "fg_patch_prob"
+  ],
+  "coefs": [
+    -0.7089947487070168,
+    1.5315740779685842,
+    0.4361650552120401,
+    0.20623867937535734,
+    -5.551115158162356e-17,
+    0.06637029356842121,
+    -0.06609098203705664,
+    -0.00027931153136644387,
+    0.12615147806780921,
+    0.02287329550959389
+  ],
+  "intercept": -4.097211354973715,
+  "anchor_combo": "simpleunet_bc64_p256_distillOff_fp0.5_dw2.0_lovasz_cws0.8",
+  "fit_rows": 1092,
+  "fit_projects": 37,
+  "data_snapshot": "_snapshot_2026-05-13",
+  "lopo_metrics_v4": {
+    "r2_log": 0.958,
+    "mape_pct": 13.9,
+    "mae_sec": 158.0,
+    "anchor_label": "full_simpleunet_bc64"
+  }
+}

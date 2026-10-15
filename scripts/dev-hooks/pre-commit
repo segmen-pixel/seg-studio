@@ -1,0 +1,70 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Pre-commit hook — blocks staged changes that re-introduce
+# non-commercial-licensed vendor references into the OSS distribution.
+#
+# The blocked vendor / model-name prefixes live OUTSIDE the published tree
+# (dev mirror: `scripts/nc-vendor-patterns.txt` at the superproject root) so
+# they never appear in this repo. Public CI reads them from the
+# NC_VENDOR_PATTERNS repository variable instead.
+#
+# Enable once per clone:
+#   git config core.hooksPath seg-studio/scripts/dev-hooks   (when working at seg-studio-dev root)
+#   git config core.hooksPath scripts/dev-hooks              (when working at seg-studio root)
+#
+# Bypass for legitimate internal-only use (will still be caught by CI on push):
+#   ALLOW_NC=1 git commit ...
+
+set -eu
+
+# Locate the pattern file relative to the repo root (works from either
+# the seg-studio-dev superproject or the seg-studio subtree; the last two
+# candidates are legacy in-tree locations).
+PATTERN_FILE=""
+for candidate in "scripts/nc-vendor-patterns.txt" "seg-studio/.github/nc-vendor-patterns.txt" ".github/nc-vendor-patterns.txt"; do
+  if [ -f "$candidate" ]; then
+    PATTERN_FILE="$candidate"
+    break
+  fi
+done
+if [ -z "$PATTERN_FILE" ]; then
+  printf '\033[33m⚠️  pre-commit: nc-vendor-patterns.txt not found, skipping NC vendor check\033[0m\n'
+  exit 0
+fi
+
+PATTERN=$(grep -vE '^\s*(#|$)' "$PATTERN_FILE" | paste -sd '|' -)
+if [ -z "$PATTERN" ]; then
+  exit 0
+fi
+
+# Get list of staged files (added/copied/modified), restrict to text formats.
+# Exclude the audit infrastructure itself (pattern file and this hook).
+FILES=$(git diff --cached --name-only --diff-filter=ACM \
+        | grep -E '\.(py|ts|tsx|md|ya?ml|json|toml|sh)$' \
+        | grep -vE '(^|/)(license-check\.yml|pre-commit|nc-vendor-patterns\.txt)$' \
+        || true)
+
+if [ -z "$FILES" ]; then
+  exit 0
+fi
+
+# Search staged content (not working tree) for blocked vendor patterns.
+HITS=$(echo "$FILES" | xargs -d '\n' git diff --cached -- 2>/dev/null \
+       | grep -nE "^\+.*($PATTERN)" || true)
+
+if [ -n "$HITS" ]; then
+  printf '\033[31m❌ Non-commercial vendor reference in staged changes:\033[0m\n'
+  echo "$HITS" | head -20
+  printf '\n'
+  printf 'Apache-2.0 OSS cannot bundle non-commercial-licensed weights or code. Options:\n'
+  printf '  1) Remove the reference and re-stage.\n'
+  printf '  2) If internal use only and you accept the OSS-incompatibility risk:\n'
+  printf '       ALLOW_NC=1 git commit ...\n'
+  printf '     (CI will still flag it on push.)\n'
+  if [ "${ALLOW_NC:-}" != "1" ]; then
+    exit 1
+  fi
+  printf '\033[33m⚠️  ALLOW_NC=1 set — proceeding (you have been warned)\033[0m\n'
+fi
+
+exit 0
