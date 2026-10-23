@@ -36,7 +36,7 @@ httpx==0.28.*
 torch==2.13.*
 torchvision==0.28.*
 numpy==2.4.*
-pillow>=10.2.0,<13
+pillow>=13.0.0,<14
 opencv-python-headless>=4.9.0,<5
 scikit-learn==1.8.*
 scikit-image==0.26.*
