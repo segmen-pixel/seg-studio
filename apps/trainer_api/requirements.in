@@ -105,7 +105,7 @@ coremltools>=8.0,<9
 # dependency upgrade: re-run the bridge tests and one labelling run.
 # fastmcp  Apache-2.0  https://github.com/PrefectHQ/fastmcp/blob/main/LICENSE
 # mcp (installed by fastmcp)  MIT  https://github.com/modelcontextprotocol/python-sdk/blob/main/LICENSE
-fastmcp==4.0.1
+fastmcp==4.1.2
 
 # ── OpenVINO export (Intel edge) is opt-in: ~300MB+ of wheels.
 # Installed by `install_windows.bat --with-openvino` from
