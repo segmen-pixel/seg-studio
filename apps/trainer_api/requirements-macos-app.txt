@@ -1,0 +1,7 @@
+# macOS only: the menu bar item of Seg-Studio.app (scripts/desktop_app/_menubar_macos.py).
+# scripts/macos/install_macos.sh installs these with --no-deps after the
+# lockfile. Without them the app still starts the services and opens the
+# screen; it shows no menu bar item and asks with a dialog instead.
+# pyobjc-framework-cocoa needs pyobjc-core and nothing else. Both are MIT.
+pyobjc-core==12.2.2
+pyobjc-framework-cocoa==12.2.2

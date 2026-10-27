@@ -1,0 +1,100 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2026 Segmen-Pixel and Seg-Studio contributors */
+/* ============================================================
+   Seg-Studio — Apple-inspired design tokens
+   ============================================================ */
+
+/* ── 1. CSS Custom Properties (Dark default) ── */
+:root {
+  color-scheme: dark;
+  --bg:       #1C1C1E;
+  --panel:    #2C2C2E;
+  --panel-2:  #3A3A3C;
+  --ink:      #F5F5F7;
+  --muted:    #98989D;
+  --accent:   #0A84FF;
+  --accent-2: #30D158;
+  --border:   rgba(255,255,255,0.12);
+  --danger:   #FF453A;
+  --glass:    rgba(44,44,46,0.72);
+  --shadow:   0 2px 8px rgba(0,0,0,0.32);
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-xl: 20px;
+  --sidebar-w: 240px;
+  --content-pad: 16px;
+  --tabs-pad: 24px;
+}
+
+/* Light mode: system preference */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg:       #F2F2F7;
+    --panel:    #FFFFFF;
+    --panel-2:  #E5E5EA;
+    --ink:      #1D1D1F;
+    --muted:    #86868B;
+    --accent:   #007AFF;
+    --accent-2: #34C759;
+    --border:   rgba(0,0,0,0.12);
+    --danger:   #FF3B30;
+    --glass:    rgba(255,255,255,0.72);
+    --shadow:   0 2px 8px rgba(0,0,0,0.08);
+  }
+}
+
+/* Light mode: explicit */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg:       #F2F2F7;
+  --panel:    #FFFFFF;
+  --panel-2:  #E5E5EA;
+  --ink:      #1D1D1F;
+  --muted:    #86868B;
+  --accent:   #007AFF;
+  --accent-2: #34C759;
+  --border:   rgba(0,0,0,0.12);
+  --danger:   #FF3B30;
+  --glass:    rgba(255,255,255,0.72);
+  --shadow:   0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Dark mode: explicit */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:       #1C1C1E;
+  --panel:    #2C2C2E;
+  --panel-2:  #3A3A3C;
+  --ink:      #F5F5F7;
+  --muted:    #98989D;
+  --accent:   #0A84FF;
+  --accent-2: #30D158;
+  --border:   rgba(255,255,255,0.12);
+  --danger:   #FF453A;
+  --glass:    rgba(44,44,46,0.72);
+  --shadow:   0 2px 8px rgba(0,0,0,0.32);
+}
+
+/* ── 2. Base Reset & Typography ── */
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+

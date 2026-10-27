@@ -1,0 +1,209 @@
+# trainer_api: human-edited dependency source.
+# Lockfile (`requirements.txt`) is auto-generated from this file by `uv pip compile`.
+#
+# When adding/upgrading a dependency:
+#   1. Edit this file (loose ranges OK for utilities; pin ML/server core).
+#   2. Run: uv pip compile requirements.in -o requirements.txt --python-version 3.11 --universal --override overrides.txt
+#      (--universal keeps the lock cross-platform: without it a Windows run
+#       bakes in pywin32 and breaks Linux CI / Docker / macOS installs.
+#       --override excludes the GUI cv2 build — see overrides.txt)
+#   3. Verify the new license is OSS-compatible (Apache-2.0 / MIT / BSD / LGPL).
+#   4. Commit BOTH files together with a license-confirmation trail in the body:
+#        LICENSE: <pkg> <version> <SPDX-id> confirmed at <URL>
+#
+# ML / server-core packages are pinned to the version family currently
+# validated against our distill / training pipeline on Python 3.11
+# (Windows + CUDA 12.4 dev, Linux + CPU CI). Bumping a major version is
+# a deliberate compatibility-test event — re-run pytest + a smoke distill
+# run before relaxing these pins.
+#
+# See CONTRIBUTING.md ("Dependency policy") for the full flow.
+
+# ── Core server (pinned to validated minor families) ────────────
+fastapi==0.135.*
+uvicorn[standard]==0.42.*
+sqlmodel==0.0.*
+pydantic==2.12.*
+python-multipart==0.0.*
+httpx==0.28.*
+
+# ── ML / inference (pinned to validated major.minor) ────────────
+# torch CUDA suffix (`+cu124`) is environment-specific and intentionally
+# absent here — the lockfile records canonical PyPI versions
+# (`torch==2.13.0`) and CI installs CPU wheels via --extra-index-url.
+# 2.6.* had no wheels for Python 3.14 and its exact sympy==1.13.1
+# requirement dragged every co-resolution back to 2.6.0.
+torch==2.13.*
+torchvision==0.28.*
+numpy==2.4.*
+# 13.0.0 is the first release with fixes for the advisories published
+# 2026-10-20..23 (heap overflows in the JPEG, TIFF and FlashPix decoders,
+# among others); no 12.x release carries them.
+pillow>=13.0.0,<14
+opencv-python-headless>=4.9.0,<5
+scikit-learn==1.8.*
+scikit-image==0.26.*
+scipy==1.17.*
+onnx==1.22.*
+# onnxscript: required by torch>=2.11 torch.onnx.export (dynamo path).
+# MIT, https://github.com/microsoft/onnxscript/blob/main/LICENSE
+onnxscript>=0.7,<1
+# onnxruntime: installed separately by build_installer.py.
+# Dev: `pip install onnxruntime-gpu>=1.19.0` (CUDA) or `onnxruntime>=1.17.0` (CPU).
+
+# ── Large image tiling (DeepZoom pyramid generation) ────────────
+pyvips>=2.2.0,<4
+
+# ── Chunked mask storage for large images ───────────────────────
+zarr>=2.18.0,<3
+
+# ── Hugging Face libraries (instance segmentation: rfdetr, peft) ─
+# 5.10 is the first family with the fix for GHSA-xrqw-3rrv-vx5w
+# (save_pretrained path traversal); 5.5.* carried the advisory.
+transformers==5.10.*
+huggingface_hub==1.*
+
+# ── Instance segmentation (v0.9.8): RF-DETR-Seg fine-tune/predict/export ─
+# Apache-2.0: the rfdetr package and ALL Seg weights (Nano..2XL). The
+# PML-1.0 "plus" components (the plus extra / plus extension module and the
+# detection XL/2XL classes) are banned via the NC vendor patterns — never
+# install the plus extra.
+#
+# Deliberately NOT rfdetr[train]: that extra drags the Roboflow-platform
+# helpers (roboflow SDK + rf100vl), whose pins pull a SECOND cv2 build
+# (opencv-python GUI alongside our opencv-python-headless), downgrade
+# headless to an exact old pin, and add pi-heif/pillow-avif codecs. rfdetr
+# imports roboflow only lazily inside deploy_to_roboflow(); training on a
+# local COCO dir runs without it (proven 2026-07-22 by a roboflow-blocked
+# 1-epoch GPU run). The [train] deps we actually use are pinned explicitly
+# below — re-diff against rfdetr's [train] extra on every version bump.
+rfdetr==1.8.*
+peft>=0.19,<1
+# 2.6.6 fixes GHSA-qqmf-gpg7-g8gw (checkpoint _instantiator code execution); the
+# floor also covers the 2.6.2 / 2.6.3 exclusions rfdetr's [train] extra carries.
+pytorch-lightning>=2.6.6,<3
+torchmetrics[detection]>=1.2,<2
+faster-coco-eval>=1.7.2,<2
+pycocotools>=2.0,<3
+# albumentations phones PyPI at import for a version check; the app and the
+# training worker set NO_ALBUMENTATIONS_UPDATE=1 (R2, design doc §8).
+albumentations>=2.0,<3
+# ONNX export needs no extra deps (verified 2026-07-22: rfdetr export runs
+# without onnxsim / onnx-graphsurgeon / polygraphy).
+
+# ── auto_select combo predictor (XGBoost ensemble, Apache-2.0) ─
+# LightGBM (MIT) was the v3 backend.  v6 ships an XGBoost-only stack so
+# every runtime dep is Apache-2.0 or BSD-3.  See packages/segcore/auto_select/
+# models/best_model_v6/ for the bundled boosters.
+xgboost>=2.0.0,<4
+
+# ── CoreML export ───────────────────────────────────────────────
+coremltools>=8.0,<9
+
+# ── AI support and the MCP bridge ───────────────────────────────
+# fastmcp is the MCP server behind scripts/mcp_server.py and the client the
+# AI support panel starts it with. It is part of the install, so both work
+# without a further step. FASTMCP_PIN in scripts/mcp_server.py names the same
+# version; tests/test_mcp_server.py keeps the two together. Bumping it is a
+# dependency upgrade: re-run the bridge tests and one labelling run.
+# fastmcp  Apache-2.0  https://github.com/PrefectHQ/fastmcp/blob/main/LICENSE
+# mcp (installed by fastmcp)  MIT  https://github.com/modelcontextprotocol/python-sdk/blob/main/LICENSE
+# 4.1.2 fixes GHSA-7xgj-8392-5q4r and GHSA-vqqp-x5qm-5qp4.
+fastmcp==4.1.2
+
+# ── OpenVINO export (Intel edge) is opt-in: ~300MB+ of wheels.
+# Installed by `install_windows.bat --with-openvino` from
+# `requirements-openvino.in` rather than bundled here.
+
+# ── Security floors on packages we do not otherwise choose ──────
+# Not direct dependencies: these are floors raised on transitive packages so a
+# published advisory cannot sit in the lockfile. Remove an entry only once the
+# package that pulls it in requires at least this version on its own.
+#
+# aiohttp: PYSEC-2026-3545, fixed in 3.14.3; GHSA-5wr8-gcqf-gqf3,
+# GHSA-2g87-pp6c-29x5, GHSA-9xw5-w5jj-pvcg and five lower, fixed in 3.14.4.
+# Reaches us through fsspec (torch / huggingface_hub). pip-audit --strict runs
+# against this lockfile in CI, so an advisory here is a release blocker, not a
+# backlog item.
+# Apache-2.0  https://github.com/aio-libs/aiohttp/blob/master/LICENSE.txt
+aiohttp>=3.14.4
+#
+# anyio: GHSA-82r6-8w77-94w6 and GHSA-5p39-cfhj-2xmp, fixed in 4.14.2. Reaches
+# us through httpx, starlette (fastapi) and watchfiles (uvicorn[standard]).
+# MIT  https://github.com/agronholm/anyio/blob/master/LICENSE
+anyio>=4.14.2
+#
+# hydra-core: GHSA-2cp2-2r3c-7p7r, fixed in 1.3.4. Reaches us through sam-2,
+# which only instantiates the model configs packaged with it.
+# MIT  https://github.com/hydra-ecosystem/hydra/blob/main/LICENSE
+hydra-core>=1.3.4
+#
+# urllib3: GHSA-8988-9cw3-xx77, GHSA-vxq7-64xx-v4gw and GHSA-gh4c-6fx4-qh6g,
+# fixed in 2.8.0. Reaches us through requests (rfdetr / supervision).
+# MIT  https://github.com/urllib3/urllib3/blob/main/LICENSE.txt
+urllib3>=2.8.0
+#
+# multidict: CVE-2026-104874, fixed in 6.9.1. Reaches us through aiohttp / yarl.
+# Apache-2.0  https://github.com/aio-libs/multidict/blob/master/LICENSE
+multidict>=6.9.1
+#
+# fsspec: CVE-2026-104851, fixed in 2026.6.0. Reaches us through torch,
+# huggingface_hub and pytorch-lightning.
+# BSD-3-Clause  https://github.com/fsspec/filesystem_spec/blob/master/LICENSE
+fsspec>=2026.6.0
+#
+# brotli / brotlicffi: GHSA-9v8h-qqgm-4m35, fixed in 1.2.1 / 1.2.1.0. Reach us
+# through fonttools (weasyprint).
+# MIT  https://github.com/google/brotli/blob/master/LICENSE
+# MIT  https://github.com/python-hyper/brotlicffi/blob/main/LICENSE
+brotli>=1.2.1 ; platform_python_implementation == 'CPython'
+brotlicffi>=1.2.1.0 ; platform_python_implementation != 'CPython'
+#
+# filelock: GHSA-v4x8-3wr5-3wq8, GHSA-567q-5qvw-pf92 and GHSA-9vhv-jxww-xfm5,
+# fixed in 4.2.1. Reaches us through torch and huggingface_hub.
+# MIT  https://github.com/tox-dev/filelock/blob/main/LICENSE
+filelock>=4.2.1
+#
+# setuptools: GHSA-xmj3-9gf7-h52w, fixed in 84.1.0. Reaches us through torch.
+# MIT  https://github.com/pypa/setuptools/blob/main/LICENSE
+setuptools>=84.1.0
+#
+# certifi: GHSA-6q48-6c7w-9gw2 (PYSEC-2026-4320: the emSign ECC Root CA - G3,
+# under which eight intermediate CA keys were compromised), fixed in
+# 2026.10.19. Reaches us through httpx, httpcore and requests.
+# MPL-2.0  https://github.com/certifi/python-certifi/blob/master/LICENSE
+certifi>=2026.10.19
+
+# ── Environment loading ─────────────────────────────────────────
+python-dotenv>=1.0.0,<2
+
+# ── Report generation ───────────────────────────────────────────
+jinja2>=3.1.0,<4
+# 70.0 fixes GHSA-jf6q-chmf-3h3v (SSRF).
+weasyprint>=70.0
+openpyxl>=3.1.0,<4
+matplotlib>=3.8.0,<4
+
+# ── SAM models (not on PyPI; pinned to specific commit SHA for reproducibility) ─
+# MobileSAM   Apache-2.0  https://github.com/ChaoningZhang/MobileSAM/blob/master/LICENSE
+# SAM 2 (Meta) Apache-2.0 https://github.com/facebookresearch/sam2/blob/main/LICENSE
+# Bumping a SHA is a dependency upgrade — re-confirm upstream LICENSE has
+# NOT changed AND re-run distill / inference smoke tests.
+#
+# MobileSAM SHA b01a9c… (2025-12-19) is the version validated against our
+# distill pipeline. master HEAD has only acknowledgement/comment changes
+# since (no functional diff), but we do NOT auto-track HEAD — pinning is
+# the whole point of this file.
+mobile-sam @ git+https://github.com/ChaoningZhang/MobileSAM.git@b01a9ccef3b9e10b099b544efe004d0871802c3b
+#
+# timm  Apache-2.0  https://github.com/huggingface/pytorch-image-models/blob/main/LICENSE
+# MobileSAM imports timm at module load (modeling/tiny_vit_sam.py) but its
+# setup.py does not declare it, and TinySAM -- which we install by copying the
+# package directory, so pip installs nothing for it -- imports it the same way.
+# Nothing else in this file requires timm, so a clean install had no timm and
+# `import mobile_sam` raised ModuleNotFoundError: two of the five SAM backends
+# failed the moment a user selected them. Developer machines had timm as an
+# optional extra of torchmetrics/transformers, which hid it.
+timm==1.0.*
+sam-2 @ git+https://github.com/facebookresearch/sam2.git@2b90b9f5ceec907a1c18123530e92e794ad901a4
+# Checkpoints auto-downloaded from HuggingFace: segmen-pixel/seg-studio
