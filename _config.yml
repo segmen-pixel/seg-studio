@@ -10,6 +10,10 @@ baseurl: /seg-studio
 repository: segmen-pixel/seg-studio
 lang: en
 
+# Google Search Console ownership check; jekyll-seo-tag puts it in every page's head.
+webmaster_verifications:
+  google: "7mid-VLXav8M1EATCUnlqIVN6_8OEfUr7J-bJ9y_73w"
+
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
