@@ -4,6 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% seo %}
+{%- comment -%} Point each page at its counterpart in the other language, when it has one. {%- endcomment -%}
+{%- assign u = page.url -%}
+{%- assign en_u = "" -%}
+{%- assign ja_u = "" -%}
+{%- if u == "/" or u == "/ja/" -%}
+  {%- assign en_u = "/" -%}
+  {%- assign ja_u = "/ja/" -%}
+{%- elsif u contains "/docs/ja/" -%}
+  {%- assign ja_u = u -%}
+  {%- assign en_u = u | replace: "/docs/ja/", "/docs/" -%}
+{%- elsif u contains ".ja.html" -%}
+  {%- assign ja_u = u -%}
+  {%- assign en_u = u | replace: ".ja.html", ".html" -%}
+{%- elsif u contains "/docs/" -%}
+  {%- assign en_u = u -%}
+  {%- assign ja_u = u | replace: "/docs/", "/docs/ja/" -%}
+  {%- assign hit = site.pages | where: "url", ja_u | first -%}
+  {%- unless hit -%}
+    {%- assign ja_u = u | replace: ".html", ".ja.html" -%}
+  {%- endunless -%}
+{%- endif -%}
+{%- assign en_p = site.pages | where: "url", en_u | first -%}
+{%- assign ja_p = site.pages | where: "url", ja_u | first -%}
+{%- if en_p and ja_p %}
+<link rel="alternate" hreflang="en" href="{{ en_u | absolute_url }}">
+<link rel="alternate" hreflang="ja" href="{{ ja_u | absolute_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ en_u | absolute_url }}">
+{%- endif %}
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 <style>
 :root{

@@ -32,6 +32,21 @@ defaults:
       path: ""
     values:
       layout: default
+  # The Japanese pages. The layout reads page.lang for <html lang> and jekyll-seo-tag for og:locale.
+  - scope:
+      path: "docs/ja"
+    values:
+      lang: ja
+  - scope:
+      path: "docs/contributing/screenshots.ja.md"
+    values:
+      lang: ja
+  - scope:
+      path: "README.ja.md"
+    values:
+      lang: ja
+      title: "Seg-Studio — 画像を塗り分ける AI を自分の PC で作れるアプリ"
+      description: "画像に写った傷・汚れ・部品・細胞などをピクセル単位で見つける AI モデルを、プログラミングなしで作れるアプリです。無料のオープンソース（Apache-2.0）で、すべて手元の PC の中で動きます。"
 
 exclude:
   - LICENSE
